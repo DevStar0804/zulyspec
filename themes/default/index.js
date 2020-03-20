@@ -1,5 +1,3 @@
-require('./index.css');
-
 var colors = {
   primary: '#f9c300',
   secondary: 'black',
@@ -21,8 +19,7 @@ module.exports = {
       fontFamily: fonts.primary,
       fontWeight: 'normal',
       fontSize: '2em',
-      color: colors.secondary,
-      overflow: 'hidden'
+      color: colors.secondary
     }
   },
   components: {
