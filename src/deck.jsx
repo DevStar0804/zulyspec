@@ -10,7 +10,6 @@ React.initializeTouchEvents(true);
 
 const Style = Radium.Style;
 
-import Progress from './progress';
 const TransitionGroup = Radium(React.addons.TransitionGroup);
 
 @Radium
@@ -268,12 +267,10 @@ class Deck extends React.Component {
   }
   render() {
     let exportMode = false;
-    let showProgress = this.props.showProgress;
 
     if (this.context.router.state.location.query &&
         'export' in this.context.router.state.location.query) {
       exportMode = true;
-      showProgress = false;
     }
 
     let slide ='slide' in this.context.router.state.params ?
@@ -304,10 +301,6 @@ class Deck extends React.Component {
       }
     };
 
-    let currentSlide = 'slide' in this.context.router.state.params ?
-      parseInt(this.context.router.state.params.slide) : 0;
-    let slides = this.props.children;
-
     return (
       <div
         className="spectacle-deck"
@@ -320,7 +313,6 @@ class Deck extends React.Component {
           <TransitionGroup component="div" style={[styles.transition]}>
             {this._renderSlide()}
           </TransitionGroup>}
-        {showProgress ? <Progress items={slides} currentSlide={currentSlide} /> : ''}
         <Style rules={assign(this.context.styles.global, globals)} />
       </div>
     )
@@ -330,8 +322,7 @@ class Deck extends React.Component {
 Deck.displayName = 'Deck';
 
 Deck.defaultProps = {
-  transitionDuration: 500,
-  showProgress: true
+  transitionDuration: 500
 };
 
 Deck.contextTypes = {
