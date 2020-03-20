@@ -6,8 +6,7 @@ function context(Component, params) {
 
     childContextTypes: {
       styles: React.PropTypes.object,
-      flux: React.PropTypes.object,
-      presenter: React.PropTypes.bool
+      flux: React.PropTypes.object
     },
 
     getChildContext() {
@@ -19,9 +18,7 @@ function context(Component, params) {
       }
       return {
         styles: styles,
-        flux: params.flux,
-        presenter: this.props.location.query &&
-          'presenter' in this.props.location.query
+        flux: params.flux
       };
     },
 

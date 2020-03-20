@@ -16,8 +16,4 @@ webpackConfig.module.loaders[0] = {
   ]
 }
 
-if (process.argv[1].indexOf('webpack-dev-server') !== -1) {
-  webpackConfig.module.loaders[0].loaders.unshift('react-hot')
-}
-
 module.exports = webpackConfig;
