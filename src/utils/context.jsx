@@ -4,22 +4,16 @@ const context = function context(Component, params) {
   const wrapper = React.createClass({
     displayName: "ContextWrapper",
     propTypes: {
-      location: React.PropTypes.object,
-      params: React.PropTypes.object
+      location: React.PropTypes.object
     },
     childContextTypes: {
       styles: React.PropTypes.object,
       flux: React.PropTypes.object,
-      presenter: React.PropTypes.bool,
-      overview: React.PropTypes.bool,
-      export: React.PropTypes.bool,
-      print: React.PropTypes.bool,
-      slide: React.PropTypes.number
+      presenter: React.PropTypes.bool
     },
     getChildContext() {
       let styles = {};
-      const location = this.props.location;
-      if (location.query && "print" in location.query) {
+      if (this.props.location.query && "print" in this.props.location.query) {
         styles = params.print;
       } else {
         styles = params.styles;
@@ -27,12 +21,8 @@ const context = function context(Component, params) {
       return {
         styles,
         flux: params.flux,
-        presenter: location.query && "presenter" in location.query,
-        overview: location.query && "overview" in location.query,
-        export: location.query && "export" in location.query,
-        print: location.query && "print" in location.query,
-        slide: this.props.params && "slide" in this.props.params ?
-          parseInt(this.props.params.slide) : 0
+        presenter: this.props.location.query &&
+          "presenter" in this.props.location.query
       };
     },
 
