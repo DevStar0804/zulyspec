@@ -52,16 +52,11 @@ const getStyles = function getStyles() {
     styles.backgroundColor = color;
   }
   if (this.props.bgImage) {
-    if (this.props.bgDarken) {
-      styles.backgroundImage =
+    styles.backgroundImage =
       "linear-gradient( rgba(0, 0, 0, " + this.props.bgDarken +
         "), rgba(0, 0, 0, " + this.props.bgDarken +
         ") ), url(" + this.props.bgImage + ")";
-    } else {
-      styles.backgroundImage = "url(" + this.props.bgImage + ")";
-    }
     styles.backgroundSize = "cover";
-    styles.backgroundPosition = "center center";
   }
   return styles;
 };
