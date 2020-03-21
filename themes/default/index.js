@@ -19,7 +19,8 @@ module.exports = {
       fontFamily: fonts.primary,
       fontWeight: 'normal',
       fontSize: '2em',
-      color: colors.secondary
+      color: colors.secondary,
+      overflow: 'hidden'
     }
   },
   components: {
