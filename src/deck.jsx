@@ -28,7 +28,7 @@ class Deck extends React.Component {
     this._attachEvents();
   }
   componentWillUnmount() {
-    this._detachEvents();
+    this._detchEvents();
   }
   _attachEvents() {
     window.addEventListener('keydown', this._handleKeyPress);
