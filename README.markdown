@@ -35,6 +35,8 @@ Check it out:
 
 ![http://i.imgur.com/H7o2qHI.gif](http://i.imgur.com/H7o2qHI.gif_)
 
+You can toggle the presenter or overview mode by pressing respectively `p` and `o`.
+
 ## PDF Export
 
 Exporting a totally sweet looking PDF from your totally sweet looking Spectacle presentation is asburdly easy.
@@ -179,7 +181,6 @@ The deck tag is the top level tag and there should only be one of them. It suppo
 |---|---|---|
 |transition|React.PropTypes.array|Accepts `slide`, `zoom`, `fade` or `spin`, and can be combined. Sets global slide transitions. **Note: If you use the 'scale' transition, fitted text won't work in Safari.**|
 |transitionDuration| React.PropTypes.number| Accepts integer value in milliseconds for global transition duration.
-|progress| React.PropTypes.string|Accepts `pacman`, `bar`, `number` or `none`.
 
 ####\<Slide /> (Base)
 
@@ -190,7 +191,6 @@ The slide tag represents each slide in the presentation. It supports the followi
 |align| React.PropTypes.string | Accepts a space delimited value for positioning interior content. The first value can be `flex-start` (left), `center` (middle), or `flex-end` (bottom). The second value can be `flex-start` (top) , `center` (middle), or `flex-end` (bottom). You would provide this prop like `align="center middle"`, which is it's default.
 |transition|React.PropTypes.array|Accepts `slide`, `zoom`, `fade` or `spin`, and can be combined. Sets the slide transition. **Note: If you use the 'scale' transition, fitted text won't work in Safari.**|
 |transitionDuration| React.PropTypes.number| Accepts integer value in milliseconds for slide transition duration.
-|notes| React.PropTypes.stings| Text which will appear in the presenter mode. Can be HTML.
 
 ###Layout Tags
 

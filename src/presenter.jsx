@@ -1,4 +1,4 @@
-/*global setInterval clearInterval*/
+/*global setInterval*/
 
 import React from "react/addons";
 import cloneWithProps from "react/lib/cloneWithProps";
@@ -41,14 +41,11 @@ class Presenter extends Base {
     });
   }
   componentDidMount() {
-    this.time = setInterval(()=> {
+    setInterval(()=> {
       this.setState({
         time: startTime(new Date())
       });
     }, 1000);
-  }
-  componentWillUnmount() {
-    clearInterval(this.time);
   }
   _renderNextSlide() {
     const presenterStyle = {
@@ -71,11 +68,6 @@ class Presenter extends Base {
       presenterStyle,
       appearOff: true
     }) : <h1 style={[endStyle]}>END</h1>;
-  }
-  _renderNotes() {
-    const child = this.props.slides[this.props.slide];
-    if (!child.props.notes) { return false; }
-    return <div dangerouslySetInnerHTML={{__html: child.props.notes}} />;
   }
   render() {
     const styles = {
@@ -141,18 +133,6 @@ class Presenter extends Base {
         margin: 20,
         position: "relative",
         color: "white"
-      },
-      notes: {
-        position: "absolute",
-        display: "block",
-        color: "white",
-        width: "100%",
-        height: "20%",
-        bottom: "0px",
-        textAlign: "left",
-        padding: "20px 50px",
-        columnCount: "2",
-        fontSize: "0.8em"
       }
     };
     return (
@@ -171,9 +151,6 @@ class Presenter extends Base {
             {this._renderNextSlide()}
           </div>
         </div>
-        <div className="spectacle-presenter-notes" style={[styles.notes]}>
-          {this._renderNotes()}
-        </div>
       </div>
     );
   }
@@ -186,9 +163,7 @@ Presenter.propTypes = {
 };
 
 Presenter.contextTypes = {
-  styles: React.PropTypes.object,
-  flux: React.PropTypes.object,
-  router: React.PropTypes.object
+  styles: React.PropTypes.object
 };
 
 export default Presenter;

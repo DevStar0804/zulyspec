@@ -6,13 +6,15 @@ import assign from "object-assign";
 import cloneWithProps from "react/lib/cloneWithProps";
 import Radium from "radium";
 import _ from "lodash";
+
 import Presenter from "./presenter";
+import Export from "./export";
+import Overview from "./overview";
 
 React.initializeTouchEvents(true);
 
 const Style = Radium.Style;
 
-import Progress from "./progress";
 const TransitionGroup = Radium(React.addons.TransitionGroup);
 
 @Radium
@@ -27,8 +29,7 @@ class Deck extends React.Component {
     };
   }
   componentDidMount() {
-    const slide = "slide" in this.context.router.state.params ?
-      parseInt(this.context.router.state.params.slide) : 0;
+    const slide = this.context.slide;
     this.setState({
       lastSlide: slide
     });
@@ -49,39 +50,56 @@ class Deck extends React.Component {
   }
   _handleKeyPress(e) {
     const event = window.event ? window.event : e;
-    // left, page down
-    if (event.keyCode === 37 || event.keyCode === 33) {
+    if (event.keyCode === 37) { // left arrow
       this._prevSlide();
     }
-    // right, page up
-    if (event.keyCode === 39 || event.keyCode === 34) {
+    if (event.keyCode === 39) { // right arrow
       this._nextSlide();
+    }
+    if (event.keyCode === 79) { // o
+      this._toggleOverviewMode();
+    }
+    if (event.keyCode === 80) { // o
+      this._togglePresenterMode();
+    }
+  }
+  _toggleOverviewMode() {
+    const suffix = this.context.overview ? "" : "?overview";
+    this.context.router.replaceWith("/" + (this.context.slide) + suffix);
+  }
+  _togglePresenterMode() {
+    const suffix = this.context.presenter ? "" : "?presenter";
+    this.context.router.replaceWith("/" + (this.context.slide) + suffix);
+  }
+  _getSuffix() {
+    if (this.context.presenter) {
+      return "?presenter";
+    } else if (this.context.overview) {
+      return "?overview";
+    } else {
+      return "";
     }
   }
   _goToSlide(e) {
     if (e.key === "spectacle-slide") {
       const data = JSON.parse(e.newValue);
-      const presenter = this.context.presenter ? "?presenter" : "";
-      const slide = "slide" in this.context.router.state.params ?
-        parseInt(this.context.router.state.params.slide) : 0;
+      const slide = this.context.slide;
       this.setState({
         lastSlide: slide || 0
       });
       if (this._checkFragments(slide, data.forward)) {
-        this.context.router.replaceWith("/" + (data.slide) + presenter);
+        this.context.router.replaceWith("/" + (data.slide) + this._getSuffix());
       }
     }
   }
   _prevSlide() {
-    const slide = "slide" in this.context.router.state.params ?
-      parseInt(this.context.router.state.params.slide) : 0;
-    const presenter = this.context.presenter ? "?presenter" : "";
+    const slide = this.context.slide;
     this.setState({
       lastSlide: slide
     });
     if (this._checkFragments(slide, false)) {
       if (slide > 0) {
-        this.context.router.replaceWith("/" + (slide - 1) + presenter);
+        this.context.router.replaceWith("/" + (slide - 1) + this._getSuffix());
         localStorage.setItem("spectacle-slide",
           JSON.stringify({slide: slide - 1, forward: false, time: Date.now()}));
       }
@@ -91,15 +109,13 @@ class Deck extends React.Component {
     }
   }
   _nextSlide() {
-    const slide = "slide" in this.context.router.state.params ?
-      parseInt(this.context.router.state.params.slide) : 0;
-    const presenter = this.context.presenter ? "?presenter" : "";
+    const slide = this.context.slide;
     this.setState({
       lastSlide: slide
     });
     if (this._checkFragments(slide, true)) {
       if (slide < this.props.children.length - 1) {
-        this.context.router.replaceWith("/" + (slide + 1) + presenter);
+        this.context.router.replaceWith("/" + (slide + 1) + this._getSuffix());
         localStorage.setItem("spectacle-slide",
           JSON.stringify({slide: slide + 1, forward: true, time: Date.now()}));
       }
@@ -112,10 +128,10 @@ class Deck extends React.Component {
     const store = this.context.flux.stores.SlideStore;
     const fragments = store.getState().fragments;
     // Not proud of this at all. 0.14 Parent based contexts will fix this.
-    if (this.context.presenter) {
+    if (this.context.presenter || this.context.overview) {
       const main = document.querySelector(".spectacle-presenter-main");
       if (main) {
-        const frags = main.querySelectorAll(".fragment");
+        const frags = main.querySelectorAll(".appear");
         if (!frags.length) {
           return true;
         }
@@ -235,52 +251,22 @@ class Deck extends React.Component {
     return 0;
   }
   _renderSlide() {
-    const slide = "slide" in this.context.router.state.params ?
-      parseInt(this.context.router.state.params.slide) : 0;
-    if (this.context.router.state.location.query &&
-        "export" in this.context.router.state.location.query) {
-      return this.props.children.map((child, index) => {
-        return cloneWithProps(child, {
-          key: index,
-          slideIndex: slide,
-          lastSlide: this.state.lastSlide,
-          transition: child.props.transition.length ?
-            child.props.transition :
-            this.props.transition,
-          transitionDuration: child.props.transition.transitionDuration ?
-            child.props.transitionDuration :
-            this.props.transitionDuration
-        });
-      });
-    } else {
-      const child = this.props.children[slide];
-      return cloneWithProps(child, {
-        key: slide,
-        slideIndex: slide,
-        lastSlide: this.state.lastSlide,
-        transition: child.props.transition.length ?
-          child.props.transition :
-          this.props.transition,
-        transitionDuration: child.props.transition.transitionDuration ?
-          child.props.transitionDuration :
-          this.props.transitionDuration
-      });
-    }
+    const slide = this.context.slide;
+    const child = this.props.children[slide];
+    return cloneWithProps(child, {
+      key: slide,
+      slideIndex: slide,
+      lastSlide: this.state.lastSlide,
+      transition: child.props.transition.length ?
+        child.props.transition :
+        this.props.transition,
+      transitionDuration: child.props.transition.transitionDuration ?
+        child.props.transitionDuration :
+        this.props.transitionDuration
+    });
   }
   render() {
-    let exportMode = false;
-    let showProgress = true;
-
-    if (this.context.router.state.location.query &&
-        "export" in this.context.router.state.location.query) {
-      exportMode = true;
-      showProgress = false;
-    }
-
-    const slide = "slide" in this.context.router.state.params ?
-      parseInt(this.context.router.state.params.slide) : 0;
-
-    const globals = exportMode ? {
+    const globals = this.context.export ? {
       body: {
         minWidth: 1100,
         minHeight: 850,
@@ -290,24 +276,34 @@ class Deck extends React.Component {
 
     const styles = {
       deck: {
-        backgroundColor: this.context.presenter ? "black" : "",
+        backgroundColor: this.context.presenter || this.context.overview ? "black" : "",
         position: "absolute",
         top: 0,
         left: 0,
         width: "100%",
-        height: "100%"
+        height: "100%",
+        perspective: 1000,
+        transformStyle: "preserve-3d"
       },
       transition: {
         height: "100%",
-        width: "100%",
-        perspective: 1000,
-        transformStyle: "flat"
+        width: "100%"
       }
     };
 
-    const currentSlide = "slide" in this.context.router.state.params ?
-      parseInt(this.context.router.state.params.slide) : 0;
-    const slides = this.props.children;
+    let componentToRender;
+    if (this.context.presenter) {
+      componentToRender = (<Presenter slides={this.props.children}
+        slide={this.context.slide} lastSlide={this.state.lastSlide} />);
+    } else if (this.context.export) {
+      componentToRender = <Export slides={this.props.children} />;
+    } else if (this.context.overview) {
+      componentToRender = <Overview slides={this.props.children} slide={this.context.slide} />;
+    } else {
+      componentToRender = (<TransitionGroup component="div" style={[styles.transition]}>
+                            {this._renderSlide()}
+                          </TransitionGroup>);
+    }
 
     return (
       <div
@@ -315,17 +311,7 @@ class Deck extends React.Component {
         style={[styles.deck]}
         onClick={this._handleClick}
         {...this._getTouchEvents()}>
-        {this.context.presenter ?
-          <Presenter slides={this.props.children}
-            slide={slide} lastSlide={this.state.lastSlide}/> :
-          <TransitionGroup
-            component="div"
-            className="spectacle-transition"
-            style={[styles.transition]}>
-            {this._renderSlide()}
-          </TransitionGroup>}
-        {showProgress ? <Progress items={slides} currentSlide={currentSlide}
-          type={this.props.progress}/> : ""}
+        {componentToRender}
         <Style rules={assign(this.context.styles.global, globals)} />
       </div>
     );
@@ -335,22 +321,23 @@ class Deck extends React.Component {
 Deck.displayName = "Deck";
 
 Deck.defaultProps = {
-  transitionDuration: 500,
-  progress: "pacman"
+  transitionDuration: 500
 };
 
 Deck.propTypes = {
   children: React.PropTypes.node,
   transition: React.PropTypes.array,
-  transitionDuration: React.PropTypes.number,
-  progress: React.PropTypes.oneOf(["pacman", "bar", "number", "none"])
+  transitionDuration: React.PropTypes.number
 };
 
 Deck.contextTypes = {
   styles: React.PropTypes.object,
   router: React.PropTypes.object,
   flux: React.PropTypes.object,
-  presenter: React.PropTypes.bool
+  presenter: React.PropTypes.bool,
+  export: React.PropTypes.bool,
+  overview: React.PropTypes.bool,
+  slide: React.PropTypes.number
 };
 
 export default Deck;
