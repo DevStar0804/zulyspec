@@ -69,6 +69,11 @@ class Presenter extends Base {
       appearOff: true
     }) : <h1 style={[endStyle]}>END</h1>;
   }
+  _renderNotes() {
+    const child = this.props.slides[this.props.slide];
+    if (!child.props.notes) { return false; }
+    return <div dangerouslySetInnerHTML={{__html: child.props.notes}} />;
+  }
   render() {
     const styles = {
       presenter: {
@@ -133,6 +138,18 @@ class Presenter extends Base {
         margin: 20,
         position: "relative",
         color: "white"
+      },
+      notes: {
+        position: "absolute",
+        display: "block",
+        color: "white",
+        width: "100%",
+        height: "20%",
+        bottom: "0px",
+        textAlign: "left",
+        padding: "20px 50px",
+        columnCount: "2",
+        fontSize: "0.8em"
       }
     };
     return (
@@ -150,6 +167,9 @@ class Presenter extends Base {
           <div className="spectacle-presenter-next" style={[styles.next]}>
             {this._renderNextSlide()}
           </div>
+        </div>
+        <div className="spectacle-presenter-notes" style={[styles.notes]}>
+          {this._renderNotes()}
         </div>
       </div>
     );

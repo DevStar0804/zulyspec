@@ -6,7 +6,6 @@ import assign from "object-assign";
 import cloneWithProps from "react/lib/cloneWithProps";
 import Radium from "radium";
 import _ from "lodash";
-
 import Presenter from "./presenter";
 
 React.initializeTouchEvents(true);
@@ -294,13 +293,13 @@ class Deck extends React.Component {
         top: 0,
         left: 0,
         width: "100%",
-        height: "100%",
-        perspective: 1000,
-        transformStyle: "preserve-3d"
+        height: "100%"
       },
       transition: {
         height: "100%",
-        width: "100%"
+        width: "100%",
+        perspective: 1000,
+        transformStyle: "flat"
       }
     };
 
@@ -317,7 +316,10 @@ class Deck extends React.Component {
         {this.context.presenter ?
           <Presenter slides={this.props.children}
             slide={slide} lastSlide={this.state.lastSlide}/> :
-          <TransitionGroup component="div" style={[styles.transition]}>
+          <TransitionGroup
+            component="div"
+            className="spectacle-transition"
+            style={[styles.transition]}>
             {this._renderSlide()}
           </TransitionGroup>}
         {showProgress ? <Progress items={slides} currentSlide={currentSlide}
