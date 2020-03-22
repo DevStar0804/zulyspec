@@ -6,7 +6,6 @@ import assign from "object-assign";
 import cloneWithProps from "react/lib/cloneWithProps";
 import Radium from "radium";
 import _ from "lodash";
-
 import Presenter from "./presenter";
 import Export from "./export";
 import Overview from "./overview";
@@ -15,6 +14,7 @@ React.initializeTouchEvents(true);
 
 const Style = Radium.Style;
 
+import Progress from "./progress";
 const TransitionGroup = Radium(React.addons.TransitionGroup);
 
 @Radium
@@ -50,10 +50,12 @@ class Deck extends React.Component {
   }
   _handleKeyPress(e) {
     const event = window.event ? window.event : e;
-    if (event.keyCode === 37) { // left arrow
+    // left, page down
+    if (event.keyCode === 37 || event.keyCode === 33) {
       this._prevSlide();
     }
-    if (event.keyCode === 39) { // right arrow
+    // right, page up
+    if (event.keyCode === 39 || event.keyCode === 34) {
       this._nextSlide();
     }
     if (event.keyCode === 79) { // o
@@ -97,7 +99,7 @@ class Deck extends React.Component {
     this.setState({
       lastSlide: slide
     });
-    if (this._checkFragments(slide, false)) {
+    if (this._checkFragments(slide, false) || this.context.overview) {
       if (slide > 0) {
         this.context.router.replaceWith("/" + (slide - 1) + this._getSuffix());
         localStorage.setItem("spectacle-slide",
@@ -113,7 +115,7 @@ class Deck extends React.Component {
     this.setState({
       lastSlide: slide
     });
-    if (this._checkFragments(slide, true)) {
+    if (this._checkFragments(slide, true) || this.context.overview) {
       if (slide < this.props.children.length - 1) {
         this.context.router.replaceWith("/" + (slide + 1) + this._getSuffix());
         localStorage.setItem("spectacle-slide",
@@ -128,10 +130,10 @@ class Deck extends React.Component {
     const store = this.context.flux.stores.SlideStore;
     const fragments = store.getState().fragments;
     // Not proud of this at all. 0.14 Parent based contexts will fix this.
-    if (this.context.presenter || this.context.overview) {
+    if (this.context.presenter) {
       const main = document.querySelector(".spectacle-presenter-main");
       if (main) {
-        const frags = main.querySelectorAll(".appear");
+        const frags = main.querySelectorAll(".fragment");
         if (!frags.length) {
           return true;
         }
@@ -281,13 +283,13 @@ class Deck extends React.Component {
         top: 0,
         left: 0,
         width: "100%",
-        height: "100%",
-        perspective: 1000,
-        transformStyle: "preserve-3d"
+        height: "100%"
       },
       transition: {
         height: "100%",
-        width: "100%"
+        width: "100%",
+        perspective: 1000,
+        transformStyle: "flat"
       }
     };
 
@@ -312,6 +314,10 @@ class Deck extends React.Component {
         onClick={this._handleClick}
         {...this._getTouchEvents()}>
         {componentToRender}
+        {!this.context.export ? <Progress
+          items={this.props.children}
+          currentSlide={this.context.slide}
+          type={this.props.progress}/> : ""}
         <Style rules={assign(this.context.styles.global, globals)} />
       </div>
     );
@@ -321,13 +327,15 @@ class Deck extends React.Component {
 Deck.displayName = "Deck";
 
 Deck.defaultProps = {
-  transitionDuration: 500
+  transitionDuration: 500,
+  progress: "pacman"
 };
 
 Deck.propTypes = {
   children: React.PropTypes.node,
   transition: React.PropTypes.array,
-  transitionDuration: React.PropTypes.number
+  transitionDuration: React.PropTypes.number,
+  progress: React.PropTypes.oneOf(["pacman", "bar", "number", "none"])
 };
 
 Deck.contextTypes = {
