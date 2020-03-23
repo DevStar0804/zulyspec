@@ -22,13 +22,13 @@ export default {
 
     if(this.props.transition.indexOf('fade') !== -1) {
       state = assign(state, {
-        opacity: 1
+        opacity: 0
       });
     }
 
     if(this.props.transition.indexOf('zoom') !== -1) {
       state = assign(state, {
-        scale: 1
+        scale: 0.1
       });
     }
 
@@ -57,15 +57,10 @@ export default {
     let slide = parseInt(this.context.router.state.params.slide) || 0;
     let direction = this.props.slideIndex > this.props.lastSlide;
 
-    this.setState({
-      z: 200
-    });
-
     if(this.props.transition.indexOf('fade') !== -1) {
       this.tweenState('opacity', {
         easing: tweenState.easingTypes.easeInOutQuad,
         duration: this.props.transitionDuration,
-        beginValue: 0,
         endValue: 1
       });
     }
@@ -74,7 +69,6 @@ export default {
       this.tweenState('scale', {
         easing: tweenState.easingTypes.easeInOutQuad,
         duration: this.props.transitionDuration,
-        beginValue: 0,
         endValue: 1
       });
     }
@@ -96,6 +90,10 @@ export default {
         endValue: 0
       });
     }
+
+    this.setState({
+      z: 200
+    });
 
     this.routerCallback(cb);
 
@@ -146,7 +144,7 @@ export default {
       this.tweenState('scale', {
         easing: tweenState.easingTypes.easeInOutQuad,
         duration: this.props.transitionDuration,
-        endValue: 0
+        endValue: 0.1
       });
     }
 
