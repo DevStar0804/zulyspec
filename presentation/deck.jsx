@@ -39,11 +39,12 @@ export default class extends React.Component {
             Wait what?
           </Heading>
         </Slide>
-        <Slide transition={['zoom', 'fade']} bgColor="primary">
+        <Slide transition={['zoom', 'fade']} bgColor="primary" align="center middle">
           <CodePane
             lang="javascript"
             source={require("raw!./deck.example")}
-            margin="20px auto"/>
+            margin="20px auto"
+            textSize="1rem"/>
         </Slide>
         <Slide transition={['slide']} bgImage={images.city.replace('/','')} bgDarken={0.75}>
           <Appear>
@@ -91,7 +92,7 @@ export default class extends React.Component {
             Combinable Transitions
           </Heading>
         </Slide>
-        <Slide transition={['fade']} bgColor="secondary" textColor="primary">
+        <Slide transition={['fade']} bgColor="secondary" textColor="primary" align="center middle">
           <List>
             <ListItem><Appear>Inline style based theme system</Appear></ListItem>
             <ListItem><Appear>Autofit text</Appear></ListItem>
