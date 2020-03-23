@@ -244,12 +244,11 @@ A simple tag for wrapping inline text that you want lightly styled in a monospac
 
 ####\<Heading /> (Base)
 
-Heading tags are special in that, when you specify a `size` prop, they generate the appropriate heading tag, and extend themselves with a style that is defined in the theme file for that heading. Line height can be adjusted via a numeric `lineHeight` prop.
+Heading tags are special in that, when you specify a `size` prop, they generate the appropriate heading tag, and extend themselves with a style that is defined in the theme file for that heading.
 
 |Name|PropType|Description|
 |---|---|---|
 |fit|React.PropTypes.boolean| When set to true, fits text to the slide's width. **Note: If you use the 'scale' transition, this won't work in Safari.** |
-|lineHeight|React.PropTypes.number| Sets the line height of your text.|
 
 ####\<Image /> (Base)
 
@@ -291,12 +290,11 @@ The `S` tag is used to add inline styling to a piece of text, such as underline 
 
 ####\<Text/> (Base)
 
-The `Text` tag is used to add text to your slide. Line height can be adjusted via a numeric `lineHeight` prop.
+The `Text` tag is used to add text to your slide.
 
 |Name|PropType|Description|
 |---|---|---|
 |fit|React.PropTypes.boolean| When set to true, fits text to the slide's width. **Note: If you use the 'scale' transition, this won't work in Safari.** |
-|lineHeight|React.PropTypes.number| Sets the line height of your text.|
 
 ### Base Props
 
