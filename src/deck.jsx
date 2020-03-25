@@ -53,10 +53,10 @@ class Deck extends Component {
     if (event.keyCode === 39 || event.keyCode === 34) {
       this._nextSlide();
     }
-    if (event.keyCode === 79 && !event.ctrlKey && !event.metaKey) { // o
+    if ((event.altKey && event.keyCode === 79) && !event.ctrlKey && !event.metaKey) { // o
       this._toggleOverviewMode();
     }
-    if (event.keyCode === 80 && !event.ctrlKey && !event.metaKey) { // o
+    if ((event.altKey && event.keyCode === 80) && !event.ctrlKey && !event.metaKey) { // p
       this._togglePresenterMode();
     }
   }
@@ -253,7 +253,7 @@ class Deck extends Component {
   _getSlideIndex() {
     let index = 0;
     if (!parseInt(this.context.slide)) {
-      this.props.children.forEach((slide, i) => {
+      Children.toArray(this.props.children).forEach((slide, i) => {
         if (slide.props.id === this.context.slide) {
           index = i;
         }
@@ -265,7 +265,7 @@ class Deck extends Component {
   }
   _renderSlide() {
     const slide = this._getSlideIndex();
-    const child = this.props.children[slide];
+    const child = Children.toArray(this.props.children)[slide];
     return cloneElement(child, {
       key: slide,
       children: Children.toArray(child.props.children),
@@ -307,19 +307,20 @@ class Deck extends Component {
     };
 
     let componentToRender;
+    const children = Children.toArray(this.props.children);
     if (this.context.presenter) {
       componentToRender = (
         <Presenter
-          slides={this.props.children}
+          slides={children}
           slide={this._getSlideIndex()}
           hash={this.context.slide}
           lastSlide={this.state.lastSlide}
         />
       );
     } else if (this.context.export) {
-      componentToRender = <Export slides={this.props.children} />;
+      componentToRender = <Export slides={children} />;
     } else if (this.context.overview) {
-      componentToRender = <Overview slides={this.props.children} slide={this._getSlideIndex()} />;
+      componentToRender = <Overview slides={children} slide={this._getSlideIndex()} />;
     } else {
       componentToRender = (
         <TransitionGroup component="div" style={[styles.transition]}>
@@ -340,7 +341,7 @@ class Deck extends Component {
         {
           !this.context.export ?
           <Progress
-            items={this.props.children}
+            items={children}
             currentSlide={this._getSlideIndex()}
             type={this.props.progress}
           /> : ""
