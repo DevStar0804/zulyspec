@@ -3,8 +3,7 @@
 const defaultColors = {
   primary: "black",
   secondary: "black",
-  tertiary: "black",
-  quartenary: "black"
+  tertiary: "black"
 };
 
 const defaultFonts = {
@@ -38,34 +37,6 @@ const print = (colorArgs = defaultColors, fontArgs = defaultFonts) => {
     },
     fullscreen: {
       fill: colors.tertiary
-    },
-    controls: {
-      prev: {
-        position: "absolute",
-        top: "50%",
-        left: 20,
-        transform: "translateY(-50%)",
-        zIndex: 9999,
-        background: "none",
-        border: "none",
-        outline: 0
-      },
-      prevIcon: {
-        fill: colors.quartenary
-      },
-      next: {
-        position: "absolute",
-        top: "50%",
-        right: 20,
-        transform: "translateY(-50%)",
-        zIndex: 9999,
-        background: "none",
-        border: "none",
-        outline: 0
-      },
-      nextIcon: {
-        fill: colors.quartenary
-      }
     },
     progress: {
       pacman: {

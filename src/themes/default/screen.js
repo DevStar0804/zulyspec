@@ -3,8 +3,7 @@
 const defaultColors = {
   primary: "#f9c300",
   secondary: "black",
-  tertiary: "white",
-  quartenary: "white"
+  tertiary: "white"
 };
 
 const defaultFonts = {
@@ -38,34 +37,6 @@ const screen = (colorArgs = defaultColors, fontArgs = defaultFonts) => {
     fullscreen: {
       fill: colors.tertiary
     },
-    controls: {
-      prev: {
-        position: "absolute",
-        top: "50%",
-        left: 20,
-        transform: "translateY(-50%)",
-        zIndex: 9999,
-        background: "none",
-        border: "none",
-        outline: 0
-      },
-      prevIcon: {
-        fill: colors.quartenary
-      },
-      next: {
-        position: "absolute",
-        top: "50%",
-        right: 20,
-        transform: "translateY(-50%)",
-        zIndex: 9999,
-        background: "none",
-        border: "none",
-        outline: 0
-      },
-      nextIcon: {
-        fill: colors.quartenary
-      }
-    },
     progress: {
       pacman: {
         container: {
@@ -89,7 +60,7 @@ const screen = (colorArgs = defaultColors, fontArgs = defaultFonts) => {
           height: "10px",
           borderTopLeftRadius: "10px",
           borderTopRightRadius: "10px",
-          background: colors.quartenary
+          background: colors.tertiary
         },
         pacmanBottom: {
           position: "absolute",
@@ -98,7 +69,7 @@ const screen = (colorArgs = defaultColors, fontArgs = defaultFonts) => {
           height: "10px",
           borderBottomLeftRadius: "10px",
           borderBottomRightRadius: "10px",
-          background: colors.quartenary,
+          background: colors.tertiary,
           top: "10px"
         },
         point: {
@@ -109,7 +80,7 @@ const screen = (colorArgs = defaultColors, fontArgs = defaultFonts) => {
           height: "10px",
           borderWidth: 2,
           borderStyle: "solid",
-          borderColor: colors.quartenary,
+          borderColor: colors.tertiary,
           borderRadius: "50%",
           transition: "all 0.01s ease-out 0.4s"
         }
@@ -126,7 +97,7 @@ const screen = (colorArgs = defaultColors, fontArgs = defaultFonts) => {
         },
         bar: {
           height: "100%",
-          background: colors.quartenary,
+          background: colors.tertiary,
           transition: "all 0.3s ease-out"
         }
       },
@@ -136,7 +107,7 @@ const screen = (colorArgs = defaultColors, fontArgs = defaultFonts) => {
           bottom: 10,
           right: 10,
           zIndex: 1000,
-          color: colors.quartenary
+          color: colors.tertiary
         }
       }
     },
