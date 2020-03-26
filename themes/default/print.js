@@ -42,7 +42,7 @@ module.exports = {
       paddingLeft: 40,
       display: "block",
       color: "black",
-      fontSize: "4.9rem",
+      fontSize: "4.9em",
       lineHeight: 1,
       fontWeight: "bold"
     },
@@ -50,8 +50,8 @@ module.exports = {
       color: "black",
       display: "block",
       clear: "left",
-      fontSize: "2rem",
-      marginTop: "1rem"
+      fontSize: "2em",
+      marginTop: "1em"
     },
     content: {
       margin: "auto",
@@ -61,7 +61,7 @@ module.exports = {
       pre: {
         maxWidth: 800,
         margin: "auto",
-        fontSize: "1rem",
+        fontSize: "1em",
         fontWeight: "normal",
         fontFamily: fonts.tertiary
       },
@@ -73,9 +73,9 @@ module.exports = {
     },
     code: {
       color: "black",
-      fontSize: "2.66rem",
+      fontSize: "2.66em",
       fontFamily: fonts.tertiary,
-      margin: "0.25rem auto",
+      margin: "0.25em auto",
       backgroundColor: "rgba(0,0,0,0.15)",
       padding: "0 10px",
       borderRadius: 3
@@ -83,7 +83,7 @@ module.exports = {
     heading: {
       h1: {
         color: "black",
-        fontSize: "7.05rem",
+        fontSize: "7.05em",
         fontFamily: fonts.primary,
         lineHeight: 1,
         fontWeight: "bold",
@@ -91,7 +91,7 @@ module.exports = {
       },
       h2: {
         color: "black",
-        fontSize: "5.88rem",
+        fontSize: "5.88em",
         fontFamily: fonts.primary,
         lineHeight: 1,
         fontWeight: "bold",
@@ -99,46 +99,46 @@ module.exports = {
       },
       h3: {
         color: "black",
-        fontSize: "4.9rem",
+        fontSize: "4.9em",
         fontFamily: fonts.secondary,
         lineHeight: 1,
         fontWeight: "bold",
-        margin: "0.5rem auto"
+        margin: "0.5em auto"
       },
       h4: {
         color: "black",
-        fontSize: "3.82rem",
+        fontSize: "3.82em",
         fontFamily: fonts.primary,
         lineHeight: 1,
         fontWeight: "bold",
-        margin: "0.5rem auto"
+        margin: "0.5em auto"
       },
       h5: {
         color: "black",
-        fontSize: "3.19rem",
+        fontSize: "3.19em",
         fontFamily: fonts.primary,
         lineHeight: 1,
         fontWeight: "bold",
-        margin: "0.5rem auto"
+        margin: "0.5em auto"
       },
       h6: {
         color: "black",
-        fontSize: "2.66rem",
+        fontSize: "2.66em",
         fontFamily: fonts.primary,
         lineHeight: 1,
         fontWeight: "bold",
-        margin: "0.5rem auto"
+        margin: "0.5em auto"
       }
     },
     image: {
       display: "block",
-      margin: "0.5rem auto"
+      margin: "0.5em auto"
     },
     link: {
       textDecoration: "none"
     },
     listItem: {
-      fontSize: "2.66rem"
+      fontSize: "2.66em"
     },
     list: {
       textAlign: "left",
@@ -150,9 +150,9 @@ module.exports = {
     },
     text: {
       color: "black",
-      fontSize: "2.66rem",
+      fontSize: "2.66em",
       fontFamily: fonts.primary,
-      margin: "0.25rem auto"
+      margin: "0.25em auto"
     }
   }
 };
