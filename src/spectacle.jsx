@@ -12,7 +12,6 @@ import Layout from "./layout";
 import Link from "./link";
 import ListItem from "./list-item";
 import List from "./list";
-import Markdown from "./markdown";
 import Quote from "./quote";
 import S from "./s";
 import Slide from "./slide";
@@ -33,7 +32,6 @@ export {
   Link,
   ListItem,
   List,
-  Markdown,
   Quote,
   S,
   Slide,

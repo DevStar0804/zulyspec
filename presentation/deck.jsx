@@ -1,8 +1,8 @@
-import React from "react/addons";
+import React, { Component } from "react";
 
 import {
   Appear, BlockQuote, Cite, CodePane, Deck, Fill,
-  Heading, Image, Layout, Link, ListItem, List, Markdown, Quote, Slide, Text
+  Heading, Image, Layout, Link, ListItem, List, Quote, Slide, Text
 } from "../src/spectacle";
 
 import preloader from "../src/utils/preloader";
@@ -12,13 +12,12 @@ import Interactive from "./interactive";
 const images = {
   city: require("./city.jpg"),
   kat: require("./kat.png"),
-  logo: require("./formidable-logo.svg"),
-  markdown: require("./markdown.png")
+  logo: require("./formidable-logo.svg")
 };
 
 preloader([images.city, images.kat]);
 
-export default class extends React.Component {
+export default class extends Component {
   render() {
     return (
       <Deck transition={["zoom", "slide"]} transitionDuration={800}>
@@ -47,7 +46,8 @@ export default class extends React.Component {
           <CodePane
             lang="javascript"
             source={require("raw!./deck.example")}
-            margin="20px auto"/>
+            margin="20px auto"
+          />
         </Slide>
         <Slide transition={["slide"]} bgImage={images.city.replace("/", "")} bgDarken={0.75}>
           <Appear fid="1">
@@ -83,27 +83,9 @@ export default class extends React.Component {
         </Slide>
         <Slide transition={["slide"]} bgColor="black">
           <BlockQuote>
-            <Quote>Cat ipsum dolor sit amet, hunt anything that moves or hopped up on goofballs hide when guests come over. Hide when guests come over intrigued by the shower, or stare at ceiling climb leg for stretch and use lap as chair.</Quote>
+            <Quote>Wonderfully formatted quotes</Quote>
+            <Cite>Ken Wheeler</Cite>
           </BlockQuote>
-        </Slide>
-        <Slide transition={["fade"]}>
-          <Markdown>
-            {`
-## Inline Markdown
-![Markdown Logo](${images.markdown.replace("/", "")})
-
-[Bacon ipsum](http://baconipsum.com) dolor amet jerky t-bone fatback, pork alcatra beef ribs bresaola swine pancetta rump shank kielbasa.
-* Lists!
-* ~~Prosciutto~~ shankle _sirloin_
-* Tenderloin **doner** short ribs
-            `}
-          </Markdown>
-        </Slide>
-        <Slide transition={["zoom", "fade"]}>
-          <Markdown source={require("raw!./markdown-code.md")}/>
-        </Slide>
-        <Slide transition={["zoom"]} bgColor="black">
-          <Markdown source={require("raw!./markdown-blockquote.md")}/>
         </Slide>
         <Slide transition={["slide", "spin"]} bgColor="primary">
           <Heading caps fit size={1} textColor="tertiary">
