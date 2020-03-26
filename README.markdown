@@ -116,7 +116,7 @@ Fullscreen can be toggled via browser options, or by **hovering over the bottom 
 Exporting a totally sweet looking PDF from your totally sweet looking Spectacle presentation is absurdly easy.
 
 - Run `npm start`
-- Append your URL with `?export` (e.g. [http://localhost:3000/#/?export](http://localhost:3000/#/?export) or [http://localhost:3000/?export](http://localhost:3000/?export))
+- Hit [http://localhost:3000/#/?export](http://localhost:3000/#/?export)
 - Bring up the print dialog `(ctrl or cmd + p)`
 - Check "Background Graphics" to on if you are about that life
 - Change destination to "Save as PDF", as shown below:
@@ -225,6 +225,7 @@ The deck tag wraps your slides. It supports the following props:
 |transition|React.PropTypes.array|Accepts `slide`, `zoom`, `fade` or `spin`, and can be combined. Sets global slide transitions. **Note: If you use the 'scale' transition, fitted text won't work in Safari.**|
 |transitionDuration| React.PropTypes.number| Accepts integer value in milliseconds for global transition duration.
 |progress| React.PropTypes.string|Accepts `pacman`, `bar`, `number` or `none`.
+|controls| React.PropTypes.bool| Show control arrows when not in fullscreen
 
 <a name="slide-base"></a>
 #### Slide (Base)
