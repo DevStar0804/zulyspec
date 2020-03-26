@@ -2,15 +2,11 @@ import React from "react/addons";
 import highlight from "highlight.js";
 import Base from "./base";
 import Radium from "radium";
-import isUndefined from "lodash/lang/isundefined";
 
 @Radium
 class CodePane extends Base {
   createMarkup() {
-    const { source, children } = this.props;
-    // Allow code to come from source or from children, for markdown support
-    const code = (isUndefined(source) || source === "") ? children : source;
-    const markup = highlight.highlight(this.props.lang, code);
+    const markup = highlight.highlight(this.props.lang, this.props.source);
     return {
       __html: markup.value
     };
