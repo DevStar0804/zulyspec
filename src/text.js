@@ -1,9 +1,9 @@
-import React, { Component, PropTypes } from "react";
-import { getStyles } from "./utils/base";
+import React, { PropTypes } from "react";
+import Base from "./base";
 import Radium from "radium";
 
 @Radium
-export default class Text extends Component {
+export default class Text extends Base {
   constructor() {
     super();
     this.resize = this.resize.bind(this);
@@ -63,7 +63,7 @@ export default class Text extends Component {
       fit ? (
         <div
           ref="container"
-          style={[this.context.styles.components.text, getStyles.call(this), styles.container]}
+          style={[this.context.styles.components.text, this.getStyles(), styles.container]}
         >
           <span
             ref="text"
@@ -73,7 +73,7 @@ export default class Text extends Component {
           </span>
         </div>
       ) : (
-        <p style={[this.context.styles.components.text, getStyles.call(this), styles.nonFit, style]}>
+        <p style={[this.context.styles.components.text, this.getStyles(), styles.nonFit, style]}>
           {this.props.children}
         </p>
       )

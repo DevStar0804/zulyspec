@@ -1,12 +1,12 @@
-import React, { Component, PropTypes } from "react";
-import { getStyles } from "./utils/base";
+import React, { PropTypes } from "react";
+import Base from "./base";
 import Radium from "radium";
 
 @Radium
-export default class Link extends Component {
+export default class Link extends Base {
   render() {
     return (
-      <a href={this.props.href} target={this.props.target} style={[this.context.styles.components.link, getStyles.call(this), this.props.style]}>
+      <a href={this.props.href} target={this.props.target} style={[this.context.styles.components.link, this.getStyles(), this.props.style]}>
         {this.props.children}
       </a>
     );

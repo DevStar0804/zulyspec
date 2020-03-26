@@ -1,12 +1,12 @@
-import React, { Component, PropTypes } from "react";
-import { getStyles } from "./utils/base";
+import React, { PropTypes } from "react";
+import Base from "./base";
 import Radium from "radium";
 
 @Radium
-export default class Code extends Component {
+export default class Code extends Base {
   render() {
     return (
-      <code style={[this.context.styles.components.code, getStyles.call(this), this.props.style]}>
+      <code style={[this.context.styles.components.code, this.getStyles(), this.props.style]}>
         {this.props.children}
       </code>
     );

@@ -1,9 +1,9 @@
-import React, { cloneElement, Component, PropTypes } from "react";
-import { getStyles } from "./utils/base";
+import React, { cloneElement, PropTypes } from "react";
+import Base from "./base";
 import Radium from "radium";
 
 @Radium
-export default class Overview extends Component {
+export default class Overview extends Base {
   _renderSlides() {
     const slide = this.props.slide;
     return this.props.slides.map((child, index) => {

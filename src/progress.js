@@ -1,5 +1,5 @@
-import React, { Component, PropTypes } from "react";
-import { getStyles } from "./utils/base";
+import React, { PropTypes } from "react";
+import Base from "./base";
 import Radium from "radium";
 
 const animations = {
@@ -22,7 +22,7 @@ const animations = {
 };
 
 @Radium
-export default class Progress extends Component {
+export default class Progress extends Base {
   render() {
     const { type, currentSlide, items } = this.props;
     let style = this.context.styles.progress;
@@ -65,7 +65,7 @@ export default class Progress extends Component {
         return false;
     }
     return (
-      <div style={[getStyles.call(this)]}>
+      <div style={[this.getStyles()]}>
         <div style={[style.container]}>
           {markup}
         </div>
