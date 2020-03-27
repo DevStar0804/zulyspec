@@ -1,6 +1,6 @@
 /*global window*/
 
-import React, { PropTypes } from "react";
+import React from "react/addons";
 import Base from "./base";
 import Radium from "radium";
 
@@ -28,8 +28,8 @@ class Text extends Base {
   }
   resize() {
     if (this.props.fit) {
-      const text = this.refs.text;
-      const container = this.refs.container;
+      const text = React.findDOMNode(this.refs.text);
+      const container = React.findDOMNode(this.refs.container);
       text.style.display = "inline-block";
       const scale = (container.offsetWidth / text.offsetWidth);
       const height = text.offsetHeight * scale;
@@ -57,25 +57,21 @@ class Text extends Base {
         transformOrigin: "center top"
       }
     };
-    return (
-      this.props.fit ? (
-        <div
-          ref="container"
-          style={[this.context.styles.components.text, this.getStyles(), styles.container]}
-        >
-          <span
-            ref="text"
-            style={[styles.text, this.props.style]}
-          >
-            {this.props.children}
-          </span>
-        </div>
-      ) : (
-        <p style={[this.context.styles.components.text, this.getStyles(), this.props.style]}>
+    return this.props.fit
+    ? <div
+        ref="container"
+        style={[
+          this.context.styles.components.text,
+          this.getStyles(), styles.container]}>
+        <span
+          ref="text"
+          style={[styles.text, this.props.style]}>
           {this.props.children}
-        </p>
-      )
-    );
+        </span>
+      </div>
+    : <p style={[this.context.styles.components.text, this.getStyles(), this.props.style]}>
+        {this.props.children}
+      </p>;
   }
 }
 
@@ -84,12 +80,12 @@ Text.defaultProps = {
 };
 
 Text.propTypes = {
-  children: PropTypes.node,
-  lineHeight: PropTypes.number
+  children: React.PropTypes.node,
+  lineHeight: React.PropTypes.number
 };
 
 Text.contextTypes = {
-  styles: PropTypes.object
+  styles: React.PropTypes.object
 };
 
 export default Text;

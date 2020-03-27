@@ -1,4 +1,4 @@
-import React, { PropTypes } from "react";
+import React from "react/addons";
 import Base from "./base";
 import Radium from "radium";
 
@@ -14,12 +14,12 @@ class Code extends Base {
 }
 
 Code.propTypes = {
-  children: PropTypes.node,
-  style: PropTypes.object
+  children: React.PropTypes.node,
+  style: React.PropTypes.object
 };
 
 Code.contextTypes = {
-  styles: PropTypes.object
+  styles: React.PropTypes.object
 };
 
 export default Code;

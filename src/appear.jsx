@@ -1,18 +1,19 @@
-import React, { PropTypes } from "react";
+import React from "react/addons";
 import tweenState from "react-tween-state";
 import _ from "lodash";
+import assign from "object-assign";
 
 const Appear = React.createClass({
   mixins: [tweenState.Mixin],
   propTypes: {
-    children: PropTypes.node,
-    style: PropTypes.object
+    children: React.PropTypes.node,
+    style: React.PropTypes.object
   },
   contextTypes: {
-    flux: PropTypes.object,
-    export: PropTypes.bool,
-    overview: PropTypes.bool,
-    slide: PropTypes.number
+    flux: React.PropTypes.object,
+    export: React.PropTypes.bool,
+    overview: React.PropTypes.bool,
+    slide: React.PropTypes.number
   },
   getInitialState() {
     return {
@@ -20,7 +21,7 @@ const Appear = React.createClass({
       opacity: this.context.export || this.context.overview ? 1 : 0
     };
   },
-  componentWillMount() {
+  componentDidMount() {
     this.context.flux.stores.SlideStore.listen(this._storeChange);
   },
   componentWillUnmount() {
@@ -28,7 +29,7 @@ const Appear = React.createClass({
   },
   _storeChange(state) {
     const slide = this.context.slide;
-    const fragment = this.refs.fragment;
+    const fragment = React.findDOMNode(this.refs.fragment);
     const key = _.findKey(state.fragments[slide], {
       "id": parseInt(fragment.dataset.fid)
     });
@@ -53,7 +54,7 @@ const Appear = React.createClass({
       opacity: this.getTweeningValue("opacity")
     };
     return (
-      <div style={Object.assign({}, this.props.style, styles)} className="fragment" ref="fragment">
+      <div style={assign({}, this.props.style, styles)} className="fragment" ref="fragment">
         {this.props.children}
       </div>
     );

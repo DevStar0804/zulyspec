@@ -1,21 +1,22 @@
-import React, { Component, PropTypes } from "react";
+import React from "react/addons";
+import assign from "object-assign";
 import Radium from "radium";
 
 @Radium
-class S extends Component {
+class S extends React.Component {
   render() {
     let styles = {};
     if (this.props.type.indexOf("strikethrough") !== -1) {
-      styles = Object.assign(styles, {textDecoration: "line-through"});
+      styles = assign(styles, {textDecoration: "line-through"});
     }
     if (this.props.type.indexOf("underline") !== -1) {
-      styles = Object.assign(styles, {textDecoration: "underline"});
+      styles = assign(styles, {textDecoration: "underline"});
     }
     if (this.props.type.indexOf("bold") !== -1) {
-      styles = Object.assign(styles, {fontWeight: "bold"});
+      styles = assign(styles, {fontWeight: "bold"});
     }
     if (this.props.type.indexOf("italic") !== -1) {
-      styles = Object.assign(styles, {fontStyle: "italic"});
+      styles = assign(styles, {fontStyle: "italic"});
     }
     return (
       <span style={[styles, this.context.styles.components.s[this.props.type], this.props.style]}>
@@ -26,13 +27,13 @@ class S extends Component {
 }
 
 S.propTypes = {
-  children: PropTypes.node,
-  style: PropTypes.object,
-  type: PropTypes.array
+  children: React.PropTypes.node,
+  style: React.PropTypes.object,
+  type: React.PropTypes.array
 };
 
 S.contextTypes = {
-  styles: PropTypes.object
+  styles: React.PropTypes.object
 };
 
 export default S;

@@ -25,7 +25,7 @@ To present:
 
 - Run `npm start`
 - Open two browser windows on two different screens
-- On your screen visit [http://localhost:3000/#/?presenter](http://localhost:3000/#/)
+- On your screen visit [http://localhost:3000/#/?presenter](http://localhost:3000/#/?presenter)
 - On the presentation screen visit [http://localhost:3000/#/](http://localhost:3000/#/)
 - Give an amazingly stylish presentation
 
@@ -62,13 +62,13 @@ The main `.jsx` file you write your deck in is `/presentation/deck.jsx`
 ```javascript
 // deck.jsx
 
-import React, { Component } from 'react';
+import React from 'react/addons';
 import {
   Appear, BlockQuote, Cite, CodePane, Code, Deck, Fill, Fit,
   Heading, Image, Layout, ListItem, List, Quote, S, Slide, Text
 } from '../src/spectacle';
 
-export default class extends Component {
+export default class extends React.Component {
   render() {
     return (
       <Deck>

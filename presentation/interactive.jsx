@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React from "react/addons";
 import Heading from "../src/heading";
 
-class Interactive extends Component {
+class Interactive extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

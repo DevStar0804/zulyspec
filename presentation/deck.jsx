@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react/addons";
 
 import {
   Appear, BlockQuote, Cite, CodePane, Deck, Fill,
@@ -17,7 +17,7 @@ const images = {
 
 preloader([images.city, images.kat]);
 
-export default class extends Component {
+export default class extends React.Component {
   render() {
     return (
       <Deck transition={["zoom", "slide"]} transitionDuration={800}>
@@ -46,8 +46,7 @@ export default class extends Component {
           <CodePane
             lang="javascript"
             source={require("raw!./deck.example")}
-            margin="20px auto"
-          />
+            margin="20px auto"/>
         </Slide>
         <Slide transition={["slide"]} bgImage={images.city.replace("/", "")} bgDarken={0.75}>
           <Appear fid="1">

@@ -1,4 +1,4 @@
-import React, { PropTypes } from "react";
+import React from "react/addons";
 import highlight from "highlight.js";
 import Base from "./base";
 import Radium from "radium";
@@ -17,21 +17,20 @@ class CodePane extends Base {
         <code
           className="hljs"
           style={this.context.styles.components.codePane.code}
-          dangerouslySetInnerHTML={this.createMarkup()}
-        />
+          dangerouslySetInnerHTML={this.createMarkup()}/>
       </pre>
     );
   }
 }
 
 CodePane.contextTypes = {
-  styles: PropTypes.object
+  styles: React.PropTypes.object
 };
 
 CodePane.propTypes = {
-  lang: PropTypes.string,
-  source: PropTypes.string,
-  style: PropTypes.object
+  lang: React.PropTypes.string,
+  source: React.PropTypes.string,
+  style: React.PropTypes.object
 };
 
 CodePane.defaultProps = {

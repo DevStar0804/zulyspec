@@ -1,4 +1,4 @@
-import React, { PropTypes } from "react";
+import React from "react/addons";
 import Base from "./base";
 import Radium from "radium";
 
@@ -14,11 +14,11 @@ class Cite extends Base {
 }
 
 Cite.propTypes = {
-  children: PropTypes.node
+  children: React.PropTypes.node
 };
 
 Cite.contextTypes = {
-  styles: PropTypes.object
+  styles: React.PropTypes.object
 };
 
 export default Cite;
