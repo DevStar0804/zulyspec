@@ -7,7 +7,6 @@ module.exports = {
   devtool: 'source-map',
   entry: [
     'webpack-hot-middleware/client',
-    'babel-polyfill',
     './index'
   ],
   output: {
@@ -24,20 +23,19 @@ module.exports = {
       test: /\.js$/,
       loader: 'babel',
       query: {
-        plugins: [
-          [
-            'react-transform', {
-              transforms: [{
-                transform: 'react-transform-hmr',
-                imports: ['react'],
-                locals: ['module']
-              }, {
-                transform: 'react-transform-catch-errors',
-                imports: ['react', 'redbox-react']
-              }]
-            }
-          ]
-        ]
+        plugins: ['react-transform'],
+        extra: {
+          'react-transform': {
+            transforms: [{
+              transform: 'react-transform-hmr',
+              imports: ['react'],
+              locals: ['module']
+            }, {
+              transform: 'react-transform-catch-errors',
+              imports: ['react', 'redbox-react']
+            }]
+          }
+        }
       },
       exclude: /node_modules/,
       include: __dirname
