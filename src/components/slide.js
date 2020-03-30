@@ -1,6 +1,5 @@
 import React, { PropTypes } from "react";
 import tweenState from "react-tween-state";
-import { isUndefined } from "lodash";
 import { getStyles } from "../utils/base";
 import Transitions from "./transitions";
 import radium from "radium";
@@ -135,9 +134,10 @@ const Slide = React.createClass({
       }
     };
 
-    document.documentElement.style.fontSize = `${16 * this.state.zoom}px`;
+    if (!this.props.viewerScaleMode) {
+      document.documentElement.style.fontSize = `${16 * this.state.zoom}px`;
+    }
 
-    const contentClass = isUndefined(this.props.className) ? "" : this.props.className;
     return (
       <div className="spectacle-slide"
         ref="slide"
@@ -151,7 +151,7 @@ const Slide = React.createClass({
       >
         <div style={[styles.inner, this.context.overview && overViewStyles.inner]}>
           <div ref="content"
-            className={`${contentClass} spectacle-content`}
+            className={`${this.props.className} spectacle-content`}
             style={[
               styles.content,
               this.context.styles.components.content,
