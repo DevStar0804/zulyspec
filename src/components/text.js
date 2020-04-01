@@ -30,7 +30,7 @@ export default class Text extends Component {
       const container = this.containerRef;
       text.style.display = "inline-block";
       const scale = (container.offsetWidth / text.offsetWidth);
-      const height = (text.offsetHeight * scale) || 0;
+      const height = text.offsetHeight * scale;
       text.style.display = "block";
       this.setState({
         scale,
