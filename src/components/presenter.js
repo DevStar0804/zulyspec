@@ -2,11 +2,22 @@ import React, { Children, cloneElement, Component, PropTypes } from "react";
 import { getSlideByIndex } from "../utils/slides";
 import {
   HeaderContainer, EndHeader, PresenterContent, SlideInfo,
-  ContentContainer, PreviewPane, PreviewCurrentSlide,
+  Clock, ContentContainer, PreviewPane, PreviewCurrentSlide,
   PreviewNextSlide, Notes
 } from "./presenter-components";
 
-import Time from "./time";
+const startTime = function startTime(date) {
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  let seconds = date.getSeconds();
+  const ampm = hours >= 12 ? "PM" : "AM";
+  hours %= 12;
+  hours = hours ? hours : 12;
+  minutes = minutes < 10 ? `0 ${minutes}` : minutes;
+  seconds = seconds < 10 ? `0 ${seconds}` : seconds;
+  const strTime = `${hours} : ${minutes} : ${seconds} ${ampm}`;
+  return strTime;
+};
 
 export default class Presenter extends Component {
   static childContextTypes = {
@@ -14,13 +25,26 @@ export default class Presenter extends Component {
   };
 
   state = {
-    notes: {}
+    notes: {},
+    time: startTime(new Date())
   };
 
   getChildContext() {
     return {
       updateNotes: this.updateNotes.bind(this)
     };
+  }
+
+  componentWillMount() {
+    this.time = setInterval(() => {
+      this.setState({
+        time: startTime(new Date())
+      });
+    }, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.time);
   }
 
   getCurrentSlide() {
@@ -105,7 +129,7 @@ export default class Presenter extends Component {
           <SlideInfo>
             Slide {this.props.slideIndex + 1} of {this.props.slideReference.length}
           </SlideInfo>
-          <Time timer={this.props.timer} />
+          <Clock>{this.state.time}</Clock>
         </HeaderContainer>
         <ContentContainer>
           <PreviewPane>
@@ -132,8 +156,7 @@ Presenter.propTypes = {
   route: PropTypes.object,
   slideIndex: PropTypes.number,
   slideReference: PropTypes.array,
-  slides: PropTypes.array,
-  timer: PropTypes.bool
+  slides: PropTypes.array
 };
 
 Presenter.contextTypes = {
