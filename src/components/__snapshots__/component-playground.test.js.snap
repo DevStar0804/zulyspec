@@ -48,7 +48,6 @@ exports[`<ComponentPlayground /> Should render the dark theme correctly 1`] = `
       <pre
         class="prism-code css-egp0ia"
         contenteditable="true"
-        language="jsx"
         spellcheck="false"
       >
         <span
@@ -81,7 +80,7 @@ exports[`<ComponentPlayground /> Should render the dark theme correctly 1`] = `
           {
         </span>
         
-          heading
+        	heading
         <span
           class="token punctuation"
         >
@@ -94,7 +93,7 @@ exports[`<ComponentPlayground /> Should render the dark theme correctly 1`] = `
           {
         </span>
         
-            fontSize
+        		fontSize
         <span
           class="token punctuation"
         >
@@ -112,7 +111,7 @@ exports[`<ComponentPlayground /> Should render the dark theme correctly 1`] = `
           ,
         </span>
         
-            fontWeight
+        		fontWeight
         <span
           class="token punctuation"
         >
@@ -125,7 +124,7 @@ exports[`<ComponentPlayground /> Should render the dark theme correctly 1`] = `
           "bold"
         </span>
         
-          
+        	
         <span
           class="token punctuation"
         >
@@ -137,7 +136,7 @@ exports[`<ComponentPlayground /> Should render the dark theme correctly 1`] = `
           ,
         </span>
         
-          copy
+        	copy
         <span
           class="token punctuation"
         >
@@ -150,7 +149,7 @@ exports[`<ComponentPlayground /> Should render the dark theme correctly 1`] = `
           {
         </span>
         
-            fontSize
+        		fontSize
         <span
           class="token punctuation"
         >
@@ -163,7 +162,7 @@ exports[`<ComponentPlayground /> Should render the dark theme correctly 1`] = `
           "1.5rem"
         </span>
         
-          
+        	
         <span
           class="token punctuation"
         >
@@ -231,7 +230,7 @@ exports[`<ComponentPlayground /> Should render the dark theme correctly 1`] = `
           (
         </span>
         
-          
+        	
         <span
           class="token tag"
         >
@@ -252,7 +251,7 @@ exports[`<ComponentPlayground /> Should render the dark theme correctly 1`] = `
           </span>
         </span>
         
-            
+        		
         <span
           class="token tag"
         >
@@ -305,7 +304,7 @@ exports[`<ComponentPlayground /> Should render the dark theme correctly 1`] = `
           </span>
         </span>
         
-              Create Live Code Examples 
+        			Create Live Code Examples 
         <span
           class="token keyword"
         >
@@ -329,7 +328,7 @@ exports[`<ComponentPlayground /> Should render the dark theme correctly 1`] = `
           !
         </span>
         
-            
+        		
         <span
           class="token tag"
         >
@@ -350,7 +349,7 @@ exports[`<ComponentPlayground /> Should render the dark theme correctly 1`] = `
           </span>
         </span>
         
-            
+        		
         <span
           class="token tag"
         >
@@ -403,8 +402,8 @@ exports[`<ComponentPlayground /> Should render the dark theme correctly 1`] = `
           </span>
         </span>
         
-              Supports Light and Dark Syntax Themes
-            
+        			Supports Light and Dark Syntax Themes
+        		
         <span
           class="token tag"
         >
@@ -425,7 +424,7 @@ exports[`<ComponentPlayground /> Should render the dark theme correctly 1`] = `
           </span>
         </span>
         
-          
+        	
         <span
           class="token tag"
         >
@@ -570,7 +569,6 @@ exports[`<ComponentPlayground /> Should render the light theme correctly 1`] = `
       <pre
         class="prism-code css-egp0ia"
         contenteditable="true"
-        language="jsx"
         spellcheck="false"
       >
         <span
@@ -603,7 +601,7 @@ exports[`<ComponentPlayground /> Should render the light theme correctly 1`] = `
           {
         </span>
         
-          heading
+        	heading
         <span
           class="token punctuation"
         >
@@ -616,7 +614,7 @@ exports[`<ComponentPlayground /> Should render the light theme correctly 1`] = `
           {
         </span>
         
-            fontSize
+        		fontSize
         <span
           class="token punctuation"
         >
@@ -634,7 +632,7 @@ exports[`<ComponentPlayground /> Should render the light theme correctly 1`] = `
           ,
         </span>
         
-            fontWeight
+        		fontWeight
         <span
           class="token punctuation"
         >
@@ -647,7 +645,7 @@ exports[`<ComponentPlayground /> Should render the light theme correctly 1`] = `
           "bold"
         </span>
         
-          
+        	
         <span
           class="token punctuation"
         >
@@ -659,7 +657,7 @@ exports[`<ComponentPlayground /> Should render the light theme correctly 1`] = `
           ,
         </span>
         
-          copy
+        	copy
         <span
           class="token punctuation"
         >
@@ -672,7 +670,7 @@ exports[`<ComponentPlayground /> Should render the light theme correctly 1`] = `
           {
         </span>
         
-            fontSize
+        		fontSize
         <span
           class="token punctuation"
         >
@@ -685,7 +683,7 @@ exports[`<ComponentPlayground /> Should render the light theme correctly 1`] = `
           "1.5rem"
         </span>
         
-          
+        	
         <span
           class="token punctuation"
         >
@@ -753,7 +751,7 @@ exports[`<ComponentPlayground /> Should render the light theme correctly 1`] = `
           (
         </span>
         
-          
+        	
         <span
           class="token tag"
         >
@@ -774,7 +772,7 @@ exports[`<ComponentPlayground /> Should render the light theme correctly 1`] = `
           </span>
         </span>
         
-            
+        		
         <span
           class="token tag"
         >
@@ -827,7 +825,7 @@ exports[`<ComponentPlayground /> Should render the light theme correctly 1`] = `
           </span>
         </span>
         
-              Create Live Code Examples 
+        			Create Live Code Examples 
         <span
           class="token keyword"
         >
@@ -851,7 +849,7 @@ exports[`<ComponentPlayground /> Should render the light theme correctly 1`] = `
           !
         </span>
         
-            
+        		
         <span
           class="token tag"
         >
@@ -872,7 +870,7 @@ exports[`<ComponentPlayground /> Should render the light theme correctly 1`] = `
           </span>
         </span>
         
-            
+        		
         <span
           class="token tag"
         >
@@ -925,8 +923,8 @@ exports[`<ComponentPlayground /> Should render the light theme correctly 1`] = `
           </span>
         </span>
         
-              Supports Light and Dark Syntax Themes
-            
+        			Supports Light and Dark Syntax Themes
+        		
         <span
           class="token tag"
         >
@@ -947,7 +945,7 @@ exports[`<ComponentPlayground /> Should render the light theme correctly 1`] = `
           </span>
         </span>
         
-          
+        	
         <span
           class="token tag"
         >
@@ -1093,7 +1091,6 @@ exports[`<ComponentPlayground /> Should render with a custom background color 1`
       <pre
         class="prism-code css-egp0ia"
         contenteditable="true"
-        language="jsx"
         spellcheck="false"
       >
         <span
@@ -1126,7 +1123,7 @@ exports[`<ComponentPlayground /> Should render with a custom background color 1`
           {
         </span>
         
-          heading
+        	heading
         <span
           class="token punctuation"
         >
@@ -1139,7 +1136,7 @@ exports[`<ComponentPlayground /> Should render with a custom background color 1`
           {
         </span>
         
-            fontSize
+        		fontSize
         <span
           class="token punctuation"
         >
@@ -1157,7 +1154,7 @@ exports[`<ComponentPlayground /> Should render with a custom background color 1`
           ,
         </span>
         
-            fontWeight
+        		fontWeight
         <span
           class="token punctuation"
         >
@@ -1170,7 +1167,7 @@ exports[`<ComponentPlayground /> Should render with a custom background color 1`
           "bold"
         </span>
         
-          
+        	
         <span
           class="token punctuation"
         >
@@ -1182,7 +1179,7 @@ exports[`<ComponentPlayground /> Should render with a custom background color 1`
           ,
         </span>
         
-          copy
+        	copy
         <span
           class="token punctuation"
         >
@@ -1195,7 +1192,7 @@ exports[`<ComponentPlayground /> Should render with a custom background color 1`
           {
         </span>
         
-            fontSize
+        		fontSize
         <span
           class="token punctuation"
         >
@@ -1208,7 +1205,7 @@ exports[`<ComponentPlayground /> Should render with a custom background color 1`
           "1.5rem"
         </span>
         
-          
+        	
         <span
           class="token punctuation"
         >
@@ -1276,7 +1273,7 @@ exports[`<ComponentPlayground /> Should render with a custom background color 1`
           (
         </span>
         
-          
+        	
         <span
           class="token tag"
         >
@@ -1297,7 +1294,7 @@ exports[`<ComponentPlayground /> Should render with a custom background color 1`
           </span>
         </span>
         
-            
+        		
         <span
           class="token tag"
         >
@@ -1350,7 +1347,7 @@ exports[`<ComponentPlayground /> Should render with a custom background color 1`
           </span>
         </span>
         
-              Create Live Code Examples 
+        			Create Live Code Examples 
         <span
           class="token keyword"
         >
@@ -1374,7 +1371,7 @@ exports[`<ComponentPlayground /> Should render with a custom background color 1`
           !
         </span>
         
-            
+        		
         <span
           class="token tag"
         >
@@ -1395,7 +1392,7 @@ exports[`<ComponentPlayground /> Should render with a custom background color 1`
           </span>
         </span>
         
-            
+        		
         <span
           class="token tag"
         >
@@ -1448,8 +1445,8 @@ exports[`<ComponentPlayground /> Should render with a custom background color 1`
           </span>
         </span>
         
-              Supports Light and Dark Syntax Themes
-            
+        			Supports Light and Dark Syntax Themes
+        		
         <span
           class="token tag"
         >
@@ -1470,7 +1467,7 @@ exports[`<ComponentPlayground /> Should render with a custom background color 1`
           </span>
         </span>
         
-          
+        	
         <span
           class="token tag"
         >
@@ -1610,7 +1607,6 @@ exports[`<ComponentPlayground /> Should render with a custom code block 1`] = `
       <pre
         class="prism-code css-egp0ia"
         contenteditable="true"
-        language="jsx"
         spellcheck="false"
       >
         <span
@@ -1750,7 +1746,7 @@ exports[`<ComponentPlayground /> Should render with a custom code block 1`] = `
           ;
         </span>
         
-              
+        			
         <span
           class="token function"
         >

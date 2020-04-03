@@ -1,42 +1,44 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getStyles } from '../utils/base';
+import isUndefined from 'lodash/isUndefined';
 import styled from 'react-emotion';
 
-import '../utils/prism-import';
-import { Editor } from 'react-live';
+const format = (str) => {
+  return str.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+};
 
-const StyledWrapper = styled.div(props => props.styles);
-const StyledEditor = styled(Editor)(props => props.styles);
+const StyledPre = styled.pre(props => props.styles);
+const StyledCode = styled.code(props => props.styles);
 
 export default class CodePane extends Component {
+  componentDidMount() {
+    return window.Prism && window.Prism.highlightAll();
+  }
+  createMarkup() {
+    const { source, children } = this.props;
+    const code = (isUndefined(source) || source === '') ? children : source;
+    return {
+      __html: format(code)
+    };
+  }
   render() {
-    const useDarkTheme = this.props.theme === 'dark';
-
-    if (useDarkTheme) {
-      require('../themes/default/prism.dark.css');
-    } else {
-      require('../themes/default/prism.light.css');
-    }
-
-    const wrapperStyles = [
-      this.context.styles.components.codePane.wrapper,
+    const preStyles = [
+      this.context.styles.components.codePane.pre,
       getStyles.call(this),
       this.props.style
     ];
-
     return (
-      <StyledWrapper
-        className={`react-live react-live-${useDarkTheme ? 'dark' : 'light'} ${this.props.className}`}
-        styles={wrapperStyles}
+      <StyledPre
+        className={this.props.className}
+        styles={preStyles}
       >
-        <StyledEditor
-          code={this.props.source}
-          language={this.props.lang}
-          contentEditable={this.props.contentEditable}
-          styles={this.context.styles.components.codePane.editor}
+        <StyledCode
+          className={`language-${this.props.lang}`}
+          styles={this.context.styles.components.codePane.code}
+          dangerouslySetInnerHTML={this.createMarkup()}
         />
-      </StyledWrapper>
+      </StyledPre>
     );
   }
 }
@@ -49,17 +51,12 @@ CodePane.contextTypes = {
 CodePane.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  contentEditable: PropTypes.bool,
   lang: PropTypes.string,
   source: PropTypes.string,
-  style: PropTypes.object,
-  theme: PropTypes.string,
+  style: PropTypes.object
 };
 
 CodePane.defaultProps = {
-  theme: 'dark',
-  className: '',
-  contentEditable: false,
   lang: 'markup',
-  source: '',
+  source: ''
 };

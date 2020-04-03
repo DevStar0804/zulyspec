@@ -207,7 +207,7 @@ const screen = (colorArgs = defaultColors, fontArgs = defaultFonts) => {
         textAlign: 'center',
       },
       codePane: {
-        wrapper: {
+        pre: {
           margin: 'auto',
           fontSize: '0.8rem',
           fontWeight: 'normal',
@@ -215,9 +215,8 @@ const screen = (colorArgs = defaultColors, fontArgs = defaultFonts) => {
           minWidth: '100%',
           maxWidth: 800,
         },
-        editor: {
+        code: {
           textAlign: 'left',
-          padding: 20,
           fontWeight: 'normal',
         },
       },
