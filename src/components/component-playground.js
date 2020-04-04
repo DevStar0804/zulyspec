@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'react-emotion';
 import { defaultCode } from '../utils/playground.default-code';
 
+import FullscreenButton from './fullscreen-button';
+
 import {
   LiveProvider,
   LiveEditor,
@@ -18,13 +20,13 @@ export const PlaygroundProvider = styled(LiveProvider)`
   overflow: hidden;
 `;
 
-const PlaygroundPreview = styled(LivePreview)`
+const PlaygroundPreview = styled(({ className }) => (
+  <LivePreview className={className} />
+))`
   padding: 0.5rem;
   min-height: 100%;
 
-  background: ${(props) => (
-    props.previewBackgroundColor || '#fff'
-  )};
+  background: ${p => p.previewBackgroundColor || '#fff'};
 `;
 
 const PlaygroundEditor = styled(LiveEditor)`
@@ -39,9 +41,22 @@ const PlaygroundRow = styled.div`
   justify-content: stretch;
   align-items: center;
   width: 100%;
+
+  /* NOTE: Comma separation doesn't seem to work here */
+
+  &:-webkit-full-screen { height: 100%; }
+  &:-moz-full-screen { height: 100%; }
+  &:-ms-fullscreen { height: 100%; }
+  &:fullscreen { height: 100%; }
+
+  &:-webkit-full-screen > * { height: 100%; }
+  &:-moz-full-screen > * { height: 100%; }
+  &:-ms-fullscreen > * { height: 100%; }
+  &:fullscreen > * { height: 100%; }
 `;
 
 const Title = styled.div`
+  position: relative;
   flex: 1;
   background: #ddd;
   border-bottom: 1px solid #999;
@@ -86,48 +101,93 @@ const PlaygroundError = styled(LiveError)`
   padding: 0.5rem;
 `;
 
-const ComponentPlayground = ({
-  code,
-  previewBackgroundColor,
-  scope = {},
-  theme = 'dark'
-}) => {
-  const useDarkTheme = theme === 'dark';
+class ComponentPlayground extends Component {
+  onKeyUp = evt => {
+    evt.stopPropagation();
 
-  if (useDarkTheme) {
-    require('../themes/default/prism.dark.css');
-  } else {
-    require('../themes/default/prism.light.css');
+    // Esc: When entering the editor or an input element the default esc-to-exit might not work anymore
+    if (evt.keyCode === 27 && document.fullscreenElement) {
+      const exit = (document.exitFullscreen || document.mozCancelFullScreen);
+
+      if (typeof exit === 'function') {
+        exit.call(document);
+      }
+    }
+  };
+
+  onKeyDown = evt => {
+    evt.stopPropagation();
+  };
+
+  onRef = node => {
+    this.node = node;
+  };
+
+  requestFullscreen = () => {
+    const requestFullscreen = (
+      this.node.requestFullscreen ||
+      this.node.webkitRequestFullscreen ||
+      this.node.mozRequestFullScreen ||
+      this.node.mozRequestFullScreen
+    );
+
+    if (typeof requestFullscreen === 'function') {
+      requestFullscreen.call(this.node);
+    }
+  };
+
+  render() {
+    const {
+      code,
+      previewBackgroundColor,
+      scope = {},
+      theme = 'dark'
+    } = this.props;
+
+    const useDarkTheme = theme === 'dark';
+
+    if (useDarkTheme) {
+      require('../themes/default/prism.dark.css');
+    } else {
+      require('../themes/default/prism.light.css');
+    }
+
+    return (
+      <PlaygroundProvider
+        className={`react-live-${useDarkTheme ? 'dark' : 'light'}`}
+        mountStylesheet={false}
+        code={(code || defaultCode).trim()}
+        scope={{ Component, ...scope }}
+        noInline
+      >
+        <PlaygroundRow>
+          <Title>Live Preview</Title>
+          <Title useDarkTheme={useDarkTheme}>
+            Source Code
+            <FullscreenButton onClick={this.requestFullscreen} />
+          </Title>
+        </PlaygroundRow>
+
+        <PlaygroundRow
+          innerRef={this.onRef}
+          onKeyUp={this.onKeyUp}
+          onKeyDown={this.onKeyDown}
+        >
+          <PlaygroundColumn>
+            <PlaygroundPreview
+              previewBackgroundColor={previewBackgroundColor}
+            />
+            <PlaygroundError />
+          </PlaygroundColumn>
+
+          <PlaygroundColumn>
+            <PlaygroundEditor />
+          </PlaygroundColumn>
+        </PlaygroundRow>
+      </PlaygroundProvider>
+    );
   }
-
-  return (
-    <PlaygroundProvider
-      className={`react-live-${useDarkTheme ? 'dark' : 'light'}`}
-      mountStylesheet={false}
-      code={(code || defaultCode).trim()}
-      scope={{ Component, ...scope }}
-      noInline
-    >
-      <PlaygroundRow>
-        <Title>Live Preview</Title>
-        <Title useDarkTheme={useDarkTheme}>Source Code</Title>
-      </PlaygroundRow>
-
-      <PlaygroundRow>
-        <PlaygroundColumn>
-          <PlaygroundPreview
-            previewBackgroundColor={previewBackgroundColor}
-          />
-          <PlaygroundError />
-        </PlaygroundColumn>
-
-        <PlaygroundColumn>
-          <PlaygroundEditor useDarkTheme={useDarkTheme} />
-        </PlaygroundColumn>
-      </PlaygroundRow>
-    </PlaygroundProvider>
-  );
-};
+}
 
 ComponentPlayground.propTypes = {
   code: PropTypes.string,
