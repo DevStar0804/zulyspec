@@ -207,7 +207,7 @@ const screen = (colorArgs = defaultColors, fontArgs = defaultFonts) => {
         textAlign: 'center',
       },
       codePane: {
-        pre: {
+        wrapper: {
           margin: 'auto',
           fontSize: '0.8rem',
           fontWeight: 'normal',
@@ -215,8 +215,9 @@ const screen = (colorArgs = defaultColors, fontArgs = defaultFonts) => {
           minWidth: '100%',
           maxWidth: 800,
         },
-        code: {
+        editor: {
           textAlign: 'left',
+          padding: 20,
           fontWeight: 'normal',
         },
       },
@@ -228,6 +229,18 @@ const screen = (colorArgs = defaultColors, fontArgs = defaultFonts) => {
         backgroundColor: 'rgba(0,0,0,0.15)',
         padding: '0 10px',
         borderRadius: 3,
+      },
+      goToAction: {
+        borderRadius: '6px',
+        fontFamily: fonts.primary,
+        padding: '0.25em 1em',
+        border: 'none',
+        background: '#000',
+        color: '#fff',
+        '&:hover': {
+          background: colors.tertiary,
+          color: '#000'
+        }
       },
       heading: {
         h1: {

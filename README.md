@@ -40,6 +40,7 @@ ReactJS based Presentation Library
     - [CodePane (Base)](#codepane-base)
     - [Code (Base)](#code-base)
     - [ComponentPlayground](#component-playground)
+    - [GoToAction (Base)](#go-to-action)
     - [Heading (Base)](#heading-base)
     - [Image (Base)](#image-base)
     - [Link (Base)](#link-base)
@@ -123,14 +124,11 @@ We can start with this project's sample at [`one-page.html`](./one-page.html). I
     <title>Spectacle</title>
     <link href="https://fonts.googleapis.com/css?family=Lobster+Two:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700" rel="stylesheet" type="text/css">
-    <link href="https://unpkg.com/prismjs@1/themes/prism-tomorrow.css" rel="stylesheet" type="text/css">
     <link href="https://unpkg.com/normalize.css@7/normalize.css" rel="stylesheet" type="text/css">
     <link href="https://unpkg.com/spectacle/lib/themes/default/index.css" rel="stylesheet" type="text/css">
 </head>
 <body>
     <div id="root"></div>
-    <script src="https://unpkg.com/prismjs@1/prism.js"></script>
-    <script src="https://unpkg.com/prismjs@1/components/prism-jsx.min.js"></script>
     <script src="https://unpkg.com/prop-types@15/prop-types.js"></script>
     <script src="https://unpkg.com/react@15/dist/react.js"></script>
     <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
@@ -487,8 +485,6 @@ This tag displays a styled, highlighted code preview. I prefer putting my code s
 |lang|PropTypes.string| Prism compatible language name. i.e: 'javascript' |
 |source| PropTypes.string| String of code to be shown |
 
-You can change your syntax highlighting theme by swapping the prism.js CSS file in `index.html`
-
 <a name="code-base"></a>
 #### Code (Base)
 
@@ -527,6 +523,34 @@ class View extends React.Component {
 }
 render(<View />);
 ```
+
+<a name="go-to-action"></a>
+#### Go To Action (Base)
+
+The GoToAction tag lets you jump to another slide in your deck. The GoToAction can be used a simple button that supports `Base` styling or accept a render prop with a callback to support custom components.
+
+|Name|PropType|Description|
+|---|---|---|
+|slide|PropTypes.string or PropTypes.number|The string identifier or number of the side the button should jump to. Slide numbers start at `1`. This is only used in the simple button configuration.
+|render|PropTypes.func|A function with a `goToSlide` param that should return a React element to render. This is only used in the custom component configuration.
+
+##### Simple Button Configuration Example
+```jsx
+<GoToAction slide={3}>Jump to 3</GoToAction>
+```
+
+##### Custom Component Configuration Example
+```jsx
+<GoToAction
+  render={goToSlide => (
+    <CustomComponent onClick={() => goToSlide("wait-wut")}>
+      WAIT WUT!?
+    </CustomComponent>
+  )}
+/>
+```
+
+
 
 <a name="heading-base"></a>
 #### Heading (Base)
