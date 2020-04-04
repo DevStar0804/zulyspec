@@ -168,18 +168,18 @@ const print = (colorArgs = defaultColors, fontArgs = defaultFonts) => {
         textAlign: 'center',
       },
       codePane: {
-        wrapper: {
+        pre: {
           maxWidth: 800,
           margin: 'auto',
           fontSize: '0.8rem',
           fontWeight: 'normal',
           fontFamily: fonts.tertiary,
         },
-        editor: {
+        code: {
           textAlign: 'left',
           padding: 20,
           fontWeight: 'normal',
-        }
+        },
       },
       code: {
         color: 'black',
