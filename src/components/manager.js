@@ -111,7 +111,7 @@ export class Manager extends Component {
       slideReference: [],
       fullscreen: window.innerHeight === screen.height,
       mobile: window.innerWidth < props.contentWidth,
-      autoplaying: props.autoplay
+      autoplaying: props.autoplay,
     };
   }
 
@@ -148,9 +148,6 @@ export class Manager extends Component {
   componentWillUnmount() {
     this._detachEvents();
   }
-
-  viewedIndexes = new Set();
-
   _attachEvents() {
     window.addEventListener('storage', this._goToSlide);
     window.addEventListener('keydown', this._handleKeyPress);
@@ -289,7 +286,6 @@ export class Manager extends Component {
     this.setState({
       lastSlideIndex: slideIndex,
     });
-    this.viewedIndexes.delete(slideIndex);
     if (
       this._checkFragments(this.props.route.slide, false) ||
       this.props.route.params.indexOf('overview') !== -1
@@ -318,27 +314,6 @@ export class Manager extends Component {
       );
     }
   }
-  _nextUnviewedIndex() {
-    const sortedIndexes = Array.from(this.viewedIndexes).sort((a, b) => a - b);
-    return Math.min(
-      (sortedIndexes[sortedIndexes.length - 1] || 0) + 1,
-      this.state.slideReference.length - 1
-    );
-  }
-  _getOffset(slideIndex) {
-    const { goTo } = this.state.slideReference[slideIndex];
-    const nextUnviewedIndex = this._nextUnviewedIndex();
-    if (goTo && !isNaN(parseInt(goTo))) {
-      const goToIndex = () => {
-        if (this.viewedIndexes.has(goTo - 1)) {
-          return this._nextUnviewedIndex();
-        }
-        return goTo - 1;
-      };
-      return goToIndex() - slideIndex;
-    }
-    return nextUnviewedIndex - slideIndex;
-  }
   _nextSlide() {
     const slideIndex = this._getSlideIndex();
     this.setState({
@@ -356,15 +331,13 @@ export class Manager extends Component {
           this._goToSlide({ key: 'spectacle-slide', newValue: slideData });
         }
       } else if (slideIndex < slideReference.length - 1) {
-        this.viewedIndexes.add(slideIndex);
-        const offset = this._getOffset(slideIndex);
         this.context.history.replace(
-          `/${this._getHash(slideIndex + offset) + this._getSuffix()}`
+          `/${this._getHash(slideIndex + 1) + this._getSuffix()}`
         );
         localStorage.setItem(
           'spectacle-slide',
           JSON.stringify({
-            slide: this._getHash(slideIndex + offset),
+            slide: this._getHash(slideIndex + 1),
             forward: true,
             time: Date.now(),
           })
@@ -519,25 +492,17 @@ export class Manager extends Component {
     const slideReference = [];
     Children.toArray(this.props.children).forEach((child, rootIndex) => {
       if (!child.props.hasSlideChildren) {
-        const reference = {
+        slideReference.push({
           id: child.props.id || slideReference.length,
-          rootIndex
-        };
-        if (child.props.goTo) {
-          reference.goTo = child.props.goTo;
-        }
-        slideReference.push(reference);
+          rootIndex,
+        });
       } else {
         child.props.children.forEach((setSlide, setIndex) => {
-          const reference = {
+          slideReference.push({
             id: setSlide.props.id || slideReference.length,
             setIndex,
             rootIndex,
-          };
-          if (child.props.goTo) {
-            reference.goTo = child.props.goTo;
-          }
-          slideReference.push(reference);
+          });
         });
       }
     });
@@ -706,4 +671,4 @@ export class Manager extends Component {
   }
 }
 
-export default connect(state => state, null, null, { withRef: true })(Manager);
+export default connect(state => state)(Manager);

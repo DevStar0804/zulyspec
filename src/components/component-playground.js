@@ -18,13 +18,13 @@ export const PlaygroundProvider = styled(LiveProvider)`
   overflow: hidden;
 `;
 
-const PlaygroundPreview = styled(({ className }) => (
-  <LivePreview className={className} />
-))`
+const PlaygroundPreview = styled(LivePreview)`
   padding: 0.5rem;
   min-height: 100%;
 
-  background: ${p => p.previewBackgroundColor || '#fff'};
+  background: ${(props) => (
+    props.previewBackgroundColor || '#fff'
+  )};
 `;
 
 const PlaygroundEditor = styled(LiveEditor)`
@@ -86,63 +86,48 @@ const PlaygroundError = styled(LiveError)`
   padding: 0.5rem;
 `;
 
-class ComponentPlayground extends Component {
-  onKeyUp = evt => {
-    evt.stopPropagation();
-  };
+const ComponentPlayground = ({
+  code,
+  previewBackgroundColor,
+  scope = {},
+  theme = 'dark'
+}) => {
+  const useDarkTheme = theme === 'dark';
 
-  onKeyDown = evt => {
-    evt.stopPropagation();
-  };
-
-  render() {
-    const {
-      code,
-      previewBackgroundColor,
-      scope = {},
-      theme = 'dark'
-    } = this.props;
-
-    const useDarkTheme = theme === 'dark';
-
-    if (useDarkTheme) {
-      require('../themes/default/prism.dark.css');
-    } else {
-      require('../themes/default/prism.light.css');
-    }
-
-    return (
-      <PlaygroundProvider
-        className={`react-live-${useDarkTheme ? 'dark' : 'light'}`}
-        mountStylesheet={false}
-        code={(code || defaultCode).trim()}
-        scope={{ Component, ...scope }}
-        noInline
-      >
-        <PlaygroundRow>
-          <Title>Live Preview</Title>
-          <Title useDarkTheme={useDarkTheme}>Source Code</Title>
-        </PlaygroundRow>
-
-        <PlaygroundRow>
-          <PlaygroundColumn>
-            <PlaygroundPreview
-              previewBackgroundColor={previewBackgroundColor}
-            />
-            <PlaygroundError />
-          </PlaygroundColumn>
-
-          <PlaygroundColumn>
-            <PlaygroundEditor
-              onKeyUp={this.onKeyUp}
-              onKeyDown={this.onKeyDown}
-            />
-          </PlaygroundColumn>
-        </PlaygroundRow>
-      </PlaygroundProvider>
-    );
+  if (useDarkTheme) {
+    require('../themes/default/prism.dark.css');
+  } else {
+    require('../themes/default/prism.light.css');
   }
-}
+
+  return (
+    <PlaygroundProvider
+      className={`react-live-${useDarkTheme ? 'dark' : 'light'}`}
+      mountStylesheet={false}
+      code={(code || defaultCode).trim()}
+      scope={{ Component, ...scope }}
+      noInline
+    >
+      <PlaygroundRow>
+        <Title>Live Preview</Title>
+        <Title useDarkTheme={useDarkTheme}>Source Code</Title>
+      </PlaygroundRow>
+
+      <PlaygroundRow>
+        <PlaygroundColumn>
+          <PlaygroundPreview
+            previewBackgroundColor={previewBackgroundColor}
+          />
+          <PlaygroundError />
+        </PlaygroundColumn>
+
+        <PlaygroundColumn>
+          <PlaygroundEditor useDarkTheme={useDarkTheme} />
+        </PlaygroundColumn>
+      </PlaygroundRow>
+    </PlaygroundProvider>
+  );
+};
 
 ComponentPlayground.propTypes = {
   code: PropTypes.string,
