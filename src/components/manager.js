@@ -17,7 +17,6 @@ import Presenter from './presenter';
 import Export from './export';
 import Overview from './overview';
 
-import AutoplayControls from './autoplay-controls';
 import Fullscreen from './fullscreen';
 import Progress from './progress';
 import Controls from './controls';
@@ -29,8 +28,6 @@ export default class Manager extends Component {
   static displayName = 'Manager';
 
   static defaultProps = {
-    autoplay: false,
-    autoplayDuration: 7000,
     transition: [],
     transitionDuration: 500,
     progress: 'pacman',
@@ -39,8 +36,6 @@ export default class Manager extends Component {
   };
 
   static propTypes = {
-    autoplay: PropTypes.bool,
-    autoplayDuration: PropTypes.number,
     children: PropTypes.node,
     controls: PropTypes.bool,
     dispatch: PropTypes.func,
@@ -63,20 +58,17 @@ export default class Manager extends Component {
     slide: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   };
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this._handleKeyPress = this._handleKeyPress.bind(this);
     this._handleScreenChange = this._handleScreenChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this._goToSlide = this._goToSlide.bind(this);
-    this._startAutoplay = this._startAutoplay.bind(this);
-    this._stopAutoplay = this._stopAutoplay.bind(this);
     this.state = {
       lastSlideIndex: null,
       slideReference: [],
       fullscreen: window.innerHeight === screen.height,
       mobile: window.innerWidth < 1000,
-      autoplaying: props.autoplay,
     };
   }
 
@@ -91,9 +83,6 @@ export default class Manager extends Component {
       lastSlideIndex: slideIndex,
     });
     this._attachEvents();
-    if (this.props.autoplay) {
-      this._startAutoplay();
-    }
   }
   componentDidUpdate() {
     if (
@@ -116,18 +105,7 @@ export default class Manager extends Component {
     window.removeEventListener('keydown', this._handleKeyPress);
     window.removeEventListener('resize', this._handleScreenChange);
   }
-  _startAutoplay() {
-    clearInterval(this.autoplayInterval);
-    this.setState({ autoplaying: true });
-    this.autoplayInterval = setInterval(() => {
-      this._nextSlide();
-    }, this.props.autoplayDuration);
-  }
-  _stopAutoplay() {
-    this.setState({ autoplaying: false });
-    clearInterval(this.autoplayInterval);
-  }
-  _handleEvent(e) { // eslint-disable-line complexity
+  _handleEvent(e) {
     const event = window.event ? window.event : e;
 
     if (
@@ -136,14 +114,12 @@ export default class Manager extends Component {
       (event.keyCode === 32 && event.shiftKey)
     ) {
       this._prevSlide();
-      this._stopAutoplay();
     } else if (
       event.keyCode === 39 ||
       event.keyCode === 34 ||
       (event.keyCode === 32 && !event.shiftKey)
     ) {
       this._nextSlide();
-      this._stopAutoplay();
     } else if (
       event.altKey &&
       event.keyCode === 79 &&
@@ -168,16 +144,6 @@ export default class Manager extends Component {
     ) {
       // t
       this._toggleTimerMode();
-    } else if (
-      event.altKey &&
-      event.keyCode === 65 &&
-      !event.ctrlKey &&
-      !event.metaKey
-    ) {
-      // a
-      if (this.props.autoplay) {
-        this._startAutoplay();
-      }
     }
   }
   _handleKeyPress(e) {
@@ -282,13 +248,7 @@ export default class Manager extends Component {
       this._checkFragments(this.props.route.slide, true) ||
       this.props.route.params.indexOf('overview') !== -1
     ) {
-      if (slideIndex === slideReference.length - 1) {
-        // On last slide, loop to first slide
-        if (this.props.autoplay && this.state.autoplaying) {
-          const slideData = '{ "slide": "0", "forward": "false" }';
-          this._goToSlide({ key: 'spectacle-slide', newValue: slideData });
-        }
-      } else if (slideIndex < slideReference.length - 1) {
+      if (slideIndex < slideReference.length - 1) {
         this.context.history.replace(
           `/${this._getHash(slideIndex + 1) + this._getSuffix()}`
         );
@@ -633,14 +593,6 @@ export default class Manager extends Component {
           : ''}
 
         {this.props.route.params.indexOf('export') === -1 ? <Fullscreen /> : ''}
-
-        {this.props.autoplay
-          ? <AutoplayControls
-              autoplaying={this.state.autoplaying}
-              onPlay={this._startAutoplay}
-              onPause={this._stopAutoplay}
-            />
-          : ''}
 
         {this.props.globalStyles &&
           <Style rules={Object.assign(this.context.styles.global, globals)} />}
