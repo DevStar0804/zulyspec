@@ -1,5 +1,4 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { PropTypes } from "react";
 
 export default function TableHeader({ children }) {
   return <thead>{ children }</thead>;

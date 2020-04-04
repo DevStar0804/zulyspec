@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component, PropTypes } from "react";
 
 import { Provider } from "react-redux";
 import configureStore from "../store";

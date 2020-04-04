@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component, PropTypes } from "react";
 import { render } from "react-dom";
 import Playground from "component-playground";
 import styled from "styled-components";

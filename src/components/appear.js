@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component, PropTypes } from "react";
 import { findDOMNode } from "react-dom";
 import findKey from "lodash/findKey";
 import { connect } from "react-redux";

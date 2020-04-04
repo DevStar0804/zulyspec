@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component, PropTypes } from "react";
 import isUndefined from "lodash/isUndefined";
 import { getStyles } from "../utils/base";
 import Radium from "radium";

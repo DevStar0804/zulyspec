@@ -1,8 +1,7 @@
 /*eslint new-cap:0, max-statements:0*/
 /* eslint react/no-did-mount-set-state: 0 */
 
-import React, { Children, cloneElement, Component } from "react";
-import PropTypes from "prop-types";
+import React, { Children, cloneElement, Component, PropTypes } from "react";
 import ReactTransitionGroup from "react-addons-transition-group";
 import Radium, { Style } from "radium";
 import filter from "lodash/filter";

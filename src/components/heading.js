@@ -1,5 +1,4 @@
-import React, { Component, createElement } from "react";
-import PropTypes from "prop-types";
+import React, { Component, createElement, PropTypes } from "react";
 import { getStyles } from "../utils/base";
 import Radium from "radium";
 
