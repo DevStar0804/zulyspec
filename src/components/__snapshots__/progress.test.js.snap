@@ -42,13 +42,13 @@ exports[`<Progress /> should render PacMan correctly 1`] = `
                 Array [
                   undefined,
                   Object {
-                    "animation": "animation-vwhb3c 0.12s linear 10 alternate both",
+                    "animation": "pacmanTopFramesBis 0.12s linear 10 alternate both",
                   },
                 ]
               }
             >
               <div
-                className="css-1la23zo"
+                className="css-13kse6y"
               />
             </Styled(div)>
             <Styled(div)
@@ -56,13 +56,13 @@ exports[`<Progress /> should render PacMan correctly 1`] = `
                 Array [
                   undefined,
                   Object {
-                    "animation": "animation-1p18wsg 0.12s linear 10 alternate both",
+                    "animation": "pacmanBottomFramesBis 0.12s linear 10 alternate both",
                   },
                 ]
               }
             >
               <div
-                className="css-1yi33k2"
+                className="css-9ev9ib"
               />
             </Styled(div)>
           </div>

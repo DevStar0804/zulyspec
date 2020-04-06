@@ -18,20 +18,19 @@ exports[`<CodePane /> should render correctly. 1`] = `
   theme="dark"
 >
   <Styled(div)
-    className=""
+    className="react-live react-live-dark "
     styles={
       Array [
-        Object {},
+        undefined,
         Object {},
         undefined,
       ]
     }
   >
     <div
-      className="css-0"
+      className="react-live react-live-dark  css-0"
     >
       <Styled(Editor)
-        className="language-prism"
         code="
             const myButton = (
               <CustomButton
@@ -47,11 +46,10 @@ exports[`<CodePane /> should render correctly. 1`] = `
         onClick={[Function]}
         onKeyDown={[Function]}
         onKeyUp={[Function]}
-        prismTheme="dark;"
-        syntaxStyles={Object {}}
+        styles={undefined}
       >
         <Editor
-          className="language-prism css-1i53um3"
+          className="css-0"
           code="
               const myButton = (
                 <CustomButton
@@ -67,11 +65,10 @@ exports[`<CodePane /> should render correctly. 1`] = `
           onClick={[Function]}
           onKeyDown={[Function]}
           onKeyUp={[Function]}
-          prismTheme="dark;"
-          syntaxStyles={Object {}}
+          styles={undefined}
         >
           <pre
-            className="prism-code language-prism css-1i53um3"
+            className="prism-code css-0"
             contentEditable={false}
             dangerouslySetInnerHTML={
               Object {
@@ -90,10 +87,9 @@ exports[`<CodePane /> should render correctly. 1`] = `
             onClick={undefined}
             onKeyDown={undefined}
             onKeyUp={undefined}
-            prismTheme="dark;"
             spellCheck="false"
             style={undefined}
-            syntaxStyles={Object {}}
+            styles={undefined}
           />
         </Editor>
       </Styled(Editor)>

@@ -125,6 +125,7 @@ We can start with this project's sample at [`one-page.html`](./one-page.html). I
     <link href="https://fonts.googleapis.com/css?family=Lobster+Two:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700" rel="stylesheet" type="text/css">
     <link href="https://unpkg.com/normalize.css@7/normalize.css" rel="stylesheet" type="text/css">
+    <link href="https://unpkg.com/spectacle/lib/themes/default/index.css" rel="stylesheet" type="text/css">
 </head>
 <body>
     <div id="root"></div>
@@ -462,6 +463,11 @@ The element tags are the bread and butter of your slide content. Most of these t
 #### Appear
 
 This tag does not extend from Base. It's special. Wrapping elements in the appear tag makes them appear/disappear in order in response to navigation.
+
+|Name|PropType|Description|
+|---|---|---|
+|order|PropTypes.number| An optional integer starting at 1 for the presentation order of the Appear tags within a slide. If a slide contains ordered and unordered Appear tags, the unordered will show first.
+
 
 <a name="blockquote-quote-and-cite-base"></a>
 #### BlockQuote, Quote and Cite (Base)
