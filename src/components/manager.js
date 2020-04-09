@@ -75,7 +75,6 @@ export class Manager extends Component {
     dispatch: PropTypes.func,
     fragment: PropTypes.object,
     globalStyles: PropTypes.bool,
-    keyboard: PropTypes.bool,
     progress: PropTypes.oneOf(['pacman', 'bar', 'number', 'none']),
     route: PropTypes.object,
     transition: PropTypes.array,
@@ -104,7 +103,6 @@ export class Manager extends Component {
     autoplayDuration: 7000,
     contentWidth: 1000,
     contentHeight: 700,
-    keyboard: true,
     transition: [],
     transitionDuration: 500,
     progress: 'pacman',
@@ -277,9 +275,7 @@ export class Manager extends Component {
 
     if (
       event.target instanceof HTMLInputElement ||
-      event.target.type === 'textarea' ||
-      event.target.contentEditable === 'true' ||
-      !this.props.keyboard
+      event.target.type === 'textarea'
     ) {
       return;
     }
