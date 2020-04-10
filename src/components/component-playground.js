@@ -134,10 +134,6 @@ const PlaygroundError = styled(LiveError)`
 
 const STORAGE_KEY = 'spectacle-playground';
 
-function getEnhancedScope(scope = {}) {
-  return { Component, ...scope };
-}
-
 // TODO(540): Refactor to non-deprecated lifecycle methods.
 // https://github.com/FormidableLabs/spectacle/issues/540
 // - componentWillReceiveProps
@@ -151,8 +147,7 @@ class ComponentPlayground extends Component {
     this.syncCode = this.syncCode.bind(this);
 
     this.state = {
-      code: (this.props.code || defaultCode).trim(),
-      scope: getEnhancedScope(this.props.scope)
+      code: (this.props.code || defaultCode).trim()
     };
   }
 
@@ -165,10 +160,6 @@ class ComponentPlayground extends Component {
     if (nextProps.code !== this.props.code) {
       const code = (this.props.code || defaultCode).trim();
       this.setState({ code });
-    }
-    if (nextProps.scope !== this.props.scope) {
-      const scope = getEnhancedScope(nextProps.scope);
-      this.setState({ scope });
     }
   }
 
@@ -211,6 +202,7 @@ class ComponentPlayground extends Component {
   render() {
     const {
       previewBackgroundColor,
+      scope = {},
       theme = 'dark',
       transformCode
     } = this.props;
@@ -225,7 +217,7 @@ class ComponentPlayground extends Component {
       <PlaygroundProvider
         mountStylesheet={false}
         code={this.state.code}
-        scope={this.state.scope}
+        scope={{ Component, ...scope }}
         transformCode={transformCode}
         noInline
       >
