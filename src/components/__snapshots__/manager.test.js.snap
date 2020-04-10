@@ -58,7 +58,7 @@ exports[`<Manager /> should render correctly. 1`] = `
       }
     >
       <div
-        className="spectacle-deck css-1w702dy eaa55an0"
+        className="spectacle-deck css-1w702dy"
         onClick={[Function]}
         onTouchCancel={[Function]}
         onTouchEnd={[Function]}
@@ -101,11 +101,11 @@ exports[`<Manager /> should render correctly. 1`] = `
         >
           <TransitionGroup
             childFactory={[Function]}
-            className="css-r8ywg3 eaa55an1"
+            className="css-r8ywg3"
             component="div"
           >
             <div
-              className="css-r8ywg3 eaa55an1"
+              className="css-r8ywg3"
             >
               <MockSlide
                 dispatch={[Function]}
@@ -173,7 +173,7 @@ exports[`<Manager /> should render correctly. 1`] = `
             }
           >
             <div
-              className="css-0 e12weced4"
+              className="css-0"
             >
               <div>
                 <Styled(div)
@@ -186,7 +186,7 @@ exports[`<Manager /> should render correctly. 1`] = `
                   styles={undefined}
                 >
                   <div
-                    className="css-ro10dn e12weced0"
+                    className="css-ro10dn"
                   >
                     <Styled(div)
                       styles={
@@ -200,7 +200,7 @@ exports[`<Manager /> should render correctly. 1`] = `
                       }
                     >
                       <div
-                        className="css-1la23zo e12weced1"
+                        className="css-1la23zo"
                       />
                     </Styled(div)>
                     <Styled(div)
@@ -215,7 +215,7 @@ exports[`<Manager /> should render correctly. 1`] = `
                       }
                     >
                       <div
-                        className="css-1yi33k2 e12weced1"
+                        className="css-1yi33k2"
                       />
                     </Styled(div)>
                   </div>
@@ -237,7 +237,7 @@ exports[`<Manager /> should render correctly. 1`] = `
                   }
                 >
                   <div
-                    className="css-16u37i9 e12weced2"
+                    className="css-16u37i9"
                   />
                 </Styled(div)>
                 <Styled(div)
@@ -256,7 +256,7 @@ exports[`<Manager /> should render correctly. 1`] = `
                   }
                 >
                   <div
-                    className="css-1qz1mlg e12weced2"
+                    className="css-1qz1mlg"
                   />
                 </Styled(div)>
               </div>
@@ -270,24 +270,23 @@ exports[`<Manager /> should render correctly. 1`] = `
             viewBox="0 0 512 512"
           >
             <FullscreenButton
-              className="css-12n5ud e4v3eea0"
+              className="css-12n5ud"
               onClick={[Function]}
               style={undefined}
               viewBox="0 0 512 512"
             >
               <Styled(button)
                 aria-label="Toggle full screen"
-                className="css-12n5ud e4v3eea0"
+                className="css-12n5ud"
                 onClick={[Function]}
                 style={undefined}
                 viewBox="0 0 512 512"
               >
                 <button
                   aria-label="Toggle full screen"
-                  className="e4v3eea0 css-1hv29sw ev51h780"
+                  className="css-1hv29sw"
                   onClick={[Function]}
                   style={undefined}
-                  viewBox="0 0 512 512"
                 >
                   <svg
                     viewBox="0 0 24 24"
@@ -368,7 +367,7 @@ exports[`<Manager /> should render the export configuration when specified. 1`] 
       }
     >
       <div
-        className="spectacle-deck css-1w702dy eaa55an0"
+        className="spectacle-deck css-1w702dy"
         onClick={[Function]}
         onTouchCancel={[Function]}
         onTouchEnd={[Function]}
@@ -405,7 +404,7 @@ exports[`<Manager /> should render the export configuration when specified. 1`] 
         >
           <Styled(div)>
             <div
-              className="css-v2kfba ei5jtoh0"
+              className="css-v2kfba"
             >
               <MockSlide
                 export={true}
@@ -500,7 +499,7 @@ exports[`<Manager /> should render the overview configuration when specified. 1`
       }
     >
       <div
-        className="spectacle-deck css-1pplrs6 eaa55an0"
+        className="spectacle-deck css-1pplrs6"
         onClick={[Function]}
         onTouchCancel={[Function]}
         onTouchEnd={[Function]}
@@ -538,7 +537,7 @@ exports[`<Manager /> should render the overview configuration when specified. 1`
         >
           <Styled(div)>
             <div
-              className="css-gv2ckq euot5m50"
+              className="css-gv2ckq"
             >
               <Styled(div)
                 index={0}
@@ -548,7 +547,7 @@ exports[`<Manager /> should render the overview configuration when specified. 1`
                 slideIndex={0}
               >
                 <div
-                  className="css-13mtebb euot5m51"
+                  className="css-13mtebb"
                   onClick={[Function]}
                 >
                   <MockSlide
@@ -574,7 +573,7 @@ exports[`<Manager /> should render the overview configuration when specified. 1`
                 slideIndex={0}
               >
                 <div
-                  className="css-13d6elb euot5m51"
+                  className="css-13d6elb"
                   onClick={[Function]}
                 >
                   <MockSlide
@@ -602,24 +601,23 @@ exports[`<Manager /> should render the overview configuration when specified. 1`
             viewBox="0 0 512 512"
           >
             <FullscreenButton
-              className="css-12n5ud e4v3eea0"
+              className="css-12n5ud"
               onClick={[Function]}
               style={undefined}
               viewBox="0 0 512 512"
             >
               <Styled(button)
                 aria-label="Toggle full screen"
-                className="css-12n5ud e4v3eea0"
+                className="css-12n5ud"
                 onClick={[Function]}
                 style={undefined}
                 viewBox="0 0 512 512"
               >
                 <button
                   aria-label="Toggle full screen"
-                  className="e4v3eea0 css-1hv29sw ev51h780"
+                  className="css-1hv29sw"
                   onClick={[Function]}
                   style={undefined}
-                  viewBox="0 0 512 512"
                 >
                   <svg
                     viewBox="0 0 24 24"
@@ -696,7 +694,7 @@ exports[`<Manager /> should render with slideset slides 1`] = `
       }
     >
       <div
-        className="spectacle-deck css-1w702dy eaa55an0"
+        className="spectacle-deck css-1w702dy"
         onClick={[Function]}
         onTouchCancel={[Function]}
         onTouchEnd={[Function]}
@@ -760,11 +758,11 @@ exports[`<Manager /> should render with slideset slides 1`] = `
         >
           <TransitionGroup
             childFactory={[Function]}
-            className="css-r8ywg3 eaa55an1"
+            className="css-r8ywg3"
             component="div"
           >
             <div
-              className="css-r8ywg3 eaa55an1"
+              className="css-r8ywg3"
             >
               <MockSlide
                 dispatch={[Function]}
@@ -839,7 +837,7 @@ exports[`<Manager /> should render with slideset slides 1`] = `
             }
           >
             <div
-              className="css-0 e12weced4"
+              className="css-0"
             >
               <div>
                 <Styled(div)
@@ -852,7 +850,7 @@ exports[`<Manager /> should render with slideset slides 1`] = `
                   styles={undefined}
                 >
                   <div
-                    className="css-p4obic e12weced0"
+                    className="css-p4obic"
                   >
                     <Styled(div)
                       styles={
@@ -866,7 +864,7 @@ exports[`<Manager /> should render with slideset slides 1`] = `
                       }
                     >
                       <div
-                        className="css-172vklz e12weced1"
+                        className="css-172vklz"
                       />
                     </Styled(div)>
                     <Styled(div)
@@ -881,7 +879,7 @@ exports[`<Manager /> should render with slideset slides 1`] = `
                       }
                     >
                       <div
-                        className="css-5id854 e12weced1"
+                        className="css-5id854"
                       />
                     </Styled(div)>
                   </div>
@@ -903,7 +901,7 @@ exports[`<Manager /> should render with slideset slides 1`] = `
                   }
                 >
                   <div
-                    className="css-1xucvt e12weced2"
+                    className="css-1xucvt"
                   />
                 </Styled(div)>
                 <Styled(div)
@@ -923,7 +921,7 @@ exports[`<Manager /> should render with slideset slides 1`] = `
                   }
                 >
                   <div
-                    className="css-ci3gz3 e12weced2"
+                    className="css-ci3gz3"
                   />
                 </Styled(div)>
                 <Styled(div)
@@ -942,7 +940,7 @@ exports[`<Manager /> should render with slideset slides 1`] = `
                   }
                 >
                   <div
-                    className="css-tyaqbb e12weced2"
+                    className="css-tyaqbb"
                   />
                 </Styled(div)>
               </div>
@@ -956,24 +954,23 @@ exports[`<Manager /> should render with slideset slides 1`] = `
             viewBox="0 0 512 512"
           >
             <FullscreenButton
-              className="css-12n5ud e4v3eea0"
+              className="css-12n5ud"
               onClick={[Function]}
               style={undefined}
               viewBox="0 0 512 512"
             >
               <Styled(button)
                 aria-label="Toggle full screen"
-                className="css-12n5ud e4v3eea0"
+                className="css-12n5ud"
                 onClick={[Function]}
                 style={undefined}
                 viewBox="0 0 512 512"
               >
                 <button
                   aria-label="Toggle full screen"
-                  className="e4v3eea0 css-1hv29sw ev51h780"
+                  className="css-1hv29sw"
                   onClick={[Function]}
                   style={undefined}
-                  viewBox="0 0 512 512"
                 >
                   <svg
                     viewBox="0 0 24 24"

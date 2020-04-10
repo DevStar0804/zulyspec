@@ -210,9 +210,7 @@ export default class Presentation extends Component {
           >
             <div>
               <Heading size={6} caps fit textColor="secondary">
-                Flexible
-                <br />
-                animations
+                Flexible<br />animations
               </Heading>
             </div>
           </Anim>
