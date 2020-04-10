@@ -44,7 +44,7 @@ const _CombineBlockQuote = ({ children }) => (
 _CombineBlockQuote.propTypes = { children: PropTypes.node };
 
 const _CodePane = ({ language, code }) => <CodePane lang={language} source={code}/>;
-_CodePane.propTypes = { code: PropTypes.string, language: PropTypes.string };
+_CodePane.propTypes = { source: PropTypes.string, lang: PropTypes.string };
 
 const compile = marksy({
   createElement,

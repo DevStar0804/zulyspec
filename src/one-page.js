@@ -6,7 +6,6 @@
 // Template for taking a render function and turning it into a presentation.
 const template = (renderFn) => `
   (() => {
-    const { Component } = React;
     const { render } = ReactDOM;
     const {
       Appear,
@@ -20,12 +19,10 @@ const template = (renderFn) => `
       Fit,
       Heading,
       Image,
-      GoToAction,
       Layout,
       Link,
       ListItem,
       List,
-      Magic,
       Markdown,
       MarkdownSlides,
       Notes,
@@ -40,13 +37,12 @@ const template = (renderFn) => `
       TableRow,
       Table,
       Text,
-      Typeface,
-      themes
+      Typeface
     } = Spectacle;
 
     const renderFn = ${renderFn};
 
-    class Presentation extends Component {
+    class Presentation extends React.Component {
       render() {
         return renderFn();
       }
@@ -70,10 +66,10 @@ const loadSpectacleScript = () => {
       const renderFn = script.innerHTML;
       const input = template(renderFn);
       const output = Babel.transform(input, {
-        'presets': ['@babel/preset-env', '@babel/preset-react'],
-        'plugins': [
-          '@babel/plugin-proposal-object-rest-spread',
-          '@babel/plugin-proposal-class-properties'
+        presets: [
+          [ 'es2015', { 'loose': true, 'modules': false } ],
+          'stage-0',
+          'react'
         ]
       }).code;
 

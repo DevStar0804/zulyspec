@@ -26,6 +26,8 @@ import Fullscreen from './fullscreen';
 import Progress from './progress';
 import Controls from './controls';
 
+import wsync from '../sync';
+
 let convertStyle = styles => {
   return Object.keys(styles)
     .map(key => {
@@ -105,16 +107,13 @@ export class Manager extends Component {
   };
 
   constructor(props) {
-    super(...arguments);
-    this._getProgressStyles = this._getProgressStyles.bind(this);
-    this._getControlStyles = this._getControlStyles.bind(this);
+    super(props);
     this._handleKeyPress = this._handleKeyPress.bind(this);
     this._handleScreenChange = this._handleScreenChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this._goToSlide = this._goToSlide.bind(this);
     this._startAutoplay = this._startAutoplay.bind(this);
     this._stopAutoplay = this._stopAutoplay.bind(this);
-
     this.state = {
       lastSlideIndex: null,
       slideReference: [],
@@ -122,8 +121,6 @@ export class Manager extends Component {
       mobile: window.innerWidth < props.contentWidth,
       autoplaying: props.autoplay,
     };
-
-    this.viewedIndexes = new Set();
     this.slideCache = null;
   }
 
@@ -170,13 +167,20 @@ export class Manager extends Component {
     this._detachEvents();
   }
 
+  viewedIndexes = new Set();
+
   _attachEvents() {
-    window.addEventListener('storage', this._goToSlide);
+    wsync.receiveHandler = (msg) => {
+      this._goToSlide({
+        key: 'spectacle-slide',
+        newValue: msg.data
+      });
+    };
     window.addEventListener('keydown', this._handleKeyPress);
     window.addEventListener('resize', this._handleScreenChange);
   }
   _detachEvents() {
-    window.removeEventListener('storage', this._goToSlide);
+    wsync.receiveHandler = null;
     window.removeEventListener('keydown', this._handleKeyPress);
     window.removeEventListener('resize', this._handleScreenChange);
   }
@@ -305,19 +309,17 @@ export class Manager extends Component {
         get(this.state.slideReference.find(slide => slide.id === data.slide), 'rootIndex', 0) :
         data.slide - 1;
 
-      localStorage.setItem(
-        'spectacle-slide',
+      wsync.send(
         JSON.stringify({
           slide: this._getHash(index),
           forward: false,
-          time: Date.now(),
-        })
-      );
-
+          time: Date.now()
+        }));
     } else {
       return;
     }
     const slideIndex = this._getSlideIndex();
+
     this.setState({
       lastSlideIndex: slideIndex || 0,
     });
@@ -343,24 +345,20 @@ export class Manager extends Component {
         this.context.history.replace(
           `/${this._getHash(slideIndex - 1)}${this._getSuffix()}`
         );
-        localStorage.setItem(
-          'spectacle-slide',
-          JSON.stringify({
-            slide: this._getHash(slideIndex - 1),
-            forward: false,
-            time: Date.now(),
-          })
-        );
+        wsync.send(
+        JSON.stringify({
+          slide: this._getHash(slideIndex - 1),
+          forward: false,
+          time: Date.now()
+        }));
       }
     } else if (slideIndex > 0) {
-      localStorage.setItem(
-        'spectacle-slide',
+      wsync.send(
         JSON.stringify({
           slide: this._getHash(slideIndex),
           forward: false,
-          time: Date.now(),
-        })
-      );
+          time: Date.now()
+        }));
     }
   }
   _nextUnviewedIndex() {
@@ -406,24 +404,20 @@ export class Manager extends Component {
         this.context.history.replace(
           `/${this._getHash(slideIndex + offset) + this._getSuffix()}`
         );
-        localStorage.setItem(
-          'spectacle-slide',
-          JSON.stringify({
-            slide: this._getHash(slideIndex + offset),
-            forward: true,
-            time: Date.now(),
-          })
-        );
+        wsync.send(
+        JSON.stringify({
+          slide: this._getHash(slideIndex + offset),
+          forward: true,
+          time: Date.now()
+        }));
       }
     } else if (slideIndex < slideReference.length) {
-      localStorage.setItem(
-        'spectacle-slide',
+      wsync.send(
         JSON.stringify({
           slide: this._getHash(slideIndex),
           forward: true,
-          time: Date.now(),
-        })
-      );
+          time: Date.now()
+        }));
     }
   }
   _getHash(slideIndex) {
@@ -637,7 +631,7 @@ export class Manager extends Component {
       slideReference: this.state.slideReference,
     });
   }
-  _getProgressStyles() {
+  _getProgressStyles = () => {
     const slideIndex = this._getSlideIndex();
     const slide = this._getSlideByIndex(slideIndex);
 
@@ -646,7 +640,7 @@ export class Manager extends Component {
     }
     return null;
   }
-  _getControlStyles() {
+  _getControlStyles = () => {
     const slideIndex = this._getSlideIndex();
     const slide = this._getSlideByIndex(slideIndex);
 

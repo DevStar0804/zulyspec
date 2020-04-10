@@ -22,16 +22,15 @@ const timeCounter = (time) => {
 
 export default class Timer extends Component {
   constructor() {
-    super(...arguments);
-    this.handleStartTimer = this.handleStartTimer.bind(this);
-    this.handleStopTimer = this.handleStopTimer.bind(this);
-    this.handleResetTimer = this.handleResetTimer.bind(this);
+    super();
     this.state = {
       elapsedTime: 0,
       paused: true
     };
+    this.handleStartTimer = this.handleStartTimer.bind(this);
+    this.handleStopTimer = this.handleStopTimer.bind(this);
+    this.handleResetTimer = this.handleResetTimer.bind(this);
   }
-
   componentWillUnmount() {
     clearInterval(this.interval);
   }

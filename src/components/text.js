@@ -37,14 +37,13 @@ const UnfitText = styled.p(({ lineHeight, styles }) => [
 
 export default class Text extends Component {
   constructor() {
-    super(...arguments);
+    super();
     this.resize = this.resize.bind(this);
     this.state = {
       scale: 1,
       height: 16
     };
   }
-
   componentDidMount() {
     this.resize();
     window.addEventListener('load', this.resize);
