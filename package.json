@@ -31,7 +31,6 @@
     "lint": "eslint src example *.js",
     "eslint-check":
       "eslint --print-config .eslintrc | eslint-config-prettier-check",
-    "precommit": "lint-staged",
     "deploy": "npm run build:dist && surge -p .",
     "start":
       "builder run --env \"{\\\"BABEL_ENV\\\":\\\"esm\\\"}\" build-wds-base -- --port=3000 --hot",
@@ -93,7 +92,7 @@
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-react": "^7.7.0",
     "file-loader": "^1.1.11",
-    "husky": "^0.14.3",
+    "husky": "^1.0.0-rc.1",
     "jest": "^22.4.2",
     "jest-serializer-enzyme": "^1.0.0",
     "lint-staged": "^7.0.4",
@@ -123,7 +122,12 @@
     "setupFiles": ["raf/polyfill", "<rootDir>/jest-setup.js"]
   },
   "sideEffects": false,
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
-    "*.{js,json,css,md}": ["prettier --write", "git add"]
+    "*.{js,json,css,md}": ["prettier --list-different"]
   }
 }
