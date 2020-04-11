@@ -61,8 +61,7 @@ class Slide extends React.PureComponent {
                 className: frag.className || '',
                 slide: this.props.hash,
                 id: `${this.props.slideIndex}-${currentOrder}`,
-                animations: Array.from({ length: frag.dataset.animCount })
-                  .fill(this.props.lastSlideIndex > this.props.slideIndex)
+                visible: this.props.lastSlideIndex > this.props.slideIndex,
               })
             );
           }
@@ -75,20 +74,13 @@ class Slide extends React.PureComponent {
     if (isFunction(this.props.onActive)) {
       this.props.onActive(this.props.slideIndex);
     }
-
-    if (this.props.getAppearStep) {
-      /* eslint-disable no-console */
-      console.warn('getAppearStep has been deprecated, use getAnimStep instead');
-      /* eslint-enable */
-    }
   }
 
   componentDidUpdate() {
     const { steps, slideIndex } = this.stepCounter.getSteps();
-    const stepFunc = this.props.getAnimStep || this.props.getAppearStep;
-    if (stepFunc) {
+    if (this.props.getAppearStep) {
       if (slideIndex === this.props.slideIndex) {
-        stepFunc(steps);
+        this.props.getAppearStep(steps);
       }
     }
   }
@@ -290,7 +282,6 @@ Slide.propTypes = {
   className: PropTypes.string,
   dispatch: PropTypes.func,
   export: PropTypes.bool,
-  getAnimStep: PropTypes.func,
   getAppearStep: PropTypes.func,
   hash: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   lastSlideIndex: PropTypes.number,
