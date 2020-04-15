@@ -213,9 +213,6 @@ export class Manager extends Component {
 
   componentWillUnmount() {
     this._detachEvents();
-    if (this.autoplayInterval) {
-      clearInterval(this.autoplayInterval);
-    }
   }
 
   _attachEvents() {
