@@ -1,29 +1,52 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
-  entry: './index.js',
+  mode: 'development',
+  devtool: 'cheap-module-source-map',
+  entry: './index',
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath: '/dist/'
   },
+  plugins: [
+    new webpack.NamedModulesPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
+  ],
   module: {
     rules: [
       {
         test: /\.js$/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env']
-          }
-        }
+        include: ['index.js', 'src', 'example/assets', 'example/src'].map(
+          name => path.resolve(__dirname, name)
+        ),
+        loader: 'babel-loader'
       },
-      { test: /\.mdx?$/, use: ['babel-loader', '@mdx-js/loader'] }
+      {
+        test: /\.css$/,
+        loader: 'style-loader!raw-loader'
+      },
+      {
+        test: /\.svg$/,
+        include: path.join(__dirname, 'example/assets'),
+        loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
+      },
+      {
+        test: /\.png$/,
+        include: path.join(__dirname, 'example/assets'),
+        loader: 'url-loader?mimetype=image/png'
+      },
+      {
+        test: /\.jpg$/,
+        include: path.join(__dirname, 'example/assets'),
+        loader: 'url-loader?mimetype=image/jpg'
+      },
+      {
+        test: /\.gif$/,
+        include: path.join(__dirname, 'example/assets'),
+        loader: 'url-loader?mimetype=image/gif'
+      }
     ]
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: `./index.html`
-    })
-  ]
+  }
 };
