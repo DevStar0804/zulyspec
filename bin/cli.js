@@ -11,9 +11,7 @@ const main = () =>
       const mdxFilePath = parsedInput.mdx;
       if (mdxFilePath) {
         actions.launchMDXServer(mdxFilePath);
-      }
-      // add future actions here
-      else {
+      } else {
         throw new Error('Unsupported action.');
       }
     })
