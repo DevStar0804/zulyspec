@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useSpring, animated } from 'react-spring';
 
-import { SlideContext } from '../hooks/use-slide';
+import { SlideContext } from '../hooks/useSlide';
 
 /**
  * SlideElementWrapper provides a component for animating slideElements
