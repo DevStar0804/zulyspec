@@ -1,6 +1,16 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import Presentation from './example/src';
+// START: test components to try rendering:
+import TestMDX from './examples/MDX/TestMDX';
+// import TestJs from './examples/JS/TestJS.js';
+// END: test components to try rendering
 
-render(<Presentation />, document.getElementById('root'));
+/**
+ * Experiment to test MDX -> JSX transpilation through babel.
+ *
+ * Outputs MDXDocument, changing MDXDocument will cause webpack
+ * to hot-reload with new contents.
+ */
+
+render(<TestMDX />, document.getElementById('root'));

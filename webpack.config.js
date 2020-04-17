@@ -1,52 +1,72 @@
 const path = require('path');
-const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+/*
+ * In order for the CLI to find loaders and babel configurations when
+ * launching from another directory, we have to import the dependencies
+ * explicitly from node_modules. Under the same circumstances, webpack
+ * can not find the .babelrc file and so we must configure babel directly
+ * in the webpack configuration.
+ */
+const babelLoader = path.resolve(__dirname, 'node_modules', 'babel-loader');
+const presetEnv = path.resolve(__dirname, 'node_modules', '@babel/preset-env');
+const presetReact = path.resolve(
+  __dirname,
+  'node_modules',
+  '@babel/preset-react'
+);
+const pluginObjectSpread = path.resolve(
+  __dirname,
+  'node_modules',
+  '@babel/plugin-proposal-object-rest-spread'
+);
+const pluginClassProperties = path.resolve(
+  __dirname,
+  'node_modules',
+  '@babel/plugin-proposal-class-properties'
+);
+
+const mdxSlideLoader = path.resolve(__dirname, 'mdx-slide-loader');
+
+const babelConfigOptions = {
+  babelrc: false,
+  presets: [require.resolve(presetEnv), require.resolve(presetReact)],
+  plugins: [
+    require.resolve(pluginObjectSpread),
+    require.resolve(pluginClassProperties)
+  ]
+};
 
 module.exports = {
-  mode: 'development',
-  devtool: 'cheap-module-source-map',
-  entry: './index',
+  entry: './index.js',
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/dist/'
+    filename: 'bundle.js'
   },
-  plugins: [
-    new webpack.NamedModulesPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
-  ],
   module: {
     rules: [
       {
-        test: /\.js$/,
-        include: ['index.js', 'src', 'example/assets', 'example/src'].map(
-          name => path.resolve(__dirname, name)
-        ),
-        loader: 'babel-loader'
+        test: /\.jsx?$/,
+        use: {
+          loader: require.resolve(babelLoader),
+          options: babelConfigOptions
+        }
       },
       {
-        test: /\.css$/,
-        loader: 'style-loader!raw-loader'
-      },
-      {
-        test: /\.svg$/,
-        include: path.join(__dirname, 'example/assets'),
-        loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
-      },
-      {
-        test: /\.png$/,
-        include: path.join(__dirname, 'example/assets'),
-        loader: 'url-loader?mimetype=image/png'
-      },
-      {
-        test: /\.jpg$/,
-        include: path.join(__dirname, 'example/assets'),
-        loader: 'url-loader?mimetype=image/jpg'
-      },
-      {
-        test: /\.gif$/,
-        include: path.join(__dirname, 'example/assets'),
-        loader: 'url-loader?mimetype=image/gif'
+        test: /\.mdx?$/,
+        use: [
+          {
+            loader: require.resolve(babelLoader),
+            options: babelConfigOptions
+          },
+          { loader: require.resolve(mdxSlideLoader) }
+        ]
       }
     ]
-  }
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: `./index.html`
+    })
+  ]
 };
