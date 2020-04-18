@@ -5,14 +5,11 @@ import { pipe, subscribe, makeSubject } from 'wonka';
 const TransitionPipeContext = React.createContext({});
 
 function TransitionPipeProvider(props) {
-  const runTransition = React.useMemo(() => {
-    const [transitionSource, runTransition] = makeSubject();
-    pipe(
-      transitionSource,
-      subscribe(transition => transition.start())
-    );
-    return runTransition;
-  }, []);
+  const [transitionSource, runTransition] = React.useRef(makeSubject()).current;
+  pipe(
+    transitionSource,
+    subscribe(transition => transition.start())
+  );
   return (
     <TransitionPipeContext.Provider value={{ runTransition }}>
       {props.children}
