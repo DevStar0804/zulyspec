@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import useDeck, { DeckContext } from '../../hooks/use-deck';
-import isComponentType from '../../utils/is-component-type';
-import useUrlRouting from '../../hooks/use-url-routing';
-import PresenterDeck from './presenter-deck';
-import MainDeck from './main-deck';
+import useDeck, { DeckContext } from '../hooks/use-deck';
+import isComponentType from '../utils/is-component-type';
+import { animated, useTransition } from 'react-spring';
+import {
+  TransitionPipeContext,
+  TransitionPipeProvider
+} from '../hooks/use-transition-pipe';
+import useUrlRouting from '../hooks/use-url-routing';
 
 /**
  * Provides top level state/context provider with useDeck hook
@@ -26,12 +29,30 @@ const initialState = {
   immediateElement: false,
   currentSlideElement: 0,
   reverseDirection: false,
-  presenterMode: false,
-  currentNotes: null
+  presenterMode: false
+};
+
+const defaultSlideEffect = {
+  from: {
+    width: '100%',
+    position: 'absolute',
+    transform: 'translate(100%, 0%)'
+  },
+  enter: {
+    width: '100%',
+    position: 'absolute',
+    transform: 'translate(0, 0%)'
+  },
+  leave: {
+    width: '100%',
+    position: 'absolute',
+    transform: 'translate(-100%, 0%)'
+  },
+  config: { precision: 0 }
 };
 
 const Deck = ({ children, loop, keyboardControls, ...rest }) => {
-  const [resolvedInitialUrl, setResolvedInitialUrl] = React.useState(false);
+  const { runTransition } = React.useContext(TransitionPipeContext);
 
   // Check for slides and then number slides.
   const filteredChildren = Array.isArray(children)
@@ -62,38 +83,60 @@ const Deck = ({ children, loop, keyboardControls, ...rest }) => {
     slideElementMap
   );
 
-  const onInitializedState = React.useCallback(
-    () => setResolvedInitialUrl(true),
-    []
-  );
-
   const {
     navigateToNextSlide,
     navigateToPreviousSlide,
-    navigateToCurrentUrl,
-    registerSlideChangeCallback
+    navigateToCurrentUrl
   } = useUrlRouting({
     dispatch,
     currentSlide: state.currentSlide,
     currentSlideElement: state.currentSlideElement,
     presenterMode: state.presenterMode,
     slideElementMap,
-    loop,
-    onInitializedState
+    loop
   });
+
+  const userTransitionEffect =
+    filteredChildren[state.currentSlide].props.transitionEffect || {};
+  const transitionRef = React.useRef(null);
+
+  React.useEffect(() => {
+    /***
+     * This will look at the current query string and navigate to whatever
+     * slide is specified, otherwise start at 0. This only runs once per mount
+     * of Deck, which should be the entire lifecyle of the slideshow.
+     */
+    navigateToCurrentUrl();
+  }, [navigateToCurrentUrl]);
 
   React.useLayoutEffect(() => {
     document.body.style.margin = '0';
   }, []);
 
-  let content = null;
-  if (resolvedInitialUrl) {
-    content = state.presenterMode ? (
-      <PresenterDeck>{filteredChildren}</PresenterDeck>
-    ) : (
-      <MainDeck>{filteredChildren}</MainDeck>
-    );
-  }
+  React.useEffect(() => {
+    if (!transitionRef.current) {
+      return;
+    }
+    runTransition(transitionRef.current);
+  }, [transitionRef, state.currentSlide, runTransition]);
+
+  const transitions = useTransition(state.currentSlide, p => p, {
+    ref: transitionRef,
+    enter: () => userTransitionEffect.enter || defaultSlideEffect.enter,
+    leave: userTransitionEffect.leave || defaultSlideEffect.leave,
+    from: userTransitionEffect.from || defaultSlideEffect.from,
+    unique: true,
+    immediate: state.immediate
+  });
+
+  const slides = transitions.map(({ item, props, key }) => (
+    <animated.div style={props} key={key}>
+      {React.cloneElement(filteredChildren[item], {
+        slideNum: item,
+        keyboardControls
+      })}
+    </animated.div>
+  ));
 
   return (
     <div>
@@ -101,17 +144,15 @@ const Deck = ({ children, loop, keyboardControls, ...rest }) => {
         value={{
           state,
           dispatch,
-          numberOfSlides: filteredChildren.length,
+          numberOfSlides: slides.length,
           keyboardControls,
           animationsWhenGoingBack: rest.animationsWhenGoingBack,
           slideElementMap,
           navigateToNextSlide,
-          navigateToPreviousSlide,
-          navigateToCurrentUrl,
-          registerSlideChangeCallback
+          navigateToPreviousSlide
         }}
       >
-        {content}
+        {slides}
       </DeckContext.Provider>
     </div>
   );
@@ -130,4 +171,10 @@ Deck.defaultProps = {
   animationsWhenGoingBack: false
 };
 
-export default Deck;
+export default function ConnectedDeck(props) {
+  return (
+    <TransitionPipeProvider>
+      <Deck {...props} />
+    </TransitionPipeProvider>
+  );
+}
