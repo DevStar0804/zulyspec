@@ -16,6 +16,7 @@ function useDeck(
 ) {
   function reducer(state, action) {
     switch (action.type) {
+      // TODO - remove unused action type cases (no NEXT_<x> or PREV_<y>)
       case 'NEXT_SLIDE':
         return {
           ...state,
@@ -35,14 +36,17 @@ function useDeck(
           reverseDirection: false
         };
       case 'GO_TO_SLIDE': {
-        return {
+        const newState = {
           ...state,
-          currentSlideElement: 0,
+          currentSlideElement: action.payload.slideElementNumber,
           currentSlide: action.payload.slideNumber,
           immediate: action.payload.immediate,
           immediateElement: false,
-          reverseDirection: action.payload.reverseDirection
+          reverseDirection: action.payload.reverseDirection,
+          presenterMode: action.payload.presenterMode,
+          resolvedInitialUrl: true
         };
+        return newState;
       }
       case 'PREV_SLIDE':
         return {
@@ -90,6 +94,28 @@ function useDeck(
           presenterMode: action.payload.presenterMode
         };
       }
+      case 'SET_CURRENT_NOTES': {
+        return {
+          ...state,
+          currentNotes: action.payload
+        };
+      }
+      // case 'INIT_FROM_URL': {
+      //   return {
+      //     ...state,
+      //     resolvedInitialUrl: true,
+      //     presenterMode: action.payload.presenterMode,
+      //     currentSlide: action.payload.currentSlide,
+      //     currentSlideElement: action.payload.currentSlideElement,
+      //     immediate: true
+      //   };
+      // }
+      // case 'SET_INITIAL_URL_RESOLVED': {
+      //   return {
+      //     ...state,
+      //     resolvedInitialUrl: true
+      //   };
+      // }
       default:
         return { ...state };
     }
