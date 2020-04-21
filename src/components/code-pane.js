@@ -1,129 +1,79 @@
-import * as React from 'react';
-import Highlight, { defaultProps } from 'prism-react-renderer';
-import propTypes from 'prop-types';
-import theme from 'prism-react-renderer/themes/vsDark';
-import { ThemeContext } from 'styled-components';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { getStyles } from '../utils/base';
+import styled from 'react-emotion';
 
-const spaceSearch = /\S|$/;
+import '../utils/prism-import';
+import { Editor } from 'react-live';
 
-const lineNumberStyles = {
-  padding: '0 1em',
-  borderRight: '1px solid hsla(0, 0%, 100%, 0.25)',
-  flex: '0 1 30px',
-  alignSelf: 'stretch'
-};
-
-export default function CodePane(props) {
-  const canvas = React.useRef(document.createElement('canvas'));
-  const context = React.useRef(canvas.current.getContext('2d'));
-  const themeContext = React.useContext(ThemeContext);
-
-  const font = React.useMemo(() => {
-    if (themeContext && themeContext.fonts && themeContext.fonts.monospace) {
-      return themeContext.fonts.monospace;
+const StyledWrapper = styled.div(props => props.styles);
+const StyledEditor = styled(({ syntaxStyles: _, prismTheme: __, ...rest }) => (
+  <Editor {...rest} />
+))`
+  && {
+    ${props => props.syntaxStyles} &.builtin-prism-theme {
+      ${props => props.prismTheme};
     }
-    const { platform } = navigator;
-    if (platform.toLowerCase().search('win') !== -1) {
-      return 'Consolas';
-    } else if (platform.toLowerCase().search('mac') !== -1) {
-      return 'Menlo';
-    } else {
-      return 'monospace';
-    }
-  }, [themeContext]);
+  }
+`;
 
-  const fontSize = React.useMemo(() => {
-    if (
-      themeContext &&
-      themeContext.fontSizes &&
-      themeContext.fontSizes.monospace
-    ) {
-      return themeContext.fontSizes.monospace;
-    }
-    return props.fontSize;
-  }, [themeContext, props.fontSize]);
+export default class CodePane extends Component {
+  handleEditorEvent(evt) {
+    evt.stopPropagation();
+  }
 
-  const preStyles = React.useMemo(
-    () => ({
-      fontFamily: font,
-      fontSize: fontSize,
-      maxHeight: themeContext.size.maxCodePaneHeight || 300,
-      overflow: 'scroll',
-      margin: 0,
-      padding: '0.5em 1em 0.5em 0'
-    }),
-    [font, fontSize, themeContext]
-  );
+  render() {
+    const useDarkTheme = this.props.theme === 'dark';
+    const externalPrismTheme = this.props.theme === 'external';
+    const className = `language-${this.props.lang} ${
+      externalPrismTheme ? '' : 'builtin-prism-theme'
+    } ${this.props.className}`;
 
-  const measureIndentation = React.useCallback(
-    indentation => {
-      if (indentation === 0) {
-        return 0;
-      }
-      const string = ' '.repeat(indentation);
-      context.current.font = `${props.fontSize}px ${font}`;
-      const measurement = context.current.measureText(string);
-      return measurement.width;
-    },
-    [props.fontSize, font]
-  );
+    const wrapperStyles = [
+      this.context.styles.components.codePane,
+      getStyles.call(this),
+      this.props.style
+    ];
 
-  return (
-    <>
-      <Highlight
-        {...defaultProps}
-        code={props.children}
-        language={props.language}
-        theme={theme}
-      >
-        {({ className, style, tokens, getLineProps, getTokenProps }) => (
-          <pre className={className} style={{ ...style, ...preStyles }}>
-            {tokens.map((line, i) => {
-              const lineProps = getLineProps({ line, key: i });
-              const lineIndentation = line[0].content.search(spaceSearch);
-              lineProps.style = {
-                ...(lineProps.style || {}),
-                whiteSpace: 'pre-wrap',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'flex-start'
-              };
-              if (line[0].content && !line[0].empty) {
-                line[0].content = line[0].content.trimLeft();
-              }
-              return (
-                <div key={i} {...lineProps}>
-                  <div style={lineNumberStyles}>{i + 1}</div>
-                  <div
-                    style={{
-                      marginLeft: measureIndentation(lineIndentation),
-                      flex: 1,
-                      paddingLeft: '0.25em'
-                    }}
-                  >
-                    {line.map((token, key) => (
-                      <span key={key} {...getTokenProps({ token, key })} />
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </pre>
-        )}
-      </Highlight>
-    </>
-  );
+    return (
+      <StyledWrapper className={this.props.className} styles={wrapperStyles}>
+        <StyledEditor
+          className={className}
+          code={this.props.source}
+          language={this.props.lang}
+          contentEditable={this.props.contentEditable}
+          syntaxStyles={this.context.styles.components.syntax}
+          prismTheme={
+            this.context.styles.prism[useDarkTheme ? 'dark' : 'light']
+          }
+          onKeyDown={this.handleEditorEvent}
+          onKeyUp={this.handleEditorEvent}
+          onClick={this.handleEditorEvent}
+        />
+      </StyledWrapper>
+    );
+  }
 }
 
+CodePane.contextTypes = {
+  styles: PropTypes.object,
+  store: PropTypes.object
+};
+
 CodePane.propTypes = {
-  children: propTypes.string.isRequired,
-  fontSize: propTypes.number,
-  language: propTypes.string.isRequired,
-  theme: propTypes.object
+  children: PropTypes.node,
+  className: PropTypes.string,
+  contentEditable: PropTypes.bool,
+  lang: PropTypes.string,
+  source: PropTypes.string,
+  style: PropTypes.object,
+  theme: PropTypes.oneOf(['dark', 'light', 'external'])
 };
 
 CodePane.defaultProps = {
-  language: 'javascript',
-  theme: theme,
-  fontSize: 15
+  className: '',
+  contentEditable: false,
+  lang: 'markup',
+  source: '',
+  theme: 'dark'
 };
