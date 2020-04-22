@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSpring, animated } from 'react-spring';
+import { DeckContext } from '../hooks/use-deck';
 import { TransitionPipeContext } from '../hooks/use-transition-pipe';
-import { SlideContext } from '../hooks/use-slide';
 
 /**
  * SlideElementWrapper provides a component for animating slideElements
@@ -15,10 +15,10 @@ import { SlideContext } from '../hooks/use-slide';
  * essentially it skips animations.
  */
 
-const SlideElementWrapper = ({ elementNum, transitionEffect, children }) => {
+const Appear = ({ elementNum, transitionEffect, children }) => {
   const {
-    state: { currentSlideElement, reverseDirection, immediate }
-  } = React.useContext(SlideContext);
+    state: { reverseDirection, currentSlideElement, immediateElement }
+  } = React.useContext(DeckContext);
   const { signal } = React.useContext(TransitionPipeContext);
   const activeElement = elementNum === currentSlideElement;
   const upcomingElement =
@@ -42,18 +42,18 @@ const SlideElementWrapper = ({ elementNum, transitionEffect, children }) => {
     if (activeElement && !reverseDirection) {
       set({
         ...transitionEffect.to,
-        immediate
+        immediate: immediateElement
       });
     } else if (reverseDirection && previousElement) {
       set({
         ...transitionEffect.from,
-        immediate
+        immediate: immediateElement
       });
     }
   }, [
     activeElement,
     elementNum,
-    immediate,
+    immediateElement,
     previousElement,
     reverseDirection,
     set,
@@ -65,7 +65,7 @@ const SlideElementWrapper = ({ elementNum, transitionEffect, children }) => {
   return <animated.div style={styleProps}>{children}</animated.div>;
 };
 
-SlideElementWrapper.propTypes = {
+Appear.propTypes = {
   children: PropTypes.node.isRequired,
   elementNum: PropTypes.number.isRequired,
   transitionEffect: PropTypes.shape({
@@ -74,11 +74,11 @@ SlideElementWrapper.propTypes = {
   })
 };
 
-SlideElementWrapper.defaultProps = {
+Appear.defaultProps = {
   transitionEffect: {
     from: { opacity: 0 },
     to: { opacity: 1 }
   }
 };
 
-export default SlideElementWrapper;
+export default Appear;

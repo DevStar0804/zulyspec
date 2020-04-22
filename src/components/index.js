@@ -1,6 +1,6 @@
 import Deck from './deck';
 import Slide from './slide';
-import SlideElementWrapper from './slide-element-wrapper';
+import Appear from './appear';
 import CodePane from './code-pane';
 import {
   OrderedList,
@@ -12,12 +12,11 @@ import {
 } from './typography';
 import { FlexBox, Grid, Box } from './layout';
 import { Image } from './Image';
-import Notes from './notes';
 
 export {
   Deck,
   Slide,
-  SlideElementWrapper,
+  Appear,
   CodePane,
   Box,
   FlexBox,
@@ -28,6 +27,5 @@ export {
   Heading,
   ListItem,
   UnorderedList,
-  Text,
-  Notes
+  Text
 };
