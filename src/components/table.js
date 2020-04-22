@@ -1,65 +1,34 @@
-import styled from 'styled-components';
-import {
-  color,
-  typography,
-  space,
-  compose,
-  border,
-  layout
-} from 'styled-system';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { getStyles } from '../utils/base';
+import styled from 'react-emotion';
 
-const Table = styled('table')(
-  compose(
-    color,
-    typography,
-    space,
-    border,
-    layout
-  )
-);
+const StyledTable = styled.table(props => props.styles);
 
-Table.defaultProps = {
-  color: 'primary',
-  fontFamily: 'text',
-  fontSize: 'text',
-  textAlign: 'left',
-  margin: 'listMargin'
+export default class Table extends Component {
+  render() {
+    return (
+      <StyledTable
+        className={this.props.className}
+        styles={[
+          this.context.styles.components.table,
+          getStyles.call(this),
+          this.props.style
+        ]}
+      >
+        {this.props.children}
+      </StyledTable>
+    );
+  }
+}
+
+Table.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+  style: PropTypes.object
 };
 
-const TableRow = styled('tr')(
-  compose(
-    color,
-    typography,
-    space,
-    border,
-    layout
-  )
-);
-
-TableRow.defaultProps = {
-  color: 'primary',
-  fontFamily: 'text',
-  fontSize: 'text',
-  textAlign: 'left',
-  margin: 'listMargin'
+Table.contextTypes = {
+  styles: PropTypes.object,
+  store: PropTypes.object
 };
-
-const TableCell = styled('td')(
-  compose(
-    color,
-    typography,
-    space,
-    border,
-    layout
-  )
-);
-
-TableCell.defaultProps = {
-  color: 'primary',
-  fontFamily: 'text',
-  fontSize: 'text',
-  textAlign: 'left',
-  margin: 'listMargin'
-};
-
-export { Table, TableCell, TableRow };
