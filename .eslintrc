@@ -1,11 +1,8 @@
 {
   "root": true,
   "parser": "babel-eslint",
-  "extends": [
-    "formidable/configurations/es6-react",
-    "prettier",
-    "prettier/react"
-  ],
+  "extends": ["prettier", "prettier/react", "plugin:react/recommended"],
+  "plugins": ["prettier", "react-hooks"],
   "env": {
     "browser": true,
     "commonjs": true,
@@ -25,7 +22,13 @@
       "experimentalObjectRestSpread": true
     }
   },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
+    "prettier/prettier": "error",
     "quotes": [
       "error",
       "single",
@@ -33,6 +36,9 @@
         "allowTemplateLiterals": true
       }
     ],
+    "no-shadow": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
     "comma-dangle": "off",
     "indent": "off",
     "space-before-function-paren": "off",
@@ -42,7 +48,12 @@
     "func-style": "off",
     "arrow-parens": "off",
     "no-use-before-define": "off",
-    "no-undef": ["error", { "typeof": true }],
+    "no-undef": [
+      "error",
+      {
+        "typeof": true
+      }
+    ],
     "react/jsx-filename-extension": "off",
     "react/require-extension": "off",
     "react/no-multi-comp": "off",
