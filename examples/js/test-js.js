@@ -13,8 +13,7 @@ import {
   Quote,
   Text,
   UnorderedList,
-  Grid,
-  Notes
+  Grid
 } from '../../src/components';
 
 const formidableLogo = require('./formidable.png');
@@ -53,10 +52,10 @@ const TestJs = () => (
       <Text>Hello There 🤗</Text>
       <Quote>This is a Formidaquote!</Quote>
       <OrderedList>
-        <Appear elementNum={0}>
+        <Appear elementNum={1}>
           <ListItem>This is an</ListItem>
         </Appear>
-        <Appear elementNum={1}>
+        <Appear elementNum={2}>
           <ListItem>ordered list</ListItem>
         </Appear>
       </OrderedList>
@@ -64,39 +63,28 @@ const TestJs = () => (
         <ListItem>This is an</ListItem>
         <ListItem>unordered list</ListItem>
       </UnorderedList>
-      <Notes>
-        <p>
-          Notes are shown in presenter mode. Open up
-          localhost:3000/?presenterMode=true to see them.
-        </p>
-      </Notes>
     </Slide>
     <Slide>
       <CodePane fontSize={18} language="cpp">
         {cppCodeBlock}
       </CodePane>
-      <Notes>
-        <p>
-          This is a code pane! It can support multiple programming languages.
-        </p>
-      </Notes>
     </Slide>
     <Slide>
       <Text fontSize="subHeader">Slide 3!</Text>
-      <Appear elementNum={0}>
+      <Appear elementNum={1}>
         <Text>{`Hey, just one "animated" slide element here`}</Text>
       </Appear>
     </Slide>
     <Slide>
       <Text>{`I'm a static slide element that should always show`}</Text>
       <Text>{`This means that we don't need a SlideElementWrapper`}</Text>
-      <Appear elementNum={0}>
+      <Appear elementNum={1}>
         <Text> ZERO Slide 4 x 3! </Text>
       </Appear>
-      <Appear elementNum={1}>
+      <Appear elementNum={2}>
         <Text> ONE Slide 4 x 3! </Text>
       </Appear>
-      <Appear elementNum={2}>
+      <Appear elementNum={3}>
         <Text> TWO Slide 4 x 3! </Text>
       </Appear>
       <Text>{`I'm also a static non-animated "slide element"!`}</Text>

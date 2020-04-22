@@ -1,6 +1,7 @@
 import React from 'react';
+
 import { DeckContext } from './use-deck';
-import { DEFAULT_SLIDE_ELEMENT_INDEX } from '../utils/constants';
+import debounce from '../utils/debounce';
 
 /**
  * Performs logic operations for all of the slide domain level.
@@ -16,51 +17,132 @@ import { DEFAULT_SLIDE_ELEMENT_INDEX } from '../utils/constants';
 // Initialise SlideContext.
 export const SlideContext = React.createContext();
 
-function useSlide(slideNum) {
+function useSlide(
+  initialState,
+  slideNum,
+  slideElementsLength,
+  keyboardControls
+) {
   // Gets state, dispatch and number of slides off DeckContext.
   const {
     state: deckContextState,
     dispatch: deckContextDispatch,
-    slideElementMap
+    animationsWhenGoingBack,
+    navigateToNextSlide,
+    navigateToPreviousSlide
   } = React.useContext(DeckContext);
-
-  if (slideNum === 'undefined') {
-    throw new Error(
-      'Must provide slide number to useSlide. Provided undefined instead.'
-    );
-  }
-
-  const { reverseDirection, immediate } = deckContextState;
-  const slideElementsLength = slideElementMap[slideNum];
 
   const isActiveSlide = deckContextState.currentSlide === slideNum;
 
-  const setNotes = React.useCallback(
-    notes => {
-      deckContextDispatch({
-        type: 'SET_NOTES',
-        payload: { notes, slideNumber: slideNum }
-      });
+  const goToNextSlideElement = React.useCallback(() => {
+    if (
+      slideElementsLength === 0 ||
+      deckContextState.currentSlideElement === slideElementsLength
+    ) {
+      navigateToNextSlide();
+    } else {
+      deckContextDispatch({ type: 'NEXT_SLIDE_ELEMENT' });
+    }
+  }, [
+    deckContextDispatch,
+    deckContextState.currentSlideElement,
+    navigateToNextSlide,
+    slideElementsLength
+  ]);
+
+  const goToImmediateNextSlideElement = React.useCallback(() => {
+    if (
+      slideElementsLength === 0 ||
+      deckContextState.currentSlideElement === slideElementsLength
+    ) {
+      navigateToNextSlide({ immediate: true });
+    } else {
+      deckContextDispatch({ type: 'NEXT_SLIDE_ELEMENT_IMMEDIATE' });
+    }
+  }, [
+    deckContextDispatch,
+    deckContextState.currentSlideElement,
+    navigateToNextSlide,
+    slideElementsLength
+  ]);
+
+  const goToPreviousSlideElement = React.useCallback(() => {
+    if (deckContextState.currentSlideElement === 0) {
+      navigateToPreviousSlide();
+    } else {
+      if (!animationsWhenGoingBack) {
+        deckContextDispatch({ type: 'PREV_SLIDE_ELEMENT_IMMEDIATE' });
+        return;
+      }
+      deckContextDispatch({ type: 'PREV_SLIDE_ELEMENT' });
+    }
+  }, [
+    animationsWhenGoingBack,
+    deckContextDispatch,
+    deckContextState.currentSlideElement,
+    navigateToPreviousSlide
+  ]);
+
+  const keyPressCount = React.useRef(0);
+
+  // This useEffect adds a keyDown listener to the window.
+  React.useEffect(
+    function() {
+      // Keep track of the number of next slide presses for debounce
+      // Create ref for debounceing function
+      const debouncedDispatch = debounce(() => {
+        if (keyPressCount.current === 1) {
+          goToNextSlideElement();
+        } else {
+          goToImmediateNextSlideElement();
+        }
+        keyPressCount.current = 0;
+      }, 200);
+      function handleKeyDown(e) {
+        if (keyboardControls === 'arrows') {
+          if (e.key === 'ArrowLeft') {
+            goToPreviousSlideElement();
+          }
+          if (e.key === 'ArrowRight') {
+            keyPressCount.current++;
+            debouncedDispatch();
+          }
+        }
+        if (keyboardControls === 'space') {
+          if (e.code === 'Space') {
+            keyPressCount.current++;
+            debouncedDispatch();
+            e.preventDefault();
+          }
+        }
+      }
+      isActiveSlide ? window.addEventListener('keydown', handleKeyDown) : null;
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+      };
     },
-    [deckContextDispatch, slideNum]
+    [
+      isActiveSlide,
+      keyboardControls,
+      goToNextSlideElement,
+      goToPreviousSlideElement,
+      goToImmediateNextSlideElement
+    ]
   );
-
-  const currentSlideElement = isActiveSlide
-    ? deckContextState.currentSlideElement
-    : DEFAULT_SLIDE_ELEMENT_INDEX;
-
-  return {
-    state: {
-      reverseDirection,
+  return [
+    {
+      ...initialState,
       slideElementsLength,
-      currentSlideElement,
-      immediate,
+      currentSlideElement: deckContextState.currentSlideElement,
+      immediate: false,
       isActiveSlide
     },
-    actions: {
-      setNotes
+    {
+      goToNextSlideElement,
+      goToImmediateNextSlideElement,
+      goToPreviousSlideElement
     }
-  };
+  ];
 }
 
 export default useSlide;
