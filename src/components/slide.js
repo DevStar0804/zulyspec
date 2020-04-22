@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import useSlide, { SlideContext } from '../hooks/use-slide';
-import { DeckContext } from '../hooks/use-deck';
 import styled from 'styled-components';
 import { color } from 'styled-system';
 
@@ -40,22 +39,19 @@ const Slide = props => {
     backgroundColor,
     textColor,
     template,
-    numberOfSlides
+    numberOfSlides,
+    style
   } = props;
-  const { slideElementMap, keyboardControls } = React.useContext(DeckContext);
-  const initialState = { currentSlideElement: 0, immediate: false };
-  const numberOfSlideElements = slideElementMap[slideNum];
-  const value = useSlide(
-    initialState,
-    slideNum,
-    numberOfSlideElements,
-    keyboardControls
-  );
+
+  const value = useSlide(slideNum);
   return (
-    <SlideContainer backgroundColor={backgroundColor}>
+    <SlideContainer backgroundColor={backgroundColor} {...style}>
       <TemplateWrapper>
         {typeof template === 'function' &&
-          template({ slideNumber: slideNum, numberOfSlides })}
+          template({
+            slideNumber: slideNum,
+            numberOfSlides: numberOfSlides - 1
+          })}
       </TemplateWrapper>
       <SlideWrapper color={textColor}>
         <SlideContext.Provider value={value}>{children}</SlideContext.Provider>
@@ -67,8 +63,9 @@ const Slide = props => {
 Slide.propTypes = {
   backgroundColor: PropTypes.string,
   children: PropTypes.node.isRequired,
-  slideNum: PropTypes.number,
   numberOfSlides: PropTypes.number,
+  slideNum: PropTypes.number,
+  style: PropTypes.object,
   template: PropTypes.func,
   textColor: PropTypes.string
 };
