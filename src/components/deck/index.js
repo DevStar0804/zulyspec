@@ -170,16 +170,19 @@ const Deck = ({
     immediate: state.immediate
   });
 
+  const slides = transitions.map(({ item, props, key }) => (
+    <AnimatedDeckDiv style={props} key={key}>
+      {React.cloneElement(filteredChildren[item], {
+        slideNum: item,
+        numberOfSlides,
+        template: rest.template
+      })}
+    </AnimatedDeckDiv>
+  ));
+
   let content = null;
   if (state.resolvedInitialUrl) {
     if (state.presenterMode) {
-      const staticSlides = filteredChildren.map((slide, index) =>
-        React.cloneElement(slide, {
-          slideNum: index,
-          numberOfSlides,
-          template: rest.template
-        })
-      );
       content = (
         <PresenterDeck
           isController={isController}
@@ -187,23 +190,13 @@ const Deck = ({
           startConnection={startConnection}
           terminateConnection={terminateConnection}
         >
-          {staticSlides}
+          {filteredChildren}
         </PresenterDeck>
       );
     } else {
-      const animatedSlides = transitions.map(({ item, props, key }) => (
-        <AnimatedDeckDiv style={props} key={key}>
-          {React.cloneElement(filteredChildren[item], {
-            slideNum: item,
-            numberOfSlides,
-            template: rest.template
-          })}
-        </AnimatedDeckDiv>
-      ));
-
       content = (
         <AudienceDeck addMessageHandler={addMessageHandler}>
-          {animatedSlides}
+          {slides}
         </AudienceDeck>
       );
     }
