@@ -1,95 +1,157 @@
 # Spectacle
 
-[![Travis Status][trav_img]][trav_site]
-[![Maintenance Status][maintenance-image]](#maintenance-status)
+<!-- TODO BADGES -->
 
-A [ReactJS](https://reactjs.org/)-based Presentation Library.
+✨ A ReactJS based Presentation Library ✨
 
-Looking for a quick preview of what you can do with Spectacle? Check out our live Demo Deck [here](https://raw.githack.com/FormidableLabs/spectacle/master/one-page.html#/).
+<!-- Looking for a quick preview of what you can do with Spectacle? Check out our Live Demo deck [here](TODO). -->
 
 Have a question about Spectacle? Submit an issue in this repository using the "Question" template.
 
-## Contents
+<!--
+## Table of Contents
+TODO - automate this
+-->
 
-- [Getting Started](./docs/content/getting-started.md)
-  - [Classic Spectacle](./docs/content/getting-started.md#classic-spectacle)
-  - [Spectacle MDX](./docs/content/getting-started.md#spectacle-mdx)
-  - [One Page](./docs/content/getting-started.md#one-page)
-- [Basic Concepts](./docs/content/basic-concepts.md)
-  - [Main file](./docs/content/basic-concepts.md#main-file)
-  - [Themes](./docs/content/basic-concepts.md#themes)
-    - [createTheme(colors, fonts)](./docs/content/basic-concepts.md#createthemecolors-fonts)
-  - [Development](./docs/content/basic-concepts.md#development)
-  - [Build & Deployment](./docs/content/basic-concepts.md#build--deployment)
-  - [Presenting](./docs/content/basic-concepts.md#presenting)
-  - [Controls](./docs/content/basic-concepts.md#controls)
-  - [Fullscreen](./docs/content/basic-concepts.md#fullscreen)
-  - [PDF Export](./docs/content/basic-concepts.md#pdf-export)
-- [Tag API](./docs/content/tag-api.md)
-  - [Main Tags](./docs/content/tag-api.md#main-tags)
-    - [Deck](./docs/content/tag-api.md#deck)
-    - [Slide (Base)](./docs/content/tag-api.md#slide-base)
-    - [Notes](./docs/content/tag-api.md#notes)
-    - [MarkdownSlides](./docs/content/tag-api.md#markdown-slides)
-  - [Layout Tags](./docs/content/tag-api.md#layout-tags)
-    - [Layout](./docs/content/tag-api.md#layout)
-    - [Fit](./docs/content/tag-api.md#fit)
-    - [Fill](./docs/content/tag-api.md#fill)
-  - [Markdown Tag](./docs/content/tag-api.md#markdown-tag)
-    - [Markdown](./docs/content/tag-api.md#markdown)
-  - [Magic Tag](./docs/content/tag-api.md#magic-tag)
-    - [Magic](./docs/content/tag-api.md#magic)
-  - [Element Tags](./docs/content/tag-api.md#element-tags)
-    - [Appear](./docs/content/tag-api.md#appear)
-    - [Anim](./docs/content/tag-api.md#anim)
-    - [BlockQuote, Quote and Cite (Base)](./docs/content/tag-api.md#blockquote-quote-and-cite-base)
-    - [CodePane (Base)](./docs/content/tag-api.md#codepane-base)
-    - [Code (Base)](./docs/content/tag-api.md#code-base)
-    - [ComponentPlayground](./docs/content/tag-api.md#component-playground)
-    - [GoToAction (Base)](./docs/content/tag-api.md#go-to-action)
-    - [Heading (Base)](./docs/content/tag-api.md#heading-base)
-    - [Image (Base)](./docs/content/tag-api.md#image-base)
-    - [Link (Base)](./docs/content/tag-api.md#link-base)
-    - [List & ListItem (Base)](./docs/content/tag-api.md#list--listitem-base)
-    - [S (Base)](./docs/content/tag-api.md#s-base)
-    - [Table, TableRow, TableBody, TableHeader, TableHeaderItem and TableItem (Base)](./docs/content/tag-api.md#table-tablerow-tableheaderitem-and-tableitem-base)
-    - [Text (Base)](./docs/content/tag-api.md#text-base)
-    - [Typeface](./docs/content/tag-api.md#typeface)
-  - [Base Props](./docs/content/tag-api.md#base-props)
-- [Third Party Extensions](./docs/content/extensions.md)
-- [FAQ](#faq)
-- [Maintenance Status](#maintenance-status)
+## Getting Started
 
-<a name="faq"></a>
+First, you'll have to decide how you want to use Spectacle. There are a couple of different ways to build your presentation.
 
-# FAQ
+1. Using [**MDX**](https://mdxjs.com/)
 
-**_How can I easily style the base components for my presentation?_**
+   - Steps
+   - To
+   - Start
+   - With an
+   - MDX Presentation
 
-Historically, custom styling in Spectacle has meant screwing with a theme file, or using `!important` overrides. We fixed that. Spectacle is now driven by [emotion](https://github.com/emotion-js/emotion), so you can bring your own styling library, whether it's emotion itself, or something like styled-components or glamorous. For example, if you want to create a custom Heading style:
+2. Using [**Classic JSX**](https://reactjs.org/docs/introducing-jsx.html)
 
-```javascript
-import styled from 'react-emotion';
-import { Heading } from 'spectacle';
+   - Steps
+   - To
+   - Start
+   - With a
+   - JSX Presentation
 
-const CustomHeading = styled(Heading)`
-  font-size: 1.2em;
-  color: papayawhip;
-`;
+## Development
+
+```sh
+yarn add spectacle
 ```
 
-<a name="tag-api"></a>
+### Basic Concepts
 
-**_Can I write my presentation in TypeScript?_**
+Spectacle is a library exposes a number of React components you can use to build a presentation using React components.
 
-Yes, you can! Type definitions are shipped with the library, so you can import Spectacle components into any `.tsx` presentation without additional installation steps.
+#### Deck
 
-Updated type definitions for the Spectacle API can be found [at the root of this repository](./index.d.ts).
+Wraps slide components, providing templates to slides as well as keyboard bindings. It orchestrates animations of Slide components in and out of the presentation.
 
-## Maintenance Status
+#### Slide
 
-**Active:** Formidable is actively working on this project, and we expect to continue for work for the foreseeable future. Bug reports, feature requests and pull requests are welcome.
+Wraps slides, is controlled by the deck component.
 
-[trav_img]: https://api.travis-ci.com/FormidableLabs/spectacle.svg
-[trav_site]: https://travis-ci.com/FormidableLabs/spectacle
-[maintenance-image]: https://img.shields.io/badge/maintenance-active-green.svg
+#### Notes
+
+Slides may have speaker notes associated with them using the `Notes` component. These notes can be accessed using the presenter deck using `alt + p (mac)` or `Alt + Shift + p (win)`.
+
+#### Layout Components
+
+We have a number of styleable layout components to make constructing great looking slides easier.
+
+These include:
+
+| Components    |                                                                         |
+| ------------- | ----------------------------------------------------------------------- |
+| Appear        | Wraps a slideElement that can animate in.                               |
+| CodePane      | Syntax highlighting of code for a number of languages.                  |
+| Markdown      | A markdown component that allows the user to write mdx in their slides. |
+| FlexBox       |                                                                         |
+| Grid          |                                                                         |
+| Box           | A child of Grid.                                                        |
+| Image         |                                                                         |
+| ListItem      |                                                                         |
+| OrderedList   |                                                                         |
+| Quote         |                                                                         |
+| Text          |                                                                         |
+| UnorderedList |                                                                         |
+| Heading       |                                                                         |
+
+#### Themes
+
+Themeing is done using a [styled-system](https://styled-system.com/) theme object which is passed to the `Deck` component.
+
+Spectacle will then merge your theme with the default theme (keys overriden will be replaced by user-defined theme).
+
+The `Deck` provides the ThemeContext so the user's only concern is with writing the theme.
+
+You can import theme properties using the styled-system [style functions](https://styled-system.com/getting-started#create-a-component).
+
+If you need to extend layout components, you can use the [extends API](https://www.styled-components.com/docs/basics#extending-styles) from styled-components.
+
+```javascript
+// If for example we wanted to style a div with our theme:
+
+// Example theme object:
+const theme = {
+  colors: {
+    primary: 'red',
+    secondary: 'black',
+    tertiary: 'orange',
+    quaternary: 'pink',ƒ
+  }
+};
+
+// In our component:
+
+import styled from 'styled-components'
+import { color } from 'styled-system'
+
+const SlideElement = styled.div`
+  ${color}
+`
+
+<SlideElement color="primary" bg="secondary">
+  Tomato
+</SlideElement>
+
+export default SlideElement
+
+// We would have a Box component with red text and black background.
+```
+
+### API
+
+## Build & Deployment
+
+<!-- TODO will we have an out-of-the-box solution for deployment? -->
+
+```sh
+yarn run build
+```
+
+## Presenting
+
+Spectacle comes with a built-in Presenter view. It shows you a slide lookahead, your current slide and related notes, and the current time.
+
+![Screenshot of Spectacle's Presenter view with a clock](TODO)
+
+You also have the option of a stopwatch to count the elapsed time.
+
+![Screenshot of Spectacle's Presenter view with a stopwatch](TODO)
+
+To present,
+
+1. Run `yarn start`
+2. Navigate to [localhost:3000/#](https://localhost:3000/#) to view your presentation
+3. Open a second browser window and navigate to [localhost:3000/#/0?presenter](http://localhost:3000/#/0?presenter) to view your presentation with notes and a clock. Add [?presenter&timer](http://localhost:3000/#/0?presenter&timer) to switch from a clock a timer.
+
+## FAQ
+
+Can I write my presentation in TypeScript?
+
+Can I easily create templates?
+
+Can I export my slides for use elsewhere?
+
+What is the preferred way to deploy a Spectacle presentation?
