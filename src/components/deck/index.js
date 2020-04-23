@@ -7,7 +7,7 @@ import isComponentType from '../../utils/is-component-type';
 import useUrlRouting from '../../hooks/use-url-routing';
 import PresenterDeck from './presenter-deck';
 import AudienceDeck from './audience-deck';
-import defaultTheme from '../../theme/default-theme';
+import theme from '../../theme';
 import { animated, useTransition } from 'react-spring';
 import {
   TransitionPipeContext,
@@ -92,7 +92,7 @@ const Deck = ({
   }, [filteredChildren]);
 
   // Initialise useDeck hook and get state and dispatch off of it
-  const { state, dispatch } = useDeck(initialState);
+  const { state, dispatch } = useDeck({ ...initialState, numberOfSlides });
   const themeContext = React.useContext(ThemeContext);
 
   React.useLayoutEffect(() => {
@@ -132,7 +132,7 @@ const Deck = ({
     [sendMessage, isController]
   );
 
-  const { navigateToNext, navigateToPrevious } = useUrlRouting({
+  const { navigateToNext, navigateToPrevious, goToSlide } = useUrlRouting({
     dispatch,
     currentSlide: state.currentSlide,
     currentSlideElement: state.currentSlideElement,
@@ -176,7 +176,6 @@ const Deck = ({
       const staticSlides = filteredChildren.map((slide, index) =>
         React.cloneElement(slide, {
           slideNum: index,
-          numberOfSlides,
           template: rest.template
         })
       );
@@ -218,7 +217,8 @@ const Deck = ({
           numberOfSlides,
           keyboardControls,
           animationsWhenGoingBack,
-          slideElementMap
+          slideElementMap,
+          goToSlide
         }}
       >
         {content}
@@ -239,7 +239,7 @@ Deck.propTypes = {
 };
 
 const ConnectedDeck = props => (
-  <ThemeProvider theme={defaultTheme}>
+  <ThemeProvider theme={theme}>
     <TransitionPipeProvider>
       <Deck {...props} />
     </TransitionPipeProvider>
