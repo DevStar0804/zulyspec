@@ -7,7 +7,7 @@ import isComponentType from '../../utils/is-component-type';
 import useUrlRouting from '../../hooks/use-url-routing';
 import PresenterDeck from './presenter-deck';
 import AudienceDeck from './audience-deck';
-import theme from '../../theme';
+import defaultTheme from '../../theme/default-theme';
 import { animated, useTransition } from 'react-spring';
 import {
   TransitionPipeContext,
@@ -239,7 +239,7 @@ Deck.propTypes = {
 };
 
 const ConnectedDeck = props => (
-  <ThemeProvider theme={theme}>
+  <ThemeProvider theme={defaultTheme}>
     <TransitionPipeProvider>
       <Deck {...props} />
     </TransitionPipeProvider>

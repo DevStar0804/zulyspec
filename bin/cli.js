@@ -9,9 +9,8 @@ const main = () =>
     .then(args.parse)
     .then(parsedInput => {
       const mdxFilePath = parsedInput.mdx;
-      const themeFilePath = parsedInput.theme;
       if (mdxFilePath) {
-        actions.launchMDXServer(mdxFilePath, themeFilePath);
+        actions.launchMDXServer(mdxFilePath);
       }
       // add future actions here
       else {

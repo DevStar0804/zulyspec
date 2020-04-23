@@ -3,9 +3,9 @@ const validatePresentationMode = require('./validate/presentation-mode');
 
 const validate = async parser => {
   const { argv } = parser;
-  const { src, theme } = argv;
+  const { src } = argv;
 
-  return await validatePresentationMode(src, theme);
+  return await validatePresentationMode(src);
 };
 
 const args = () =>
@@ -17,11 +17,6 @@ const args = () =>
       alias: 's',
       describe: 'Path to a file from which a presentation will be generated.',
       default: 'slides.mdx',
-      type: 'string'
-    })
-    .option('theme', {
-      alias: 't',
-      describe: 'Path to a JS file that contains theme overrides.',
       type: 'string'
     })
 
