@@ -1,188 +1,126 @@
-/* eslint-disable no-invalid-this, max-statements */
 import React from 'react';
 import PropTypes from 'prop-types';
-import isUndefined from 'lodash/isUndefined';
-import isFunction from 'lodash/isFunction';
-import { getStyles } from '../utils/base';
-import {
-  SlideContent,
-  SlideContainer,
-  SlideContentWrapper
-} from './slide-components';
-import stepCounter from '../utils/step-counter';
-import { addFragment } from '../actions';
+import useSlide, { SlideContext } from '../hooks/use-slide';
+import styled, { ThemeContext } from 'styled-components';
+import { color, space } from 'styled-system';
 
-class Slide extends React.PureComponent {
-  constructor() {
-    super(...arguments);
-    this.stepCounter = stepCounter();
-  }
+const SlideContainer = styled('div')`
+  ${color};
+  width: ${({ theme }) => theme.size.width || 1366}px;
+  height: ${({ theme }) => theme.size.height || 768}px;
+  overflow: hidden;
+`;
+const SlideWrapper = styled('div')`
+  ${color};
+  ${space};
+`;
+const TemplateWrapper = styled('div')`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: -1;
+`;
 
-  state = {
-    reverse: false,
-    transitioning: true,
-    z: 1
-  };
+/**
+ * Slide component wraps anything going in a slide and maintains
+ * the slides' internal state through useSlide.
+ */
 
-  getChildContext() {
-    return {
-      stepCounter: {
-        setFragments: this.stepCounter.setFragments
-      },
-      slideHash: this.props.hash
+const Slide = props => {
+  const {
+    children,
+    slideNum,
+    backgroundColor,
+    textColor,
+    template,
+    scaleRatio
+  } = props;
+  const theme = React.useContext(ThemeContext);
+  const [ratio, setRatio] = React.useState(scaleRatio || 1);
+  const [origin, setOrigin] = React.useState({ x: 0, y: 0 });
+  const slideRef = React.useRef(null);
+  const slideWidth = theme.size.width || 1366;
+  const slideHeight = theme.size.height || 768;
+
+  const transformForWindowSize = React.useCallback(() => {
+    const clientWidth = slideRef.current.parentElement.clientWidth;
+    const clientHeight = slideRef.current.parentElement.clientHeight;
+    const useVerticalRatio =
+      clientWidth / clientHeight > slideWidth / slideHeight;
+    const newRatio = useVerticalRatio
+      ? clientHeight / slideHeight
+      : clientWidth / slideWidth;
+    setRatio(newRatio);
+  }, [slideHeight, slideWidth]);
+
+  React.useEffect(() => {
+    const clientWidth = slideRef.current.parentElement.clientWidth;
+    const clientHeight = slideRef.current.parentElement.clientHeight;
+    const useVerticalRatio =
+      clientWidth / clientHeight > slideWidth / slideHeight;
+    const clientRects = slideRef.current.getClientRects();
+    setOrigin({
+      x: useVerticalRatio
+        ? `${(clientWidth - clientRects[0].width) / 2 / (1 - ratio)}px`
+        : 'left',
+      y: useVerticalRatio
+        ? 'top'
+        : `${(clientHeight - clientRects[0].height) / 2 / (1 - ratio)}px`
+    });
+  }, [ratio, slideHeight, slideWidth, theme]);
+
+  React.useEffect(() => {
+    if (!isNaN(scaleRatio)) {
+      return;
+    }
+    transformForWindowSize();
+    window.addEventListener('resize', transformForWindowSize);
+    return () => {
+      window.removeEventListener('resize', transformForWindowSize);
     };
-  }
+  }, [transformForWindowSize, scaleRatio]);
 
-  componentDidMount() {
-    const slide = this.slideRef;
-    const frags = slide.querySelectorAll('.fragment');
-    let currentOrder = 0;
-    if (frags && frags.length && !this.context.overview) {
-      Array.prototype.slice
-        .call(frags, 0)
-        .sort(
-          (lhs, rhs) =>
-            parseInt(lhs.dataset.order, 10) - parseInt(rhs.dataset.order, 10)
-        )
-        .forEach(frag => {
-          frag.dataset.fid = currentOrder;
-          if (this.props.dispatch) {
-            this.props.dispatch(
-              addFragment({
-                className: frag.className || '',
-                slide: this.props.hash,
-                id: `${this.props.hash}-${currentOrder}`,
-                animations: Array.from({ length: frag.dataset.animCount }).fill(
-                  this.props.lastSlideIndex > this.props.slideIndex
-                )
-              })
-            );
-          }
-          currentOrder += 1;
-        });
-    }
+  const value = useSlide(slideNum);
+  const { numberOfSlides } = value.state;
 
-    this.context.onStateChange(this.props.state);
-
-    if (isFunction(this.props.onActive)) {
-      this.props.onActive(this.props.slideIndex);
-    }
-
-    if (this.props.getAppearStep) {
-      /* eslint-disable no-console */
-      console.warn(
-        'getAppearStep has been deprecated, use getAnimStep instead'
-      );
-      /* eslint-enable */
-    }
-  }
-
-  componentDidUpdate() {
-    const { steps, slideIndex } = this.stepCounter.getSteps();
-    const stepFunc = this.props.getAnimStep || this.props.getAppearStep;
-    if (stepFunc) {
-      if (slideIndex === this.props.slideIndex) {
-        stepFunc(steps);
-      }
-    }
-  }
-
-  render() {
-    const { presenterStyle, children } = this.props;
-
-    const contentClass = isUndefined(this.props.className)
-      ? ''
-      : this.props.className;
-
-    return (
-      <SlideContainer
-        className="spectacle-slide"
-        innerRef={s => {
-          this.slideRef = s;
-        }}
-        exportMode={this.props.export}
-        printMode={this.props.print}
-        background={this.context.styles.global.body.background}
-        style={this.props.style}
-        styles={{
-          base: getStyles.call(this),
-          presenter: presenterStyle
-        }}
-      >
-        <SlideContentWrapper
-          align={this.props.align}
-          overviewMode={this.context.overview}
-        >
-          <SlideContent
-            innerRef={c => {
-              this.contentRef = c;
-            }}
-            className={`${contentClass} spectacle-content`}
-            overviewMode={this.context.overview}
-            width={this.context.contentWidth}
-            height={this.context.contentHeight}
-            margin={this.props.margin}
-            style={{ ...(this.props.contentStyles || {}) }}
-            styles={{ context: this.context.styles.components.content }}
-          >
-            {children}
-          </SlideContent>
-        </SlideContentWrapper>
-      </SlideContainer>
-    );
-  }
-}
-
-Slide.defaultProps = {
-  align: 'center center',
-  presenterStyle: {},
-  style: {},
-  viewerScaleMode: false
+  return (
+    <SlideContainer
+      ref={slideRef}
+      backgroundColor={backgroundColor}
+      style={{
+        transform: `scale(${ratio})`,
+        transformOrigin: `${origin.x} ${origin.y}`
+      }}
+    >
+      <TemplateWrapper>
+        {typeof template === 'function' &&
+          template({
+            slideNumber: slideNum,
+            numberOfSlides: numberOfSlides - 1
+          })}
+      </TemplateWrapper>
+      <SlideWrapper padding="slidePadding" color={textColor}>
+        <SlideContext.Provider value={value}>{children}</SlideContext.Provider>
+      </SlideWrapper>
+    </SlideContainer>
+  );
 };
 
 Slide.propTypes = {
-  align: PropTypes.string,
-  children: PropTypes.node,
-  className: PropTypes.string,
-  contentStyles: PropTypes.object,
-  dispatch: PropTypes.func,
-  export: PropTypes.bool,
-  getAnimStep: PropTypes.func,
-  getAppearStep: PropTypes.func,
-  hash: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  lastSlideIndex: PropTypes.number,
-  margin: PropTypes.number,
-  notes: PropTypes.any,
-  onActive: PropTypes.func,
-  presenterStyle: PropTypes.object,
-  print: PropTypes.bool,
-  slideIndex: PropTypes.number,
-  slideReference: PropTypes.array,
-  state: PropTypes.string,
-  style: PropTypes.object,
-  transition: PropTypes.array,
-  transitionDuration: PropTypes.number,
-  transitionIn: PropTypes.array,
-  transitionOut: PropTypes.array,
-  viewerScaleMode: PropTypes.bool
+  backgroundColor: PropTypes.string,
+  children: PropTypes.node.isRequired,
+  scaleRatio: PropTypes.number,
+  slideNum: PropTypes.number,
+  template: PropTypes.func,
+  textColor: PropTypes.string
 };
 
-Slide.contextTypes = {
-  contentHeight: PropTypes.number,
-  contentWidth: PropTypes.number,
-  export: PropTypes.bool,
-  onStateChange: PropTypes.func.isRequired,
-  overview: PropTypes.bool,
-  print: PropTypes.object,
-  store: PropTypes.object,
-  styles: PropTypes.object
-};
-
-Slide.childContextTypes = {
-  slideHash: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  stepCounter: PropTypes.shape({
-    setFragments: PropTypes.func
-  })
+Slide.defaultProps = {
+  textColor: 'primary',
+  backgroundColor: 'tertiary'
 };
 
 export default Slide;
