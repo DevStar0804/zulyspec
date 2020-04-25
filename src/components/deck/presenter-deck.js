@@ -1,24 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DeckContext } from '../../hooks/use-deck';
-import styled, { css } from 'styled-components';
-import { compose, color, typography } from 'styled-system';
-import { Heading, Text } from '../typography';
+import styled from 'styled-components';
+import { Text } from '../typography';
+import { FlexBox } from '../layout';
 import * as queryString from 'query-string';
+import { Timer } from './timer';
+import SpectacleLogo from '../logo';
+import InternalButton from '../internal-button';
 
 const PresenterDeckContainer = styled('div')`
-  height: 100vh;
-  width: 100vw;
   position: absolute;
   top: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   flex-direction: row;
-  background-color: black;
+  background-color: #282828;
+  padding: 2em;
+  overflow: hidden;
 `;
 
 const NotesColumn = styled('div')`
-  padding: 2em 4em;
+  padding: 0 4em;
   display: flex;
   flex-direction: column;
   width: 50%;
@@ -29,44 +34,48 @@ const PreviewColumn = styled('div')`
   flex-direction: column;
   height: 100%;
   width: 50%;
-`;
-
-const PresentationHeader = styled(Heading)`
-  align-items: flex-start;
-  text-align: start;
+  > :first-child {
+    margin-bottom: 0.5em;
+  }
 `;
 
 const SlideContainer = styled('div')`
+  display: flex;
+  flex-direction: column;
   height: calc(50% - 1em);
   width: 100%;
   overflow: hidden;
 `;
 
-const SlideDivider = styled('div')`
-  height: 2em;
+const SlideWrapper = styled('div')`
+  flex: 1;
+  position: relative;
+
+  .spectacle-fullscreen-button {
+    display: none;
+  }
 `;
 
-const Button = styled('button')(
-  compose(
-    color,
-    typography
-  ),
-  css`
-    border: 0;
-    width: 300px;
-    padding: 1em;
-    margin-bottom: 1em;
-  `
-);
-Button.defaultProps = {
-  backgroundColor: 'secondary',
-  color: 'primary',
-  fontSize: 'text'
-};
+const SlideCountLabel = styled('span')`
+  background: hsla(0, 0%, 100%, 0.1);
+  border-radius: 4px;
+  font-size: 0.7em;
+  padding: 1px 4px;
+`;
+
+const NotesContainer = styled('div')`
+  overflow-y: scroll;
+`;
 
 const PresenterDeck = props => {
   const {
-    state: { currentNotes, currentSlide, currentSlideElement, immediate }
+    state: {
+      currentNotes,
+      currentSlide,
+      currentSlideElement,
+      immediate,
+      numberOfSlides
+    }
   } = React.useContext(DeckContext);
 
   const {
@@ -94,21 +103,48 @@ const PresenterDeck = props => {
   return (
     <PresenterDeckContainer>
       <NotesColumn>
-        {!isController && !isReceiver && (
-          <Button onClick={onStartConnection}>Start Connection</Button>
-        )}
-        {isController && !isReceiver && (
-          <Button onClick={terminateConnection}>Terminate Connection</Button>
-        )}
-        <PresentationHeader fontSize="subHeader">Notes:</PresentationHeader>
-        <Text lineHeight="180%" fontSize="18px">
-          {currentNotes}
+        <FlexBox justifyContent="space-between">
+          <SpectacleLogo />
+          {!isController && !isReceiver && (
+            <InternalButton onClick={onStartConnection}>
+              Cast to Secondary Display
+            </InternalButton>
+          )}
+          {isController && !isReceiver && (
+            <InternalButton onClick={terminateConnection}>
+              Stop Casting
+            </InternalButton>
+          )}
+        </FlexBox>
+        <Timer />
+        <Text fontSize={20} fontWeight="bold">
+          Notes:
         </Text>
+        <NotesContainer>
+          <Text lineHeight="180%" fontSize="18px">
+            {currentNotes}
+          </Text>
+        </NotesContainer>
       </NotesColumn>
       <PreviewColumn>
-        <SlideContainer>{activeSlide}</SlideContainer>
-        <SlideDivider />
-        <SlideContainer>{nextSlide}</SlideContainer>
+        <SlideContainer>
+          <Text fontSize={20} fontWeight="bold" textAlign="center">
+            Current&nbsp;
+            <SlideCountLabel>
+              Slide {activeSlide.props.slideNum + 1} of {numberOfSlides}
+            </SlideCountLabel>
+          </Text>
+          <SlideWrapper>{activeSlide}</SlideWrapper>
+        </SlideContainer>
+        <SlideContainer>
+          <Text fontSize={20} fontWeight="bold" textAlign="center">
+            Next&nbsp;
+            <SlideCountLabel>
+              Slide {nextSlide.props.slideNum + 1} of {numberOfSlides}
+            </SlideCountLabel>
+          </Text>
+          <SlideWrapper>{nextSlide}</SlideWrapper>
+        </SlideContainer>
       </PreviewColumn>
     </PresenterDeckContainer>
   );
