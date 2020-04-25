@@ -5,19 +5,16 @@ import styled, { css } from 'styled-components';
 import { compose, color, typography } from 'styled-system';
 import { Heading, Text } from '../typography';
 import * as queryString from 'query-string';
-import { Timer } from './timer';
 
 const PresenterDeckContainer = styled('div')`
+  height: 100vh;
+  width: 100vw;
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
   display: flex;
   flex-direction: row;
-  background-color: #282828;
-  padding: 2em;
-  overflow: hidden;
+  background-color: black;
 `;
 
 const NotesColumn = styled('div')`
@@ -32,35 +29,21 @@ const PreviewColumn = styled('div')`
   flex-direction: column;
   height: 100%;
   width: 50%;
-  > :first-child {
-    margin-bottom: 0.5em;
-  }
 `;
 
 const PresentationHeader = styled(Heading)`
   align-items: flex-start;
   text-align: start;
-  margin-bottom: 0;
 `;
 
 const SlideContainer = styled('div')`
-  display: flex;
-  flex-direction: column;
   height: calc(50% - 1em);
   width: 100%;
+  overflow: hidden;
 `;
 
-const SlideWrapper = styled('div')`
-  flex: 1;
-  position: relative;
-`;
-
-const SlideName = styled(Text)`
-  position: relative;
-  left: 0;
-  margin: 0.5em 0;
-  z-index: 1;
-  text-align: center;
+const SlideDivider = styled('div')`
+  height: 2em;
 `;
 
 const Button = styled('button')(
@@ -70,30 +53,20 @@ const Button = styled('button')(
   ),
   css`
     border: 0;
-    width: 8em;
+    width: 300px;
     padding: 1em;
-    margin-left: 16px;
+    margin-bottom: 1em;
   `
 );
 Button.defaultProps = {
   backgroundColor: 'secondary',
   color: 'primary',
-  fontSize: '18px'
+  fontSize: 'text'
 };
-
-const NotesContainer = styled.div`
-  min-height: 30%;
-`;
 
 const PresenterDeck = props => {
   const {
-    state: {
-      currentNotes,
-      currentSlide,
-      currentSlideElement,
-      immediate,
-      numberOfSlides
-    }
+    state: { currentNotes, currentSlide, currentSlideElement, immediate }
   } = React.useContext(DeckContext);
 
   const {
@@ -121,30 +94,21 @@ const PresenterDeck = props => {
   return (
     <PresenterDeckContainer>
       <NotesColumn>
-        <Text>{`Slide ${currentSlide + 1} of ${numberOfSlides}`}</Text>
-        <Timer />
-        <PresentationHeader fontSize="subHeader">Notes:</PresentationHeader>
-        <NotesContainer>
-          <Text lineHeight="180%" fontSize="18px">
-            {currentNotes}
-          </Text>
-        </NotesContainer>
         {!isController && !isReceiver && (
           <Button onClick={onStartConnection}>Start Connection</Button>
         )}
         {isController && !isReceiver && (
           <Button onClick={terminateConnection}>Terminate Connection</Button>
         )}
+        <PresentationHeader fontSize="subHeader">Notes:</PresentationHeader>
+        <Text lineHeight="180%" fontSize="18px">
+          {currentNotes}
+        </Text>
       </NotesColumn>
       <PreviewColumn>
-        <SlideContainer>
-          <SlideName fontSize="18px">Current slide</SlideName>
-          <SlideWrapper>{activeSlide}</SlideWrapper>
-        </SlideContainer>
-        <SlideContainer>
-          <SlideName fontSize="18px">Next slide</SlideName>
-          <SlideWrapper>{nextSlide}</SlideWrapper>
-        </SlideContainer>
+        <SlideContainer>{activeSlide}</SlideContainer>
+        <SlideDivider />
+        <SlideContainer>{nextSlide}</SlideContainer>
       </PreviewColumn>
     </PresenterDeckContainer>
   );

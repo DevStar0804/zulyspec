@@ -83,7 +83,7 @@ const Slide = props => {
     });
   }, [ratio, slideHeight, slideWidth, theme]);
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     if (!isNaN(scaleRatio)) {
       return;
     }
@@ -100,10 +100,7 @@ const Slide = props => {
         ? {}
         : {
             transform: `scale(${ratio})`,
-            transformOrigin: `${origin.x} ${origin.y}`,
-            position: 'absolute',
-            top: 0,
-            left: 0
+            transformOrigin: `${origin.x} ${origin.y}`
           },
     [state.exportMode, origin, ratio]
   );
