@@ -73,6 +73,7 @@ export const Markdown = styled.article`
   }
 
   & pre code {
+    padding: 10px;
     color: #333;
   }
 
