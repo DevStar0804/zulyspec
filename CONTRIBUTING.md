@@ -1,53 +1,92 @@
-Thanks for contributing!
+# Contributing
+
+Thank you for contributing!
+
+Spectacle is actively maintained by @carlos-kelly and @kale-stew from within @FormidableLabs.
 
 ## Development
 
 ### Installing dependencies
 
+We use [`yarn`](https://yarnpkg.com/en/docs/getting-started).
+
+Install all dependencies by running:
+
 ```sh
-yarn install
+$ yarn
 ```
 
-You will find all building blocks that make up Spectacle in the [`src`](src) folder.
+### Examples
+
+We have various deck scenarios in `examples` that are part of the development process.
+
+We normally just do `start:NAME` to run an in-memory dev server. But we also add a `yarn build-examples` script task to make sure we actually produce non-broken examples as a CI / assurance test.
+
+#### `examples/js`
+
+A basic deck with JSX and JavaScript:
+
+```sh
+# In one terminal open dev server
+$ yarn start:js
+
+# In another open a browser to 3000
+$ open http://localhost:3000/
+```
+
+#### `examples/one-page`
+
+A self-contained single web page that uses Spectacle, React, and `htm` for a "no build" presentation!
+
+```sh
+# Build the library
+$ yarn build
+
+# Open the page in a web browser
+$ open examples/one-page.html
+```
 
 ### Testing
 
-You will find tests for files colocated with `*.test.js` suffixes. Whenever making any changes, ensure that all existing tests pass by running `yarn run test`.
-
-If you are adding a new feature or some extra functionality, you should also make sure to accompany those changes with appropriate tests.
+TODO
 
 ### Linting and Formatting
 
-Before committing any changes, be sure to do `yarn run lint`; this will lint all relevant files using [ESLint](http://eslint.org/) and report on any changes that you need to make.
-
-You will also want to ensure your code meets the prettier formatting guidelines by running `yarn run prettier -l <filename>` on a specific file. If there are differences the script errors out. You can also specify a glob `yarn run prettier -l "src/**/*.js"` which will return a list of files that do not conform.
-
-Alternatively, install the Prettier [editor plugin](https://prettier.io/docs/en/editors.html) in your favorite editor. This is the preferred method.
-
-There is also a pre-commit hook in place to lint all staged files. If any of the staged files do not conform to the eslint rules or the [prettier](https://prettier.io/) formatting guidelines, your commit will fail until you resolve all outstanding issues.
-
-To resolve/fix prettier formatting problems from the CLI:
+To check (and fix) code:
 
 ```sh
-yarn prettier-fix && yarn lint-fix
+$ yarn lint
+$ yarn lint-fix
 ```
 
-This will modify your file in place. You will need to `git add` the file again and re-commit.
+To check (and fix) formatting of MD, JSON, _and_ code:
 
-### Before submitting a PR...
+```sh
+$ yarn prettier-check
+$ yarn prettier-fix
+```
+
+Note that there is duplication for JS code in `prettier` doing the same style changes, but both should be harmonious and run together.
+
+### Before submitting a PR
 
 Thanks for taking the time to help us make Spectacle even better! Before you go ahead and submit a PR, make sure that you have done the following:
 
-- Run the tests using `yarn run test`.
-- Run lint and flow using `yarn run lint`
+- Run all checks using `yarn run check`.
+- Check that both the core library and _all_ examples build: `yarn build && yarn build-examples`.
 - Update the [type definitions](./index.d.ts) for anything that modifies the Spectacle API, like breaking changes or new features.
-- Everything else included in our [pull request checklist](https://github.com/FormidableLabs/spectacle/blob/master/.github/PULL_REQUEST_TEMPLATE.md#checklist-feel-free-to-delete-this-section-upon-completion)
+- Everything else included in our [pull request checklist](.github/PULL_REQUEST_TEMPLATE.md).
 
-## Releasing a new version to NPM (only for project administrators)
+### Releasing a new version to NPM
 
-1.  Run `npm version patch` (or `minor`, `major` as appropriate) to run tests and lint, build the `lib` and `dist` directories, and automatically update the `package.json` with a new git tag.
-2.  Run `npm publish` and publish to npm if all is well.
-3.  Run `git push && git push --tags`
+_Only for project administrators_.
+
+1. Update `CHANGELOG.md`, following format for previous versions
+2. Commit as "Changes for version VERSION"
+3. Run `npm version patch` (or `minor|major|VERSION`) to run tests and lint,
+   build published directories, then update `package.json` + add a git tag.
+4. Run `npm publish` and publish to NPM if all is well.
+5. Run `git push && git push --tags`
 
 ## Contributor Covenant Code of Conduct
 

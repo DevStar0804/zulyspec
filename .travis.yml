@@ -3,7 +3,6 @@ language: node_js
 node_js:
   - "10"
   - "12"
-  - "13"
 
 # Use container-based Travis infrastructure.
 sudo: false
@@ -11,6 +10,8 @@ sudo: false
 branches:
   only:
     - master
+    # TODO(REWRITE): Remove after we release the rewrite.
+    - task/rewrite
 
 env:
   global:
@@ -41,8 +42,11 @@ notifications:
     on_failure: always
 
 script:
-  # Core library
+  # Build core library.
   - yarn run build
+  # Build all examples to make sure they're not broken.
+  - yarn build-examples
+  # All other checks.
   - yarn run check-ci
 
 jobs:

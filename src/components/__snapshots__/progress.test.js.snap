@@ -1,255 +1,383 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Progress /> should render PacMan correctly 1`] = `
+exports[`<Progress /> should render the circles at the specified size and color 1`] = `
 <Progress
-  currentSlideIndex={2}
-  items={
-    Array [
-      Object {
-        "id": 0,
-      },
-      Object {
-        "id": 1,
-      },
-      Object {
-        "id": "last",
-      },
-    ]
-  }
-  type="pacman"
+  color="#ff0"
+  size={20}
 >
-  <Styled(div)
-    styles={
-      Array [
-        undefined,
-        null,
-      ]
-    }
+  <styled.div
+    className="spectacle-progress-indicator"
   >
-    <div
-      className="css-0 e12weced4"
-    >
-      <div>
-        <Styled(div)
-          position={
-            Object {
-              "left": "15px",
-              "top": "-20px",
-            }
-          }
-        >
-          <div
-            className="css-tyaqbb e12weced0"
-          >
-            <Styled(div)
-              styles={
-                Array [
-                  undefined,
-                  Object {
-                    "animation": "animation-vwhb3c 0.12s linear 10 alternate both",
-                  },
-                  null,
-                ]
-              }
-            >
-              <div
-                className="css-1la23zo e12weced1"
-              />
-            </Styled(div)>
-            <Styled(div)
-              styles={
-                Array [
-                  undefined,
-                  Object {
-                    "animation": "animation-1p18wsg 0.12s linear 10 alternate both",
-                  },
-                  null,
-                ]
-              }
-            >
-              <div
-                className="css-1yi33k2 e12weced1"
-              />
-            </Styled(div)>
-          </div>
-        </Styled(div)>
-        <Styled(div)
-          key="presentation-progress-0"
-          position={
-            Object {
-              "left": "-25px",
-              "opacity": 0,
-              "top": "-20px",
-            }
-          }
-          styles={
-            Array [
-              undefined,
-              null,
-            ]
-          }
-        >
-          <div
-            className="css-1xucvt e12weced2"
-          />
-        </Styled(div)>
-        <Styled(div)
-          key="presentation-progress-1"
-          position={
-            Object {
-              "left": "-5px",
-              "opacity": 0,
-              "top": "-20px",
-            }
-          }
-          styles={
-            Array [
-              undefined,
-              null,
-            ]
-          }
-        >
-          <div
-            className="css-ci3gz3 e12weced2"
-          />
-        </Styled(div)>
-        <Styled(div)
-          key="presentation-progress-2"
-          position={
-            Object {
-              "left": "15px",
-              "opacity": 0,
-              "top": "-20px",
-            }
-          }
-          styles={
-            Array [
-              undefined,
-              null,
-            ]
-          }
-        >
-          <div
-            className="css-41ffu3 e12weced2"
-          />
-        </Styled(div)>
-      </div>
-    </div>
-  </Styled(div)>
-</Progress>
-`;
-
-exports[`<Progress /> should render nothing when none is provided. 1`] = `
-<Progress
-  currentSlideIndex={3}
-  items={
-    Array [
-      Object {
-        "id": 0,
-      },
-      Object {
-        "id": 1,
-      },
-      Object {
-        "id": "last",
-      },
-    ]
+    <StyledComponent
+      className="spectacle-progress-indicator"
+      forwardedComponent={
+        Object {
+          "$$typeof": Symbol(react.forward_ref),
+          "attrs": Array [],
+          "componentStyle": ComponentStyle {
+            "componentId": "sc-bwzfXH",
+            "isStatic": false,
+            "lastClassName": "fiQnxA",
+            "rules": Array [
+              "
+  @media print {
+    display: none;
   }
-  type="none"
-/>
-`;
-
-exports[`<Progress /> should render the bar style correctly 1`] = `
-<Progress
-  currentSlideIndex={1}
-  items={
-    Array [
-      Object {
-        "id": 0,
-      },
-      Object {
-        "id": 1,
-      },
-      Object {
-        "id": "last",
-      },
-    ]
-  }
-  type="bar"
->
-  <Styled(div)
-    styles={
-      Array [
-        undefined,
-        null,
-      ]
-    }
-  >
-    <div
-      className="css-0 e12weced4"
+",
+            ],
+          },
+          "displayName": "styled.div",
+          "foldedComponentIds": Array [],
+          "render": [Function],
+          "styledComponentId": "sc-bwzfXH",
+          "target": "div",
+          "toString": [Function],
+          "warnTooManyClasses": [Function],
+          "withComponent": [Function],
+        }
+      }
+      forwardedRef={null}
     >
-      <Styled(div)
-        styles={
-          Array [
-            undefined,
-            null,
-          ]
-        }
-        width={
-          Object {
-            "width": "50%",
-          }
-        }
+      <div
+        className="sc-bwzfXH fiQnxA spectacle-progress-indicator"
       >
-        <div
-          className="css-11ze7cv e12weced3"
-          width={
-            Object {
-              "width": "50%",
+        <styled.div
+          active={true}
+          color="#ff0"
+          data-testid="Progress Circle"
+          key="progress-circle-0"
+          onClick={[Function]}
+          size={20}
+        >
+          <StyledComponent
+            active={true}
+            color="#ff0"
+            data-testid="Progress Circle"
+            forwardedComponent={
+              Object {
+                "$$typeof": Symbol(react.forward_ref),
+                "attrs": Array [],
+                "componentStyle": ComponentStyle {
+                  "componentId": "sc-bdVaJa",
+                  "isStatic": false,
+                  "lastClassName": "idATeh",
+                  "rules": Array [
+                    "
+  width: ",
+                    [Function],
+                    "px;
+  height: ",
+                    [Function],
+                    "px;
+  display: inline-block;
+  border: 1px solid ",
+                    [Function],
+                    ";
+  background: ",
+                    [Function],
+                    ";
+  margin: ",
+                    [Function],
+                    "px;
+  border-radius: 50%;
+  pointer-events: all;
+  cursor: pointer;
+",
+                  ],
+                },
+                "displayName": "styled.div",
+                "foldedComponentIds": Array [],
+                "render": [Function],
+                "styledComponentId": "sc-bdVaJa",
+                "target": "div",
+                "toString": [Function],
+                "warnTooManyClasses": [Function],
+                "withComponent": [Function],
+              }
             }
-          }
-        />
-      </Styled(div)>
-    </div>
-  </Styled(div)>
-</Progress>
-`;
-
-exports[`<Progress /> should render the number style correctly 1`] = `
-<Progress
-  currentSlideIndex={1}
-  items={
-    Array [
-      Object {
-        "id": 0,
-      },
-      Object {
-        "id": 1,
-      },
-      Object {
-        "id": "last",
-      },
-    ]
-  }
-  type="number"
->
-  <Styled(div)
-    styles={
-      Array [
-        undefined,
-        null,
-      ]
-    }
-  >
-    <div
-      className="css-0 e12weced4"
-    >
-      <div>
-        2
-         / 
-        3
+            forwardedRef={null}
+            onClick={[Function]}
+            size={20}
+          >
+            <div
+              className="sc-bdVaJa daIxbm"
+              color="#ff0"
+              data-testid="Progress Circle"
+              onClick={[Function]}
+              size={20}
+            />
+          </StyledComponent>
+        </styled.div>
+        <styled.div
+          active={false}
+          color="#ff0"
+          data-testid="Progress Circle"
+          key="progress-circle-1"
+          onClick={[Function]}
+          size={20}
+        >
+          <StyledComponent
+            active={false}
+            color="#ff0"
+            data-testid="Progress Circle"
+            forwardedComponent={
+              Object {
+                "$$typeof": Symbol(react.forward_ref),
+                "attrs": Array [],
+                "componentStyle": ComponentStyle {
+                  "componentId": "sc-bdVaJa",
+                  "isStatic": false,
+                  "lastClassName": "idATeh",
+                  "rules": Array [
+                    "
+  width: ",
+                    [Function],
+                    "px;
+  height: ",
+                    [Function],
+                    "px;
+  display: inline-block;
+  border: 1px solid ",
+                    [Function],
+                    ";
+  background: ",
+                    [Function],
+                    ";
+  margin: ",
+                    [Function],
+                    "px;
+  border-radius: 50%;
+  pointer-events: all;
+  cursor: pointer;
+",
+                  ],
+                },
+                "displayName": "styled.div",
+                "foldedComponentIds": Array [],
+                "render": [Function],
+                "styledComponentId": "sc-bdVaJa",
+                "target": "div",
+                "toString": [Function],
+                "warnTooManyClasses": [Function],
+                "withComponent": [Function],
+              }
+            }
+            forwardedRef={null}
+            onClick={[Function]}
+            size={20}
+          >
+            <div
+              className="sc-bdVaJa idATeh"
+              color="#ff0"
+              data-testid="Progress Circle"
+              onClick={[Function]}
+              size={20}
+            />
+          </StyledComponent>
+        </styled.div>
+        <styled.div
+          active={false}
+          color="#ff0"
+          data-testid="Progress Circle"
+          key="progress-circle-2"
+          onClick={[Function]}
+          size={20}
+        >
+          <StyledComponent
+            active={false}
+            color="#ff0"
+            data-testid="Progress Circle"
+            forwardedComponent={
+              Object {
+                "$$typeof": Symbol(react.forward_ref),
+                "attrs": Array [],
+                "componentStyle": ComponentStyle {
+                  "componentId": "sc-bdVaJa",
+                  "isStatic": false,
+                  "lastClassName": "idATeh",
+                  "rules": Array [
+                    "
+  width: ",
+                    [Function],
+                    "px;
+  height: ",
+                    [Function],
+                    "px;
+  display: inline-block;
+  border: 1px solid ",
+                    [Function],
+                    ";
+  background: ",
+                    [Function],
+                    ";
+  margin: ",
+                    [Function],
+                    "px;
+  border-radius: 50%;
+  pointer-events: all;
+  cursor: pointer;
+",
+                  ],
+                },
+                "displayName": "styled.div",
+                "foldedComponentIds": Array [],
+                "render": [Function],
+                "styledComponentId": "sc-bdVaJa",
+                "target": "div",
+                "toString": [Function],
+                "warnTooManyClasses": [Function],
+                "withComponent": [Function],
+              }
+            }
+            forwardedRef={null}
+            onClick={[Function]}
+            size={20}
+          >
+            <div
+              className="sc-bdVaJa idATeh"
+              color="#ff0"
+              data-testid="Progress Circle"
+              onClick={[Function]}
+              size={20}
+            />
+          </StyledComponent>
+        </styled.div>
+        <styled.div
+          active={false}
+          color="#ff0"
+          data-testid="Progress Circle"
+          key="progress-circle-3"
+          onClick={[Function]}
+          size={20}
+        >
+          <StyledComponent
+            active={false}
+            color="#ff0"
+            data-testid="Progress Circle"
+            forwardedComponent={
+              Object {
+                "$$typeof": Symbol(react.forward_ref),
+                "attrs": Array [],
+                "componentStyle": ComponentStyle {
+                  "componentId": "sc-bdVaJa",
+                  "isStatic": false,
+                  "lastClassName": "idATeh",
+                  "rules": Array [
+                    "
+  width: ",
+                    [Function],
+                    "px;
+  height: ",
+                    [Function],
+                    "px;
+  display: inline-block;
+  border: 1px solid ",
+                    [Function],
+                    ";
+  background: ",
+                    [Function],
+                    ";
+  margin: ",
+                    [Function],
+                    "px;
+  border-radius: 50%;
+  pointer-events: all;
+  cursor: pointer;
+",
+                  ],
+                },
+                "displayName": "styled.div",
+                "foldedComponentIds": Array [],
+                "render": [Function],
+                "styledComponentId": "sc-bdVaJa",
+                "target": "div",
+                "toString": [Function],
+                "warnTooManyClasses": [Function],
+                "withComponent": [Function],
+              }
+            }
+            forwardedRef={null}
+            onClick={[Function]}
+            size={20}
+          >
+            <div
+              className="sc-bdVaJa idATeh"
+              color="#ff0"
+              data-testid="Progress Circle"
+              onClick={[Function]}
+              size={20}
+            />
+          </StyledComponent>
+        </styled.div>
+        <styled.div
+          active={false}
+          color="#ff0"
+          data-testid="Progress Circle"
+          key="progress-circle-4"
+          onClick={[Function]}
+          size={20}
+        >
+          <StyledComponent
+            active={false}
+            color="#ff0"
+            data-testid="Progress Circle"
+            forwardedComponent={
+              Object {
+                "$$typeof": Symbol(react.forward_ref),
+                "attrs": Array [],
+                "componentStyle": ComponentStyle {
+                  "componentId": "sc-bdVaJa",
+                  "isStatic": false,
+                  "lastClassName": "idATeh",
+                  "rules": Array [
+                    "
+  width: ",
+                    [Function],
+                    "px;
+  height: ",
+                    [Function],
+                    "px;
+  display: inline-block;
+  border: 1px solid ",
+                    [Function],
+                    ";
+  background: ",
+                    [Function],
+                    ";
+  margin: ",
+                    [Function],
+                    "px;
+  border-radius: 50%;
+  pointer-events: all;
+  cursor: pointer;
+",
+                  ],
+                },
+                "displayName": "styled.div",
+                "foldedComponentIds": Array [],
+                "render": [Function],
+                "styledComponentId": "sc-bdVaJa",
+                "target": "div",
+                "toString": [Function],
+                "warnTooManyClasses": [Function],
+                "withComponent": [Function],
+              }
+            }
+            forwardedRef={null}
+            onClick={[Function]}
+            size={20}
+          >
+            <div
+              className="sc-bdVaJa idATeh"
+              color="#ff0"
+              data-testid="Progress Circle"
+              onClick={[Function]}
+              size={20}
+            />
+          </StyledComponent>
+        </styled.div>
       </div>
-    </div>
-  </Styled(div)>
+    </StyledComponent>
+  </styled.div>
 </Progress>
 `;
