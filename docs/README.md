@@ -6,7 +6,7 @@ Now built with react-static!
 
 To install and run the docs site locally:
 
-```bash
+```sh
 $ cd docs
 $ yarn install
 $ yarn start
@@ -21,7 +21,7 @@ inline or doing url parsing, as the production output root will be "open-source/
 
 The staging build is served from a root path, e.g. `http://example/com`. This is typically used for CI / per-PR previews.
 
-```bash
+```sh
 $ cd docs
 $ yarn stage:build
 $ yarn stage:serve
@@ -35,7 +35,7 @@ Then visit: http://localhost:3000/open-source/spectacle/
 
 The production site is served from a nested path, e.g. `https://formidable.com/open-source/spectacle`.
 
-```bash
+```sh
 $ cd docs
 $ yarn prod:build
 $ yarn prod:serve
@@ -60,7 +60,7 @@ Our CI deploys to staging for each PR using surge.sh at the following URL:
 
 To test things out locally find the `Surge.sh` entry in 1password in the IC vault and make up some pretend values for a PR number in `TRAVIS_PULL_REQUEST`:
 
-```bash
+```sh
 $ cd docs
 $ yarn clean
 $ yarn stage:build
@@ -78,13 +78,13 @@ Our CI is configured to deploy the production build in `dist` to `formidable.com
 
 First, install the AWS CLI:
 
-```bash
+```sh
 $ brew install awscli
 ```
 
 Then, set up `aws-vault` with the AWS access and secret keys for "CI" in the `AWS IAM (spectacle-ci)` entry in the IC vault:
 
-```bash
+```sh
 $ brew cask install aws-vault
 $ aws-vault add fmd-spectacle-ci
 # Enter AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY values for AWS `spectacle-ci` user titled "CI"
@@ -92,7 +92,7 @@ $ aws-vault add fmd-spectacle-ci
 
 Then build for production and deploy with dry run to check things:
 
-```bash
+```sh
 $ cd docs
 $ yarn clean
 $ yarn prod:build
